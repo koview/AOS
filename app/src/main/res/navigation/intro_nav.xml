@@ -3,4 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/intro_nav">
 
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.example.koview.presentation.ui.intro.login.LoginFragment"
+        android:label="LoginFragment">
+
+        <action
+            android:id="@+id/action_login_fragment_to_signup_fragment"
+            app:destination="@id/signup_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signup_fragment"
+        android:name="com.example.koview.presentation.ui.intro.signup.SignUpFragment"
+        android:label="SignUpFragment">
+
+        <action
+            android:id="@+id/action_signup_fragment_to_signup_shop_fragment"
+            app:destination="@id/signup_shop_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signup_shop_fragment"
+        android:name="com.example.koview.presentation.ui.intro.signup.selectshop.SignUpShopFragment"
+        android:label="SignUpShopFragment">
+
+        <action
+            android:id="@+id/action_signup_shop_fragment_to_signup_complete_fragment"
+            app:destination="@id/signup_complete_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signup_complete_fragment"
+        android:name="com.example.koview.presentation.ui.intro.signup.complete.SignUpCompleteFragment"
+        android:label="SignUpCompleteFragment">
+
+        <action
+            android:id="@+id/action_signup_complete_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:popUpTo="@id/login_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+
 </navigation>
