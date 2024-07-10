@@ -23,8 +23,8 @@ class SplashViewModel @Inject constructor() : ViewModel() {
     fun checkLogin() {
         // todo: 로그인 정보 있으면 바로 MainActivity로 이동
         viewModelScope.launch {
-//            _event.emit(SplashEvent.NavigateToIntroActivity)
-            _event.emit(SplashEvent.NavigateToMainActivity)
+            _event.emit(SplashEvent.NavigateToIntroActivity)
+//            _event.emit(SplashEvent.NavigateToMainActivity)
         }
     }
 }

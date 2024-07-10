@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/intro_nav">
+    android:id="@+id/intro_nav"
+    app:startDestination="@id/login_fragment">
 
     <fragment
         android:id="@+id/login_fragment"
@@ -9,27 +10,27 @@
         android:label="LoginFragment">
 
         <action
-            android:id="@+id/action_login_fragment_to_signup_fragment"
-            app:destination="@id/signup_fragment" />
+            android:id="@+id/action_login_fragment_to_signup_shop_fragment"
+            app:destination="@id/signup_select_shop_fragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/signup_fragment"
-        android:name="com.example.koview.presentation.ui.intro.signup.SignUpFragment"
-        android:label="SignUpFragment">
+        android:id="@+id/signup_select_shop_fragment"
+        android:name="com.example.koview.presentation.ui.intro.signup.selectshop.SignUpSelectShopFragment"
+        android:label="SignUpSelectShopFragment">
 
         <action
-            android:id="@+id/action_signup_fragment_to_signup_shop_fragment"
-            app:destination="@id/signup_shop_fragment" />
+            android:id="@+id/action_signup_select_shop_fragment_to_signup_set_info_fragment"
+            app:destination="@id/signup_set_info_fragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/signup_shop_fragment"
-        android:name="com.example.koview.presentation.ui.intro.signup.selectshop.SignUpShopFragment"
-        android:label="SignUpShopFragment">
+        android:id="@+id/signup_set_info_fragment"
+        android:name="com.example.koview.presentation.ui.intro.signup.setinfo.SignUpSetInfoFragment"
+        android:label="SignUpSetInfoFragment">
 
         <action
-            android:id="@+id/action_signup_shop_fragment_to_signup_complete_fragment"
+            android:id="@+id/action_signup_set_info_fragment_to_signup_complete_fragment"
             app:destination="@id/signup_complete_fragment" />
     </fragment>
 
