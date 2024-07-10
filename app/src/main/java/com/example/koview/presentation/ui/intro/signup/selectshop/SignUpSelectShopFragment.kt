@@ -1,4 +1,4 @@
-package com.example.koview.presentation.ui.intro.signup.complete
+package com.example.koview.presentation.ui.intro.signup.selectshop
 
 import android.os.Bundle
 import android.view.View
@@ -6,18 +6,19 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.koview.R
-import com.example.koview.databinding.FragmentSignupCompleteBinding
+import com.example.koview.databinding.FragmentSignupSelectShopBinding
 import com.example.koview.presentation.base.BaseFragment
 
-class SignUpCompleteFragment :
-    BaseFragment<FragmentSignupCompleteBinding>(R.layout.fragment_signup_complete) {
+class SignUpSelectShopFragment :
+    BaseFragment<FragmentSignupSelectShopBinding>(R.layout.fragment_signup_select_shop) {
 
-    private val viewModel: SignUpCompleteViewModel by viewModels()
+    private val viewModel: SignUpSelectShopViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
+
         initEventObserve()
     }
 
@@ -25,14 +26,15 @@ class SignUpCompleteFragment :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    SignUpCompleteEvent.NavigateToLogin -> findNavController().toComplete()
+                    SelectShopEvent.NavigateToBack -> findNavController().navigateUp()
+                    SelectShopEvent.NavigateToSetInfo -> findNavController().toSetInfo()
                 }
             }
         }
     }
 
-    private fun NavController.toComplete() {
-        val action = SignUpCompleteFragmentDirections.actionSignupCompleteFragmentToLoginFragment()
+    private fun NavController.toSetInfo() {
+        val action = SignUpSelectShopFragmentDirections.actionSignupSelectShopFragmentToSignupSetInfoFragment()
         navigate(action)
     }
 }
