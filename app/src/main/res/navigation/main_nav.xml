@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_nav">
+    android:id="@+id/main_nav"
+    app:startDestination="@id/home_fragment">
 
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.example.koview.presentation.ui.main.home.HomeFragment"
+        android:label="HomeFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/coview_fragment"
+        android:name="com.example.koview.presentation.ui.main.coview.CoviewFragment"
+        android:label="CoviewFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ask_fragment"
+        android:name="com.example.koview.presentation.ui.main.ask.AskFragment"
+        android:label="AskFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mypage_fragment"
+        android:name="com.example.koview.presentation.ui.main.mypage.MyPageFragment"
+        android:label="MyPageFragment">
+
+    </fragment>
 
 
 </navigation>

@@ -74,8 +74,9 @@ dependencies {
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
     // navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
+    val nav_version = "2.7.7"
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     // CircleImageView
     implementation("de.hdodenhof:circleimageview:3.1.0")
