@@ -19,6 +19,8 @@ class SignUpSetInfoFragment : BaseFragment<FragmentSignupSetInfoBinding>(R.layou
         binding.vm = viewModel
 
         initEventObserve()
+
+        setObserve()
     }
 
     private fun initEventObserve() {
@@ -33,7 +35,37 @@ class SignUpSetInfoFragment : BaseFragment<FragmentSignupSetInfoBinding>(R.layou
     }
 
     private fun NavController.toComplete() {
-        val action = SignUpSetInfoFragmentDirections.actionSignupSetInfoFragmentToSignupCompleteFragment()
+        val action =
+            SignUpSetInfoFragmentDirections.actionSignupSetInfoFragmentToSignupCompleteFragment()
         navigate(action)
+    }
+
+
+    private fun setObserve() {
+        // 비밀번호, 비밀번호 재확인에 값이 들어있을때만 오류나 일치가 뜨게
+        viewModel.passwordCheck.observe(viewLifecycleOwner) {
+            if(viewModel.passwordCheck.value.toString().equals("")){
+                viewModel.passwordCheckVisible.value = false
+                binding.tlPasswordCheck.error = null
+            } else if(!viewModel.passwordCheck()) {
+                binding.tlPasswordCheck.error = "비밀번호가 일치하지 않습니다."
+                viewModel.passwordCheckVisible.value = false
+            } else {
+                binding.tlPasswordCheck.error = null
+                viewModel.passwordCheckVisible.value = true
+            }
+        }
+
+        //
+        viewModel.signUpBtnOn.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.btnSignup.setBackgroundResource(R.drawable.rect_main3fill_nostroke_12radius)
+                binding.btnSignup.isClickable = true
+            } else {
+                binding.btnSignup.setBackgroundResource(R.drawable.rect_blackfill_nostroke_12radius)
+                binding.btnSignup.isClickable = false
+            }
+        }
+
     }
 }
