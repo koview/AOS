@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_back"
@@ -20,29 +21,86 @@
             android:layout_height="wrap_content"
             android:padding="0dp"
             android:layout_marginTop="40dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="4dp"
             android:src="@drawable/ic_arrow_back"
             android:onClick="@{()->vm.navigateToBack()}"
             android:background="@color/transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_signup"
-            style="@style/TextRegularSemiBold"
+        <TextView
+            android:id="@+id/tv_discription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주로 사용하시는\n쇼핑몰을 골라주세요"
+            android:textColor="@color/black"
+            style="@style/Title2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_back"
+            android:layout_marginTop="23dp"
+            android:layout_marginStart="8dp"/>
+        
+        <LinearLayout
+            android:id="@+id/ll_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rect_blackfill_nostroke_12radius"
-            android:onClick="@{()->vm.navigateToNext()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_discription"
+            android:orientation="vertical"
+            android:layout_marginTop="35dp">
+
+            <CheckBox
+                android:id="@+id/cb_amazon"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text=" Amazon"
+                style="@style/TextRegularSemiBold"
+                android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(0, isChecked)}"/>
+
+            <CheckBox
+                android:id="@+id/cb_eBay"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text=" eBay"
+                style="@style/TextRegularSemiBold"
+                android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(1, isChecked)}"/>
+
+            <CheckBox
+                android:id="@+id/cb_aliexpress"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text=" AliExpress"
+                style="@style/TextRegularSemiBold"
+                android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(2, isChecked)}"/>
+
+            <CheckBox
+                android:id="@+id/cb_walmart"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text=" Walmart"
+                style="@style/TextRegularSemiBold"
+                android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(3, isChecked)}"/>
+
+            <CheckBox
+                android:id="@+id/cb_target"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text=" Target"
+                style="@style/TextRegularSemiBold"
+                android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(4, isChecked)}"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_signup"
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="다음"
+            style="TextRegularSemiBold"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
+            android:background="@drawable/rect_blackfill_nostroke_12radius"
+            app:layout_constraintTop_toBottomOf="@id/ll_checkbox"
+            android:layout_marginTop="35dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
