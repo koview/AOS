@@ -1,0 +1,149 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.example.koview.presentation.ui.main.home.bottomsheet.Category" />
+        <variable
+            name="vm"
+            type="com.example.koview.presentation.ui.main.home.bottomsheet.HomeCategorySelectViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_whitefill_nostroke_top30radius">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TextRegularSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:text="카테고리 선택"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/layout_accessories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="28dp"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:onClick="@{()->vm.setCategory(Category.ACCESSORIES)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_accessories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_accessories" />
+
+            <TextView
+                android:id="@+id/tv_accessories"
+                style="@style/CategoryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="장신구" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_toy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="28dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:onClick="@{()->vm.setCategory(Category.TOY)}"
+            app:layout_constraintStart_toEndOf="@id/layout_accessories"
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_toy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_toy" />
+
+            <TextView
+                android:id="@+id/tv_toy"
+                style="@style/CategoryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="완구" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_cook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="28dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:onClick="@{()->vm.setCategory(Category.COOK)}"
+            app:layout_constraintStart_toEndOf="@id/layout_toy"
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_cook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cook" />
+
+            <TextView
+                android:id="@+id/tv_cook"
+                style="@style/CategoryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="요리" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_clothes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="28dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:onClick="@{()->vm.setCategory(Category.CLOTHES)}"
+            app:layout_constraintStart_toEndOf="@id/layout_cook"
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_clothes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_clothes" />
+
+            <TextView
+                android:id="@+id/tv_clothes"
+                style="@style/CategoryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="의상" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/TextSmallMedium"
+            android:layout_width="114dp"
+            android:layout_height="32dp"
+            android:padding="0dp"
+            android:layout_marginTop="115dp"
+            android:layout_marginBottom="15dp"
+            android:text="선택 완료"
+            android:onClick="@{()->vm.selectCategory()}"
+            android:textColor="@color/white"
+            android:background="@drawable/rect_blackfill_nostroke_8radius"
+            app:layout_constraintTop_toBottomOf="@id/layout_accessories"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
