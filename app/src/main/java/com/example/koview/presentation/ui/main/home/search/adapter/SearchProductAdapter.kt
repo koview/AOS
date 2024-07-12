@@ -96,9 +96,8 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: SearchProduct) {
+            binding.model = product
             val context = binding.root.context
-            binding.tvProduct.text = product.title
-            binding.tvInfo.text = "리뷰: ${product.reviewNumber} | 등록일: ${product.registDate}"
 
             // ImageView의 크기가 결정된 후에 Glide로 이미지 로드
             // ImageView의 크기를 얻음

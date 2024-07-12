@@ -30,7 +30,7 @@ class SearchShopAdapter(private val tagList: List<TagShop>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(tagShop: TagShop) {
-            binding.tvShop.text = tagShop.title
+            binding.model = tagShop
         }
 
     }

@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextRegularSemiBold"
-                    android:text="상품명"
+                    android:text="@{model.title}"
                     android:textColor="@color/kv_gray9"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/iv_icon"
@@ -70,7 +70,7 @@
                 android:layout_marginTop="3dp"
                 style="@style/TextSmallMedium"
                 android:textColor="@color/kv_gray5"
-                android:text="리뷰: | 등록일: "/>
+                android:text='@{"리뷰: " + model.reviewNumber + " | 등록일: " + model.registDate}'/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_shop"
