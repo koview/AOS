@@ -46,21 +46,17 @@
             style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:counterEnabled="true"
-            app:counterMaxLength="10"
-            android:maxLength="10"
             app:layout_constraintTop_toBottomOf="@id/tv_signup"
             android:layout_marginTop="19dp"
             >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_nickname"
-                style="@style/TextRegularMedium"
+                style="@style/TextRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_gray1fill_nostroke_12radius"
                 android:hint="닉네임"
-                android:maxLength="10"
                 android:text="@={vm.nickname}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -75,7 +71,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_age"
-                style="@style/TextRegularMedium"
+                style="@style/TextRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_gray1fill_nostroke_12radius"
@@ -94,7 +90,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
-                style="@style/TextRegularMedium"
+                style="@style/TextRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_gray1fill_nostroke_12radius"
@@ -109,21 +105,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
-            app:counterEnabled="true"
-            app:counterMaxLength="15"
-            android:maxLength="15"
             app:layout_constraintTop_toTopOf="@id/tl_email"
             android:layout_marginTop="80dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
-                style="@style/TextRegularMedium"
+                style="@style/TextRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_gray1fill_nostroke_12radius"
                 android:inputType="textPassword"
                 android:hint="비밀번호"
-                android:maxLength="15"
                 android:text="@={vm.password}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -134,25 +126,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
-            android:maxLength="15"
             app:layout_constraintTop_toTopOf="@id/tl_password"
             android:layout_marginTop="80dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password_check"
-                style="@style/TextRegularMedium"
+                style="@style/TextRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_gray1fill_nostroke_12radius"
                 android:inputType="textPassword"
                 android:hint="비밀번호 확인"
-                android:maxLength="15"
                 android:text="@={vm.passwordCheck}"/>
             <TextView
                 android:id="@+id/tv_password_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextTinyMedium"
+                style="@style/TextTiny"
                 android:textColor="@color/kv_main3"
                 android:text="비밀번호가 일치합니다."
                 app:layout_constraintTop_toBottomOf="@id/et_password_check"
@@ -173,8 +163,7 @@
             android:background="@drawable/rect_blackfill_nostroke_12radius"
             app:layout_constraintTop_toBottomOf="@id/tl_password_check"
             android:layout_marginTop="26dp"
-            android:clickable="false"
-            android:onClick="@{()->vm.navigateToNext()}"/>
+            android:clickable="false"/>
 
 
 

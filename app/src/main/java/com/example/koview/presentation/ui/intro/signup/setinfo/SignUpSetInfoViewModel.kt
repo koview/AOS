@@ -1,5 +1,6 @@
 package com.example.koview.presentation.ui.intro.signup.setinfo
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,20 +28,12 @@ class SignUpSetInfoViewModel @Inject constructor() : ViewModel() {
     var password : MutableLiveData<String> = MutableLiveData("")
     var passwordCheck : MutableLiveData<String> = MutableLiveData("")
 
+    val selectedShops = MutableLiveData<List<String>>()
+
     var signUpBtnOn : MutableLiveData<Boolean> = MutableLiveData(false)
     var passwordCheckVisible : MutableLiveData<Boolean> = MutableLiveData(false)
 
-    fun navigateToBack() {
-        viewModelScope.launch {
-            _event.emit(SetInfoEvent.NavigateToBack)
-        }
-    }
 
-    fun navigateToNext() {
-        viewModelScope.launch {
-            _event.emit(SetInfoEvent.NavigateToComplete)
-        }
-    }
 
     // 비밀번호 = 비밀번호 재확인 체크
     fun passwordCheck(): Boolean{
@@ -86,6 +79,22 @@ class SignUpSetInfoViewModel @Inject constructor() : ViewModel() {
         } else {
             signUpBtnOn.value = true
             return
+        }
+    }
+
+    fun getSignupDataToString(): String{
+        return "email : ${email.value.toString()}\nloginPw : ${password.value.toString()}\nnickname : ${nickname.value.toString()}\nage : ${age.value.toString().toInt()}\nselectedShops : ${selectedShops.value.toString()}"
+    }
+
+    fun navigateToBack() {
+        viewModelScope.launch {
+            _event.emit(SetInfoEvent.NavigateToBack)
+        }
+    }
+
+    fun navigateToNext() {
+        viewModelScope.launch {
+            _event.emit(SetInfoEvent.NavigateToComplete)
         }
     }
 

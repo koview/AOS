@@ -1,10 +1,12 @@
 package com.example.koview.presentation.ui.intro.signup.setinfo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.koview.R
 import com.example.koview.databinding.FragmentSignupSetInfoBinding
 import com.example.koview.presentation.base.BaseFragment
@@ -18,9 +20,24 @@ class SignUpSetInfoFragment : BaseFragment<FragmentSignupSetInfoBinding>(R.layou
 
         binding.vm = viewModel
 
-        initEventObserve()
+        // 선택한 상점 데이터 꺼낸 후 뷰모델에 저장
+        val args: SignUpSetInfoFragmentArgs by navArgs()
+        val selectedShops: List<String> = args.checkedShops.toList()
+        viewModel.selectedShops.value = selectedShops
 
+// To-do : 잘 들어오는 지에 대한 것이기 때문에 나중에 삭제
+        showToastMessage(selectedShops.toString())
+        initEventObserve()
         setObserve()
+        clickSignupBtn()
+
+    }
+
+    private fun clickSignupBtn(){
+        binding.btnSignup.setOnClickListener {
+            Log.d("SignUpSetInfoFragment", viewModel.getSignupDataToString())
+            viewModel.navigateToNext()
+        }
     }
 
     private fun initEventObserve() {

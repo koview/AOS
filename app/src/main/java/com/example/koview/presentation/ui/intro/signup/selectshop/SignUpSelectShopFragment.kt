@@ -37,9 +37,10 @@ class SignUpSelectShopFragment :
         )
 
         // 화면 넘어가며 _checkedTexts에 선택한 가게들 업데이트
+// To-do : 선택된 쇼핑리스트 저장
         binding.btnSignup.setOnClickListener {
             findCheckedShop(checkboxes)
-            Log.d("SignUpSelectShopFragment", "Selected Shops String: ${viewModel.getSelectedShopsString()}")
+            Log.d("SignUpSelectShopFragment", "Selected Shops String: ${viewModel.getCheckedShopsString()}")
             viewModel.navigateToNext()
         }
 
@@ -73,14 +74,14 @@ class SignUpSelectShopFragment :
             viewModel.event.collect {
                 when (it) {
                     SelectShopEvent.NavigateToBack -> findNavController().navigateUp()
-                    SelectShopEvent.NavigateToSetInfo -> findNavController().toSetInfo()
+                    is SelectShopEvent.NavigateToSetInfo -> findNavController().toSetInfo(viewModel.checkedTexts.value!!.toTypedArray())
                 }
             }
         }
     }
 
-    private fun NavController.toSetInfo() {
-        val action = SignUpSelectShopFragmentDirections.actionSignupSelectShopFragmentToSignupSetInfoFragment()
+    private fun NavController.toSetInfo(checkedShops: Array<String>) {
+        val action = SignUpSelectShopFragmentDirections.actionSignupSelectShopFragmentToSignupSetInfoFragment(checkedShops)
         navigate(action)
     }
 }
