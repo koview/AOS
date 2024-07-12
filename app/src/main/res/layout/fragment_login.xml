@@ -8,7 +8,6 @@
         <variable
             name="vm"
             type="com.example.koview.presentation.ui.intro.login.LoginViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
