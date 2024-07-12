@@ -5,6 +5,8 @@ data class SearchProduct(
     val imageUrl: String,
     val reviewNumber: Int,
     val registDate: String,
+    val isWarning: Boolean,
+    val isHot: Boolean,
     val shopList: List<TagShop>
 )
 

@@ -23,6 +23,8 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
             imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
             reviewNumber = 1,
             registDate = "2024-07-12",
+            isWarning = true,
+            isHot = false,
             shopList = listOf(
                 TagShop(title = "xpadfnejnnddf"),
                 TagShop(title = "xpadfnejnnddf"),
@@ -43,6 +45,8 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
             imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
             reviewNumber = 5,
             registDate = "2024-07-13",
+            isWarning = false,
+            isHot = true,
             shopList = listOf(
 
             )
@@ -52,6 +56,8 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
             imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
             reviewNumber = 5,
             registDate = "2024-07-13",
+            isWarning = false,
+            isHot = false,
             shopList = listOf(
                 TagShop(title = "Shop C"),
                 TagShop(title = "Shop D"),
@@ -63,6 +69,8 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
             imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
             reviewNumber = 5,
             registDate = "2024-07-13",
+            isWarning = true,
+            isHot = true,
             shopList = listOf(
                 TagShop(title = "Shop C"),
                 TagShop(title = "Shop D"),
@@ -95,8 +103,8 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
     class SearchProductViewHolder(private val binding: ItemSearchProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(product: SearchProduct) {
-            binding.model = product
+        fun bind(searchProduct: SearchProduct) {
+            binding.model = searchProduct
             val context = binding.root.context
 
             // ImageView의 크기가 결정된 후에 Glide로 이미지 로드
@@ -112,7 +120,7 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
                             RequestOptions().transform(CenterCrop(), RoundedCorners(16))
 
                         Glide.with(itemView)
-                            .load(product.imageUrl)
+                            .load(searchProduct.imageUrl)
                             .apply(requestOptions)
                             .override(width, height)
                             .into(binding.ivProduct)
@@ -134,7 +142,7 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
             layoutManager.justifyContent = JustifyContent.FLEX_START
 
             binding.rvShop.layoutManager = layoutManager
-            val adapter = SearchShopAdapter(product.shopList)
+            val adapter = SearchShopAdapter(searchProduct.shopList)
             binding.rvShop.adapter = adapter
         }
 
