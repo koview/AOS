@@ -14,13 +14,13 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:paddingBottom="20dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="40dp">
+            android:paddingVertical="40dp">
 
             <!--    카테고리    -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -370,6 +370,7 @@
                     android:textColor="@color/kv_gray5" />
             </LinearLayout>
 
+            <!--    최근 질문    -->
             <TextView
                 android:id="@+id/tv_ask_title"
                 style="@style/Title3"
@@ -391,15 +392,14 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_ask_title" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ask_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/view_2"
-
                 tools:listitem="@layout/item_home_ask" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

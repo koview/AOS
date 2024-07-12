@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="com.example.koview.presentation.ui.main.home.model.AskUiData" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{item.contents}"
                 android:textColor="@color/kv_gray9"
                 tools:text="상품 리뷰 내용" />
 
@@ -43,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/kv_gray5"
-                    tools:text="조회수: " />
+                    android:text="조회수: " />
 
                 <TextView
                     android:id="@+id/tv_view"
@@ -51,6 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/kv_gray5"
+                    app:textFromInt="@{item.viewCount}"
                     tools:text="90" />
 
                 <TextView
@@ -58,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/kv_gray5"
-                    tools:text=" | 댓글: " />
+                    android:text=" | 댓글: " />
 
                 <TextView
                     android:id="@+id/tv_comment"
@@ -66,6 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/kv_gray5"
+                    app:textFromInt="@{item.commentsCount}"
                     tools:text="10" />
             </LinearLayout>
 
@@ -85,7 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/img_product_ex" />
+                app:askImgUrl="@{item.askImage}"
+                tools:src="@drawable/img_product_ex" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
