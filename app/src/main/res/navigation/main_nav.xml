@@ -9,6 +9,9 @@
         android:name="com.example.koview.presentation.ui.main.home.HomeFragment"
         android:label="HomeFragment">
 
+        <action
+            android:id="@+id/action_home_fragment_to_home_category_select_fragment"
+            app:destination="@id/home_category_select_fragment" />
     </fragment>
 
     <fragment
@@ -32,5 +35,9 @@
 
     </fragment>
 
+    <dialog
+        android:id="@+id/home_category_select_fragment"
+        android:name="com.example.koview.presentation.ui.main.home.bottomsheet.HomeCategorySelectFragment"
+        android:label="HomeCategorySelectFragment" />
 
 </navigation>

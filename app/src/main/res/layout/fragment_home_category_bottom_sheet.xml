@@ -1,9 +1,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="com.example.koview.presentation.ui.main.home.bottomsheet.Category" />
+        <import type="com.example.koview.presentation.ui.main.home.model.Category" />
+
         <variable
             name="vm"
             type="com.example.koview.presentation.ui.main.home.bottomsheet.HomeCategorySelectViewModel" />
@@ -13,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rect_whitefill_nostroke_top30radius">
+        android:background="@drawable/rect_whitefill_nostroke_top30radius" >
 
         <TextView
             android:id="@+id/tv_title"
