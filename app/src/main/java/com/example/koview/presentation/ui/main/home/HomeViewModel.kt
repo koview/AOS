@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     private val _event = MutableSharedFlow<HomeEvent>()
     val event: SharedFlow<HomeEvent> = _event.asSharedFlow()
 
-    private val _category = MutableStateFlow(Category.ACCESSORIES)
+    private val _category = MutableStateFlow(Category.ALL)
     val category: StateFlow<Category> = _category.asStateFlow()
 
     private val _askList = MutableStateFlow<List<AskUiData>>(emptyList())
@@ -58,7 +58,6 @@ class HomeViewModel @Inject constructor() : ViewModel() {
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt8BHAabSNHYgMLPjbnuWogrYJbjQp86C3cg&s"
                 )
             )
-
             _askList.value = fetchedData
         }
     }

@@ -1,6 +1,5 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,13 +8,12 @@
         <variable
             name="vm"
             type="com.example.koview.presentation.ui.main.home.bottomsheet.HomeCategorySelectViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rect_whitefill_nostroke_top30radius" >
+        android:background="@drawable/rect_whitefill_nostroke_top30radius">
 
         <TextView
             android:id="@+id/tv_title"
@@ -24,128 +22,365 @@
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
             android:text="카테고리 선택"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/layout_accessories"
+        <!--    전체    -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_pin1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="28dp"
-            android:layout_marginStart="25dp"
-            android:gravity="center"
-            android:onClick="@{()->vm.setCategory(Category.ACCESSORIES)}"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_pin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title">
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            style="@style/TextRegularSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="전체"
+            app:layout_constraintBottom_toBottomOf="@id/iv_pin1"
+            app:layout_constraintStart_toEndOf="@id/iv_pin1"
+            app:layout_constraintTop_toTopOf="@id/iv_pin1" />
+
+        <LinearLayout
+            android:id="@+id/layout_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:onClick="@{()->vm.setCategory(Category.ALL)}"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_pin1">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_accessories"
+                android:id="@+id/iv_select_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_accessories" />
+                android:src="@drawable/ic_select_all"
+                app:curCategory="@{vm.category}"
+                app:targetCategory="@{Category.ALL}" />
 
             <TextView
-                android:id="@+id/tv_accessories"
+                android:id="@+id/tv_select_all"
                 style="@style/CategoryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="장신구" />
+                android:text="전체 선택"
+                app:curCategory="@{vm.category}"
+                app:targetCategory="@{Category.ALL}" />
+        </LinearLayout>
+
+        <!--    어린이    -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_pin2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_pin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_select_all" />
+
+        <TextView
+            style="@style/TextRegularSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="어린이"
+            app:layout_constraintBottom_toBottomOf="@id/iv_pin2"
+            app:layout_constraintStart_toEndOf="@id/iv_pin2"
+            app:layout_constraintTop_toTopOf="@id/iv_pin2" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/fb_children_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="32dp"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_pin2">
+
+            <LinearLayout
+                android:id="@+id/layout_clothes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="@{()->vm.setCategory(Category.CLOTHES)}"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_clothes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_clothes"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.CLOTHES}" />
+
+                <TextView
+                    android:id="@+id/tv_clothes"
+                    style="@style/CategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="의상"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.CLOTHES}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_accessories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:onClick="@{()->vm.setCategory(Category.ACCESSORIES)}"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/layout_clothes"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_accessories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_watch"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.ACCESSORIES}" />
+
+                <TextView
+                    android:id="@+id/tv_accessories"
+                    style="@style/CategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="패션 소품"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.ACCESSORIES}" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layout_stationary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:onClick="@{()->vm.setCategory(Category.STATIONARY)}"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/layout_accessories"
+                app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_stationary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_pencil"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.STATIONARY}" />
+
+                <TextView
+                    android:id="@+id/tv_stationary"
+                    style="@style/CategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="학용품"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.STATIONARY}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_sanitary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:onClick="@{()->vm.setCategory(Category.SANITARY)}"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/layout_accessories"
+                app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_sanitary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_tissue"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.SANITARY}" />
+
+                <TextView
+                    android:id="@+id/tv_sanitary"
+                    style="@style/CategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="위생 용품"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.SANITARY}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_toy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:onClick="@{()->vm.setCategory(Category.TOY)}"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/layout_sanitary"
+                app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_toy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_toy"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.TOY}" />
+
+                <TextView
+                    android:id="@+id/tv_toy"
+                    style="@style/CategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="완구"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.TOY}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_children_etc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:onClick="@{()->vm.setCategory(Category.CHILDREN_ETC)}"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/layout_sanitary"
+                app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_children_etc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_etc"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.CHILDREN_ETC}" />
+
+                <TextView
+                    android:id="@+id/tv_children_etc"
+                    style="@style/CategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="기타"
+                    app:curCategory="@{vm.category}"
+                    app:targetCategory="@{Category.CHILDREN_ETC}" />
+            </LinearLayout>
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+        <!--    일반    -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_pin3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_pin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fb_children_category" />
+
+        <TextView
+            style="@style/TextRegularSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:text="일반"
+            app:layout_constraintBottom_toBottomOf="@id/iv_pin3"
+            app:layout_constraintStart_toEndOf="@id/iv_pin3"
+            app:layout_constraintTop_toTopOf="@id/iv_pin3" />
+
+        <LinearLayout
+            android:id="@+id/layout_food_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:onClick="@{()->vm.setCategory(Category.FOOD_CONTAINER)}"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_pin3">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_food_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_food"
+                app:curCategory="@{vm.category}"
+                app:targetCategory="@{Category.FOOD_CONTAINER}" />
+
+            <TextView
+                android:id="@+id/tv_food_container"
+                style="@style/CategoryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="식품 용기"
+                app:curCategory="@{vm.category}"
+                app:targetCategory="@{Category.FOOD_CONTAINER}" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layout_toy"
+            android:id="@+id/layout_general_etc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="28dp"
-            android:layout_marginStart="20dp"
+            android:layout_margin="20dp"
             android:gravity="center"
-            android:onClick="@{()->vm.setCategory(Category.TOY)}"
-            app:layout_constraintStart_toEndOf="@id/layout_accessories"
-            app:layout_constraintTop_toBottomOf="@id/tv_title">
+            android:onClick="@{()->vm.setCategory(Category.GENERAL_ETC)}"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/layout_food_container"
+            app:layout_constraintTop_toBottomOf="@id/iv_pin3">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_toy"
+                android:id="@+id/iv_general_rtc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_toy" />
+                android:src="@drawable/ic_etc"
+                app:curCategory="@{vm.category}"
+                app:targetCategory="@{Category.GENERAL_ETC}" />
 
             <TextView
-                android:id="@+id/tv_toy"
+                android:id="@+id/tv_general_etc"
                 style="@style/CategoryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="완구" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_cook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="28dp"
-            android:layout_marginStart="20dp"
-            android:gravity="center"
-            android:onClick="@{()->vm.setCategory(Category.COOK)}"
-            app:layout_constraintStart_toEndOf="@id/layout_toy"
-            app:layout_constraintTop_toBottomOf="@id/tv_title">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_cook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_cook" />
-
-            <TextView
-                android:id="@+id/tv_cook"
-                style="@style/CategoryText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="요리" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_clothes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="28dp"
-            android:layout_marginStart="20dp"
-            android:gravity="center"
-            android:onClick="@{()->vm.setCategory(Category.CLOTHES)}"
-            app:layout_constraintStart_toEndOf="@id/layout_cook"
-            app:layout_constraintTop_toBottomOf="@id/tv_title">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_clothes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_clothes" />
-
-            <TextView
-                android:id="@+id/tv_clothes"
-                style="@style/CategoryText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="의상" />
+                android:text="기타"
+                app:curCategory="@{vm.category}"
+                app:targetCategory="@{Category.GENERAL_ETC}" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/TextSmallMedium"
             android:layout_width="114dp"
             android:layout_height="32dp"
-            android:padding="0dp"
-            android:layout_marginTop="115dp"
-            android:layout_marginBottom="15dp"
-            android:text="선택 완료"
-            android:onClick="@{()->vm.selectCategory()}"
-            android:textColor="@color/white"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/rect_blackfill_nostroke_8radius"
-            app:layout_constraintTop_toBottomOf="@id/layout_accessories"
-            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{()->vm.selectCategory()}"
+            android:padding="0dp"
+            android:text="선택 완료"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_food_container" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

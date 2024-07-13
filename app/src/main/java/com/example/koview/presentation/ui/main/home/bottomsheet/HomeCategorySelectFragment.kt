@@ -36,6 +36,8 @@ class HomeCategorySelectFragment() : BottomSheetDialogFragment() {
             container,
             false
         )
+        initSelectedCategory()
+
         binding.vm = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -46,7 +48,6 @@ class HomeCategorySelectFragment() : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initEventObserve()
-        initSelectedCategory()
     }
 
     private fun initEventObserve() {
@@ -61,53 +62,12 @@ class HomeCategorySelectFragment() : BottomSheetDialogFragment() {
                         }
                         dismiss()
                     }
-
-                    is HomeCategorySelectEvent.ChangeCategory -> setColors(it.curCategory)
                 }
             }
         }
     }
 
     private fun initSelectedCategory() {
-        setColors(parentViewModel.category.value)
-    }
-
-    private fun setColors(category: Category) {
-        val main3Color = ContextCompat.getColor(requireContext(), R.color.kv_main3)
-
-        resetColors()
-        when (category) {
-            Category.ACCESSORIES -> {
-                binding.ivAccessories.setColorFilter(main3Color)
-                binding.tvAccessories.setTextColor(main3Color)
-            }
-
-            Category.TOY -> {
-                binding.ivToy.setColorFilter(main3Color)
-                binding.tvToy.setTextColor(main3Color)
-            }
-
-            Category.COOK -> {
-                binding.ivCook.setColorFilter(main3Color)
-                binding.tvCook.setTextColor(main3Color)
-            }
-
-            Category.CLOTHES -> {
-                binding.ivClothes.setColorFilter(main3Color)
-                binding.tvClothes.setTextColor(main3Color)
-            }
-        }
-    }
-
-    private fun resetColors() {
-        val defaultColor = ContextCompat.getColor(requireContext(), R.color.black)
-        binding.tvAccessories.setTextColor(defaultColor)
-        binding.ivAccessories.setColorFilter(defaultColor)
-        binding.tvToy.setTextColor(defaultColor)
-        binding.ivToy.setColorFilter(defaultColor)
-        binding.tvCook.setTextColor(defaultColor)
-        binding.ivCook.setColorFilter(defaultColor)
-        binding.tvClothes.setTextColor(defaultColor)
-        binding.ivClothes.setColorFilter(defaultColor)
+        viewModel.setCategory(parentViewModel.category.value)
     }
 }
