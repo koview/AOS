@@ -9,13 +9,16 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.koview.databinding.ItemSearchProductBinding
+import com.example.koview.presentation.ui.main.home.search.SearchViewModel
+import com.example.koview.presentation.ui.main.home.search.model.Review
 import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 import com.example.koview.presentation.ui.main.home.search.model.TagShop
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
-class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchProductViewHolder>() {
+class SearchProductAdapter(private val viewModel: SearchViewModel) :
+    RecyclerView.Adapter<SearchProductAdapter.SearchProductViewHolder>() {
 
     val productList = listOf(
         SearchProduct(
@@ -38,6 +41,48 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
                 TagShop(title = "Shop B"),
                 TagShop(title = "Shop A"),
                 TagShop(title = "Shop B")
+            ),
+            reviewList = listOf(
+                Review(
+                    nickname = "네로",
+                    content = "테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg",
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "ddddd",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg",
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "2323",
+                    content = "설명입니당",
+                    imageUrl = listOf(),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "sssss",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg",
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                )
             )
         ),
         SearchProduct(
@@ -49,6 +94,49 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
             isHot = true,
             shopList = listOf(
 
+            ),
+            reviewList = listOf(
+                Review(
+                    nickname = "커너",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "ddddd",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "2323",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "sssss",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg",
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                )
             )
         ),
         SearchProduct(
@@ -62,6 +150,50 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
                 TagShop(title = "Shop C"),
                 TagShop(title = "Shop D"),
                 TagShop(title = "Shop d")
+            ),
+            reviewList = listOf(
+                Review(
+                    nickname = "멜리",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "ddddd",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg",
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "2323",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg",
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "sssss",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                )
             )
         ),
         SearchProduct(
@@ -75,6 +207,48 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
                 TagShop(title = "Shop C"),
                 TagShop(title = "Shop D"),
                 TagShop(title = "Shop d")
+            ),
+            reviewList = listOf(
+                Review(
+                    nickname = "네로",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "ddddd",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "2323",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                ),
+                Review(
+                    nickname = "sssss",
+                    content = "설명입니당",
+                    imageUrl = listOf(
+                        "https://ifh.cc/g/f9WcP4.jpg"
+                    ),
+                    likeNumber = 10,
+                    commentNumber = 20,
+                    date = "2024-07-13"
+                )
             )
         )
     )
@@ -88,7 +262,7 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
             viewGroup,
             false
         )
-        return SearchProductViewHolder(binding)
+        return SearchProductViewHolder(binding, viewModel)
     }
 
     override fun onBindViewHolder(
@@ -100,11 +274,15 @@ class SearchProductAdapter : RecyclerView.Adapter<SearchProductAdapter.SearchPro
     }
 
     override fun getItemCount(): Int = productList.size
-    class SearchProductViewHolder(private val binding: ItemSearchProductBinding) :
+    class SearchProductViewHolder(
+        private val binding: ItemSearchProductBinding,
+        private val viewModel: SearchViewModel
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(searchProduct: SearchProduct) {
             binding.model = searchProduct
+            binding.vm = viewModel
             val context = binding.root.context
 
             // ImageView의 크기가 결정된 후에 Glide로 이미지 로드
