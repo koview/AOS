@@ -36,12 +36,5 @@ class SearchViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-//    fun getSearchProduct(): LiveData<SearchProduct> {
-//        return _searchProduct
-//    }
-
-    fun setSearchProduct(searchProduct: SearchProduct) {
-        _searchProduct.value = searchProduct
-    }
 
 }
