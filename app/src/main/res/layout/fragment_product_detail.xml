@@ -99,9 +99,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <!-- Layout with Icon -->
+                            <!-- Layout with hot Icon -->
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/layout_with_icon"
+                                android:id="@+id/layout_with_hot_icon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:visibility="@{model.isHot ? View.VISIBLE : View.GONE}"
@@ -109,7 +109,7 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/iv_icon"
+                                    android:id="@+id/iv_hot_icon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_fire"
@@ -118,7 +118,7 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tv_product_with_icon"
+                                    android:id="@+id/tv_product_with_hot_icon"
                                     style="@style/TextRegularSemiBold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -126,7 +126,39 @@
                                     android:text="@{model.title}"
                                     android:textColor="@color/kv_gray9"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toEndOf="@id/iv_icon"
+                                    app:layout_constraintStart_toEndOf="@id/iv_hot_icon"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <!-- Layout with warning Icon -->
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/layout_with_warning_icon"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="@{model.isWarning ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/iv_warning_icon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_warning"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tv_product_with_warning_icon"
+                                    style="@style/TextRegularSemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:text="@{model.title}"
+                                    android:textColor="@color/kv_gray9"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/iv_warning_icon"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -139,12 +171,13 @@
                                 android:layout_height="wrap_content"
                                 android:text="@{model.title}"
                                 android:textColor="@color/kv_gray9"
-                                android:visibility="@{model.isHot ? View.GONE : View.VISIBLE}"
+                                android:visibility="@{model.isHot ? View.GONE : (model.isWarning ? View.GONE : View.VISIBLE)}"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_info"
@@ -157,6 +190,7 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_shop"
+                            android:overScrollMode="never"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager" />
@@ -171,7 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="리뷰"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_review" />
