@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.koview.R
 import com.example.koview.databinding.ItemSearchProductBinding
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.example.koview.presentation.ui.main.home.search.model.Review
@@ -23,7 +24,7 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
     val productList = listOf(
         SearchProduct(
             title = "얏호",
-            imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
+            imageUrl = "",
             reviewNumber = 1,
             registDate = "2024-07-12",
             isWarning = true,
@@ -202,7 +203,7 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             reviewNumber = 5,
             registDate = "2024-07-13",
             isWarning = true,
-            isHot = true,
+            isHot = false,
             shopList = listOf(
                 TagShop(title = "Shop C"),
                 TagShop(title = "Shop D"),
@@ -299,14 +300,14 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
 
                         Glide.with(itemView)
                             .load(searchProduct.imageUrl)
+                            .placeholder(R.drawable.default_product_image)
+                            .error(R.drawable.default_product_image)
                             .apply(requestOptions)
                             .override(width, height)
                             .into(binding.ivProduct)
                         // 이 부분은 피그마에서 추가적으로 디자인되면 하면 좋을 듯
                         // placeholder: 이미지 로딩을 시작하기 전에 보여줄 이미지 설정
                         // error: 리소스를 불러오다가 에러가 발생했을 때 보여줄 이미지 설정
-//                            .placeholder(R.drawable.placeholder_image)
-//                            .error(R.drawable.error_image)
 
                         return true
                     }
