@@ -15,7 +15,8 @@ data class SearchProduct(
 ) : Serializable
 
 data class TagShop(
-    val title: String
+    val title: String,
+    val isVerify: Boolean
 ) : Serializable
 
 data class Review(

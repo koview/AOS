@@ -1,5 +1,7 @@
 package com.example.koview.presentation.ui.main.home.search.adapter
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +33,10 @@ class SearchShopAdapter(private val tagList: List<TagShop>) :
 
         fun bind(tagShop: TagShop) {
             binding.model = tagShop
+            if (tagShop.isVerify) {
+                binding.layoutTag.backgroundTintList =
+                    ColorStateList.valueOf(Color.parseColor("#F60000"))
+            }
         }
 
     }

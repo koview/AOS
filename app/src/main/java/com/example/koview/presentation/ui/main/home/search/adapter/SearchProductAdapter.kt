@@ -30,18 +30,18 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             isWarning = true,
             isHot = false,
             shopList = listOf(
-                TagShop(title = "xpadfnejnnddf"),
-                TagShop(title = "xpadfnejnnddf"),
-                TagShop(title = "xpadfnejnnddfdfsdfsdf"),
-                TagShop(title = "Shop 1"),
-                TagShop(title = "Shop 2"),
-                TagShop(title = "Shop 3"),
-                TagShop(title = "Shop 4"),
-                TagShop(title = "Shop 5"),
-                TagShop(title = "Shop 6"),
-                TagShop(title = "Shop B"),
-                TagShop(title = "Shop A"),
-                TagShop(title = "Shop B")
+                TagShop(title = "xpadfnejnnddf", isVerify = false),
+                TagShop(title = "xpadfnejnnddf", isVerify = true),
+                TagShop(title = "xpadfnejnnddfdfsdfsdf", isVerify = true),
+                TagShop(title = "Shop 1", isVerify = false),
+                TagShop(title = "Shop 2", isVerify = true),
+                TagShop(title = "Shop 3", isVerify = true),
+                TagShop(title = "Shop 4", isVerify = true),
+                TagShop(title = "Shop 5", isVerify = true),
+                TagShop(title = "Shop 6", isVerify = true),
+                TagShop(title = "Shop B", isVerify = true),
+                TagShop(title = "Shop A", isVerify = true),
+                TagShop(title = "Shop B", isVerify = true)
             ),
             reviewList = listOf(
                 Review(
@@ -148,9 +148,9 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             isWarning = false,
             isHot = false,
             shopList = listOf(
-                TagShop(title = "Shop C"),
-                TagShop(title = "Shop D"),
-                TagShop(title = "Shop d")
+                TagShop(title = "Shop C", isVerify = true),
+                TagShop(title = "Shop D", isVerify = true),
+                TagShop(title = "Shop d", isVerify = true)
             ),
             reviewList = listOf(
                 Review(
@@ -205,9 +205,9 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             isWarning = true,
             isHot = false,
             shopList = listOf(
-                TagShop(title = "Shop C"),
-                TagShop(title = "Shop D"),
-                TagShop(title = "Shop d")
+                TagShop(title = "Shop C", isVerify = false),
+                TagShop(title = "Shop D", isVerify = false),
+                TagShop(title = "Shop d", isVerify = false)
             ),
             reviewList = listOf(
                 Review(
