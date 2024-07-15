@@ -1,7 +1,14 @@
 package com.example.koview.presentation.ui.main.home.search
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -26,6 +33,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
         initSearchProductRecyclerview()
         initEventObserve()
+        enterSearch()
     }
 
     private fun initSearchProductRecyclerview() {
@@ -52,6 +60,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private fun NavController.toProductDetail(searchProduct: SearchProduct) {
         val action = SearchFragmentDirections.actionSearchFragmentToProductDetailFragment(searchProduct)
         navigate(action)
+    }
+
+    private fun enterSearch() {
+        binding.etSearch.setOnEditorActionListener { textView, actionId, event ->
+            var handled = false
+            // 확인 버튼 눌렀을 때
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // TODO: 여기서 ViewModel 함수 호출
+                Log.d("엔터", "엔터")
+                // 키보드 내려가기
+                val inputMethodManager = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+                handled = true
+            }
+            handled
+        }
     }
 
 }

@@ -62,11 +62,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_search"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     style="@style/TextSmall"
+                    android:inputType="text"
                     android:maxLines="1"
+                    android:imeOptions="actionDone"
                     android:background="@color/transparent"
                     android:hint="찾고 싶은 상품을 입력해 주세요!"
                     android:layout_marginEnd="15dp"
