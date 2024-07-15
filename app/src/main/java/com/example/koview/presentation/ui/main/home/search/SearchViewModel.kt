@@ -36,5 +36,8 @@ class SearchViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun search() {
+        // TODO: searchAPI 연동
+    }
 
 }
