@@ -174,7 +174,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_product_ex_2" />
+                        productImgUrl="@{vm.harmfulProductImage[0]}"
+                        tools:src="@drawable/img_product_ex_2" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -192,7 +193,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_product_ex_2" />
+                        productImgUrl="@{vm.harmfulProductImage[1]}"
+                        tools:src="@drawable/img_product_ex_2" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -211,7 +213,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_product_ex_2" />
+                        productImgUrl="@{vm.harmfulProductImage[2]}"
+                        tools:src="@drawable/img_product_ex_2" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -229,7 +232,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_product_ex_2" />
+                        productImgUrl="@{vm.harmfulProductImage[3]}"
+                        tools:src="@drawable/img_product_ex_2" />
                 </androidx.cardview.widget.CardView>
 
             </GridLayout>
@@ -289,7 +293,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_product_ex" />
+                        productImgUrl="@{vm.hotProductImage[0]}"
+                        tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -307,7 +312,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_product_ex" />
+                        productImgUrl="@{vm.hotProductImage[1]}"
+                        tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -325,7 +331,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_product_ex" />
+                        productImgUrl="@{vm.hotProductImage[2]}"
+                        tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -343,7 +350,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_product_ex" />
+                        productImgUrl="@{vm.hotProductImage[3]}"
+                        tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
             </GridLayout>
