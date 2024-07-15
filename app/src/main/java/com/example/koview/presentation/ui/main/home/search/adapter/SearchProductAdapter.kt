@@ -305,9 +305,6 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
                             .apply(requestOptions)
                             .override(width, height)
                             .into(binding.ivProduct)
-                        // 이 부분은 피그마에서 추가적으로 디자인되면 하면 좋을 듯
-                        // placeholder: 이미지 로딩을 시작하기 전에 보여줄 이미지 설정
-                        // error: 리소스를 불러오다가 에러가 발생했을 때 보여줄 이미지 설정
 
                         return true
                     }
