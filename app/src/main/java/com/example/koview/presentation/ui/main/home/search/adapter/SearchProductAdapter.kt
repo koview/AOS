@@ -21,6 +21,7 @@ import com.google.android.flexbox.JustifyContent
 class SearchProductAdapter(private val viewModel: SearchViewModel) :
     RecyclerView.Adapter<SearchProductAdapter.SearchProductViewHolder>() {
 
+    // 더미데이터 -> api연동 후 삭제
     val productList = listOf(
         SearchProduct(
             title = "얏호",
