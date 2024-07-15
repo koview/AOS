@@ -31,11 +31,11 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     private val _askList = MutableStateFlow<List<AskUiData>>(emptyList())
     val askList: StateFlow<List<AskUiData>> = _askList.asStateFlow()
 
-    private val _harmfulProductImage = MutableStateFlow<List<String>>(emptyList())
-    val harmfulProductImage: StateFlow<List<String>> = _harmfulProductImage.asStateFlow()
+    private val _harmfulProdImage = MutableStateFlow<List<String>>(emptyList())
+    val harmfulProdImage: StateFlow<List<String>> = _harmfulProdImage.asStateFlow()
 
-    private val _hotProductImage = MutableStateFlow<List<String>>(emptyList())
-    val hotProductImage: StateFlow<List<String>> = _hotProductImage.asStateFlow()
+    private val _popularProdImage = MutableStateFlow<List<String>>(emptyList())
+    val popularProdImage: StateFlow<List<String>> = _popularProdImage.asStateFlow()
 
     init {
         setProductImage()
@@ -52,14 +52,14 @@ class HomeViewModel @Inject constructor() : ViewModel() {
                 "https://img.kwcdn.com/product/fancy/7c643556-e4ef-46b1-ba91-e63305486754.jpg?imageView2/2/w/800/q/70/format/webp"
             )
 
-            val hotProductImage = listOf(
+            val popularProductImage = listOf(
                 "https://ae01.alicdn.com/kf/Sb638d30edc6f47138b73e40d3e3dd765w/925.jpg_.webp",
                 "https://img.kwcdn.com/product/fancy/e5b6a07b-cd3b-4c7a-939c-fd176dd5d3f5.jpg?imageView2/2/w/800/q/70/format/webp",
                 "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/005b5a62d120479080a5cc2d3596da29.jpg?imageView2/2/w/800/q/70/format/webp",
                 "https://img.kwcdn.com/product/fancy/c3008653-f77d-436e-8254-4baa645912e4.jpg?imageView2/2/w/800/q/70/format/webp"
             )
-            _harmfulProductImage.value = harmfulProductImage
-            _hotProductImage.value = hotProductImage
+            _harmfulProdImage.value = harmfulProductImage
+            _popularProdImage.value = popularProductImage
         }
     }
 
