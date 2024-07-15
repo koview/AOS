@@ -174,7 +174,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.harmfulProductImage[0]}"
+                        productImgUrl="@{vm.harmfulProdImage[0]}"
                         tools:src="@drawable/img_product_ex_2" />
                 </androidx.cardview.widget.CardView>
 
@@ -193,7 +193,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.harmfulProductImage[1]}"
+                        productImgUrl="@{vm.harmfulProdImage[1]}"
                         tools:src="@drawable/img_product_ex_2" />
 
                 </androidx.cardview.widget.CardView>
@@ -213,7 +213,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.harmfulProductImage[2]}"
+                        productImgUrl="@{vm.harmfulProdImage[2]}"
                         tools:src="@drawable/img_product_ex_2" />
                 </androidx.cardview.widget.CardView>
 
@@ -232,7 +232,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.harmfulProductImage[3]}"
+                        productImgUrl="@{vm.harmfulProdImage[3]}"
                         tools:src="@drawable/img_product_ex_2" />
                 </androidx.cardview.widget.CardView>
 
@@ -293,7 +293,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.hotProductImage[0]}"
+                        productImgUrl="@{vm.popularProdImage[0]}"
                         tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
@@ -312,7 +312,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.hotProductImage[1]}"
+                        productImgUrl="@{vm.popularProdImage[1]}"
                         tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
@@ -331,7 +331,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.hotProductImage[2]}"
+                        productImgUrl="@{vm.popularProdImage[2]}"
                         tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
@@ -350,7 +350,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.hotProductImage[3]}"
+                        productImgUrl="@{vm.popularProdImage[3]}"
                         tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
