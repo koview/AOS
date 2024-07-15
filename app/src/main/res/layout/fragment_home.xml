@@ -171,10 +171,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_harmful_1"
+                        productImgUrl="@{vm.harmfulProdImage[0]}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.harmfulProdImage[0]}"
                         tools:src="@drawable/img_product_ex_2" />
                 </androidx.cardview.widget.CardView>
 
@@ -190,10 +190,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_harmful_2"
+                        productImgUrl="@{vm.harmfulProdImage[1]}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.harmfulProdImage[1]}"
                         tools:src="@drawable/img_product_ex_2" />
 
                 </androidx.cardview.widget.CardView>
@@ -210,10 +210,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_harmful_3"
+                        productImgUrl="@{vm.harmfulProdImage[2]}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.harmfulProdImage[2]}"
                         tools:src="@drawable/img_product_ex_2" />
                 </androidx.cardview.widget.CardView>
 
@@ -229,10 +229,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_harmful_4"
+                        productImgUrl="@{vm.harmfulProdImage[3]}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.harmfulProdImage[3]}"
                         tools:src="@drawable/img_product_ex_2" />
                 </androidx.cardview.widget.CardView>
 
@@ -290,10 +290,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_popular_1"
+                        productImgUrl="@{vm.popularProdImage[0]}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.popularProdImage[0]}"
                         tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
@@ -309,10 +309,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_popular_2"
+                        productImgUrl="@{vm.popularProdImage[1]}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.popularProdImage[1]}"
                         tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
@@ -328,10 +328,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_popular_3"
+                        productImgUrl="@{vm.popularProdImage[2]}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.popularProdImage[2]}"
                         tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
@@ -347,10 +347,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_popular_4"
+                        productImgUrl="@{vm.popularProdImage[3]}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        productImgUrl="@{vm.popularProdImage[3]}"
                         tools:src="@drawable/img_product_ex" />
                 </androidx.cardview.widget.CardView>
 
@@ -405,11 +405,14 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_ask_list"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="100dp"
                 android:orientation="vertical"
                 android:paddingTop="7dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view_2"
                 tools:listitem="@layout/item_home_ask" />
 
