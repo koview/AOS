@@ -12,6 +12,12 @@
         <action
             android:id="@+id/action_home_fragment_to_home_category_select_fragment"
             app:destination="@id/home_category_select_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_harmful_product_fragment"
+            app:destination="@id/harmful_product_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_popular_product_framgnet"
+            app:destination="@id/popular_product_framgnet" />
     </fragment>
 
     <fragment
@@ -34,6 +40,21 @@
         android:label="MyPageFragment">
 
     </fragment>
+
+    <fragment
+        android:id="@+id/harmful_product_fragment"
+        android:name="com.example.koview.presentation.ui.main.home.product.HarmfulProductFragment"
+        android:label="HarmfulProductFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/popular_product_framgnet"
+        android:name="com.example.koview.presentation.ui.main.home.product.PopularProductFragment"
+        android:label="PopularProductFragment">
+
+    </fragment>
+
 
     <dialog
         android:id="@+id/home_category_select_fragment"

@@ -44,6 +44,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             viewModel.event.collect() {
                 when (it) {
                     HomeEvent.ShowCategoryBottomSheet -> findNavController().toCategoryBottomSheet()
+                    HomeEvent.NavigateToHarmfulProduct -> findNavController().toHarmfulProduct()
+                    HomeEvent.NavigateToPopularProduct -> findNavController().toPopularProduct()
                 }
             }
         }
@@ -51,6 +53,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun NavController.toCategoryBottomSheet() {
         val action = HomeFragmentDirections.actionHomeFragmentToHomeCategorySelectFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toHarmfulProduct() {
+        val action = HomeFragmentDirections.actionHomeFragmentToHarmfulProductFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toPopularProduct() {
+        val action = HomeFragmentDirections.actionHomeFragmentToPopularProductFramgnet()
         navigate(action)
     }
 }
