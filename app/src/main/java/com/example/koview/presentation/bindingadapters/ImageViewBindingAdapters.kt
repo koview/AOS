@@ -24,6 +24,14 @@ fun bindAskImg(imageView: ImageView, url: String?) {
         .into(imageView)
 }
 
+@BindingAdapter("productImgUrl")
+fun bindProductImage(imageView: ImageView, url: String?) {
+    Glide.with(imageView.context)
+        .load(url)
+        .error(R.drawable.img_product_ex_2)
+        .into(imageView)
+}
+
 @BindingAdapter("targetCategory", "curCategory", requireAll = true)
 fun setCategoryColor(view: ImageView, targetCategory: Category, curCategory: Category) {
     val context = view.context
