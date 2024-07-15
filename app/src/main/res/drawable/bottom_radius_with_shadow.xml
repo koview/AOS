@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 그림자 레이어 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="@color/kv_gray6"
+                android:endColor="@android:color/transparent"
+                android:angle="270" />
+            <corners android:bottomLeftRadius="10dp" android:bottomRightRadius="10dp"/>
+        </shape>
+    </item>
+
+    <!-- 실제 배경 레이어 -->
+    <item android:bottom="10dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+            <corners android:bottomLeftRadius="10dp" android:bottomRightRadius="10dp"/>
+        </shape>
+    </item>
+</layer-list>
