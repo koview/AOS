@@ -17,6 +17,8 @@ import javax.inject.Inject
 
 sealed class HomeEvent {
     data object ShowCategoryBottomSheet : HomeEvent()
+    data object NavigateToHarmfulProduct : HomeEvent()
+    data object NavigateToPopularProduct : HomeEvent()
 }
 
 @HiltViewModel
@@ -100,6 +102,18 @@ class HomeViewModel @Inject constructor() : ViewModel() {
         viewModelScope.launch {
             // todo : 해당 카테고리의 상품들로 정보 다시 불러오기
             _category.value = filter
+        }
+    }
+
+    fun navigateToHarmfulProduct() {
+        viewModelScope.launch {
+            _event.emit(HomeEvent.NavigateToHarmfulProduct)
+        }
+    }
+
+    fun navigateToPopularProduct() {
+        viewModelScope.launch {
+            _event.emit(HomeEvent.NavigateToPopularProduct)
         }
     }
 }
