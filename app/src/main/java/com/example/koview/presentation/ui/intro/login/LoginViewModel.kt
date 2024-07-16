@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.koview.app.App.Companion.sharedPreferences
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.SignInRequest
 import com.example.koview.data.repository.IntroRepository
+import com.example.koview.presentation.utils.Constants.ACCESS_TOKEN
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -52,11 +54,11 @@ class LoginViewModel @Inject constructor(
                     when (it) {
                         is BaseState.Error -> {
                             loginError()
-                            Log.d("login", "로그인 실패")
                         }
 
                         is BaseState.Success -> {
-                            Log.d("login", "로그인 성공")
+                            sharedPreferences.edit()
+                                .putString(ACCESS_TOKEN, it.body.result.accessToken)
                             _loginCheckVisible.value = false
                             navigateToMain()
                         }
@@ -74,7 +76,6 @@ class LoginViewModel @Inject constructor(
 
     private fun navigateToMain() {
         viewModelScope.launch {
-            Log.d("login", "로그인 성공 후 메인으로 이동")
             _event.emit(LoginEvent.NavigateToMainActivity)
         }
     }
