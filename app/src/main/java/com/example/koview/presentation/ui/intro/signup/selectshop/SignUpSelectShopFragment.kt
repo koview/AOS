@@ -28,23 +28,6 @@ class SignUpSelectShopFragment :
 
         initEventObserve()
 
-        val checkboxes = listOf(
-            binding.cbAmazon,
-            binding.cbEBay,
-            binding.cbAliexpress,
-            binding.cbWalmart,
-            binding.cbTarget
-        )
-
-        // 화면 넘어가며 _checkedTexts에 선택한 가게들 업데이트
-// To-do : 선택된 쇼핑리스트 저장
-        binding.btnSignup.setOnClickListener {
-            findCheckedShop(checkboxes)
-            Log.d("SignUpSelectShopFragment", "Selected Shops String: ${viewModel.getCheckedShopsString()}")
-            viewModel.navigateToNext()
-        }
-
-
         checkBoxObserve()
 
     }
@@ -61,12 +44,6 @@ class SignUpSelectShopFragment :
             }
 
         }
-    }
-
-    // 최종적으로 체크된 shop들을 뷰모델의 라이브데이터에 저장
-    private fun findCheckedShop(checkboxes: List<CheckBox>) {
-        val checkedShops = checkboxes.filter { it.isChecked }.map { it.text.toString() }
-        viewModel.updateCheckedShops(checkedShops)
     }
 
     private fun initEventObserve() {

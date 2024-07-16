@@ -1,5 +1,7 @@
 package com.example.koview.presentation.ui.intro.signup.setinfo
 
+import android.util.Log
+import android.widget.CheckBox
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -59,22 +61,34 @@ class SignUpSetInfoViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    // 회원가입 버튼 onClick
+    fun clickSignupBtn(){
+        Log.d("SignUpSetInfoFragment", getSignupDataToString())
+        navigateToNext()
+    }
+
 
     // 빈 항목이 있는지, 이메일 형식에 맞는지, 비밀번호 확인이 맞는지 체크
     fun validate(){
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
         if (email.value.toString().equals("")){
+            signUpBtnOn.value = false
             return
         } else if (!email.value.toString().matches(emailPattern.toRegex())){
+            signUpBtnOn.value = false
             return
         } else if(nickname.value.toString().equals("")){
+            signUpBtnOn.value = false
             return
         } else if(age.value.toString().equals("")){
+            signUpBtnOn.value = false
             return
         } else if(password.value.toString().equals("")){
+            signUpBtnOn.value = false
             return
         } else if(!passwordCheck()){
+            signUpBtnOn.value = false
             return
         } else {
             signUpBtnOn.value = true

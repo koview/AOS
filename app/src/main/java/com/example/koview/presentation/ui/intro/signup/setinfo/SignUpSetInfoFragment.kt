@@ -29,16 +29,9 @@ class SignUpSetInfoFragment : BaseFragment<FragmentSignupSetInfoBinding>(R.layou
         showToastMessage(selectedShops.toString())
         initEventObserve()
         setObserve()
-        clickSignupBtn()
-
     }
 
-    private fun clickSignupBtn(){
-        binding.btnSignup.setOnClickListener {
-            Log.d("SignUpSetInfoFragment", viewModel.getSignupDataToString())
-            viewModel.navigateToNext()
-        }
-    }
+
 
     private fun initEventObserve() {
         repeatOnStarted {

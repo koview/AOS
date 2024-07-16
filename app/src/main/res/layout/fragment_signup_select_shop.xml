@@ -55,6 +55,7 @@
                 android:layout_height="35dp"
                 android:text=" Amazon"
                 style="@style/TextRegularSemiBold"
+                android:checked="@{vm.checkboxStates[0]}"
                 android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(0, isChecked)}"/>
 
             <CheckBox
@@ -63,6 +64,7 @@
                 android:layout_height="35dp"
                 android:text=" eBay"
                 style="@style/TextRegularSemiBold"
+                android:checked="@{vm.checkboxStates[1]}"
                 android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(1, isChecked)}"/>
 
             <CheckBox
@@ -71,6 +73,7 @@
                 android:layout_height="35dp"
                 android:text=" AliExpress"
                 style="@style/TextRegularSemiBold"
+                android:checked="@{vm.checkboxStates[2]}"
                 android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(2, isChecked)}"/>
 
             <CheckBox
@@ -79,6 +82,7 @@
                 android:layout_height="35dp"
                 android:text=" Walmart"
                 style="@style/TextRegularSemiBold"
+                android:checked="@{vm.checkboxStates[3]}"
                 android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(3, isChecked)}"/>
 
             <CheckBox
@@ -87,6 +91,7 @@
                 android:layout_height="35dp"
                 android:text=" Target"
                 style="@style/TextRegularSemiBold"
+                android:checked="@{vm.checkboxStates[4]}"
                 android:onCheckedChanged="@{(buttonView, isChecked) -> vm.updateCheckboxState(4, isChecked)}"/>
         </LinearLayout>
 
@@ -100,7 +105,8 @@
             android:textColor="@color/white"
             android:background="@drawable/rect_blackfill_nostroke_12radius"
             app:layout_constraintTop_toBottomOf="@id/ll_checkbox"
-            android:layout_marginTop="35dp" />
+            android:layout_marginTop="35dp"
+            android:onClick="@{()->vm.navigateToNext()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
