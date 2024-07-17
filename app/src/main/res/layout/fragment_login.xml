@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="vm"
             type="com.example.koview.presentation.ui.intro.login.LoginViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,35 +15,107 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="16dp">
 
+        <TextView
+            android:id="@+id/tv_koview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Koview"
+            android:textColor="@color/black"
+            style="@style/Title1"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="44dp"
+            android:paddingVertical="20dp"
+            android:gravity="center"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_email"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_koview"
+            android:layout_marginTop="13dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_nickname"
+                style="@style/TextRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_gray1fill_nostroke_12radius"
+                android:hint="이메일"
+                android:text="@={vm.email}"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_password"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/tl_email"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                style="@style/TextRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_gray1fill_nostroke_12radius"
+                android:inputType="textPassword"
+                android:hint="비밀번호"
+                android:text="@={vm.password}"/>
+
+            <TextView
+                android:id="@+id/tv_password_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextTiny"
+                android:textColor="@color/kv_red"
+                android:text="이메일 또는 비밀번호를 확인해주세요."
+                app:layout_constraintTop_toBottomOf="@id/et_password"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="5dp"
+                android:visibility="@{vm.loginCheckVisible ? View.VISIBLE : View.GONE}"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login"
             style="@style/TextRegularSemiBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:background="@drawable/rect_blackfill_nostroke_12radius"
             android:onClick="@{()->vm.checkLogin()}"
             android:text="로그인"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tl_password"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tv_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="아직 회원이 아니신가요?"
+            style="@style/TextSmall"
+            app:layout_constraintTop_toBottomOf="@id/btn_login"
+            android:layout_marginTop="57dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_signup"
             style="@style/TextRegularSemiBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/rect_blackfill_nostroke_12radius"
             android:onClick="@{()->vm.navigateToSignUp()}"
             android:text="회원가입"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_login" />
+            app:layout_constraintTop_toBottomOf="@id/tv_signup" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

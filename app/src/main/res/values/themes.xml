@@ -7,6 +7,7 @@
 
         
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="Theme.Koview" parent="Base.Theme.Koview" />
