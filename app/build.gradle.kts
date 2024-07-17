@@ -100,4 +100,6 @@ dependencies {
     // ViewPager
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
+    // FlexBox
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
 }

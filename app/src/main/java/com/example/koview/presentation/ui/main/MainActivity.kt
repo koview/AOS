@@ -10,7 +10,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.koview.R
 import com.example.koview.databinding.ActivityMainBinding
 import com.example.koview.presentation.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     private val viewModel: MainViewModel by viewModels()

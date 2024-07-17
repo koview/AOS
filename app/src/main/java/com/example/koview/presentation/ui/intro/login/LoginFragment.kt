@@ -10,7 +10,9 @@ import com.example.koview.R
 import com.example.koview.databinding.FragmentLoginBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
     private val viewModel: LoginViewModel by viewModels()
