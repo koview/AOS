@@ -1,0 +1,147 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="com.example.koview.presentation.ui.main.home.search.model.SearchProduct" />
+
+        <variable
+            name="vm"
+            type="com.example.koview.presentation.ui.main.home.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:onClick="@{()->vm.navigateToProductDetail(model)}"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/iv_product"
+            android:layout_width="0dp"
+            android:layout_height="220dp"
+            android:background="@drawable/rect_whitefill_nostroke_16radius"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_product">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Layout with hot Icon -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_with_hot_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{model.isHot ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_hot_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_fire"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_product_with_hot_icon"
+                        style="@style/TextRegularSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@{model.title}"
+                        android:textColor="@color/kv_gray9"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_hot_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Layout with warning Icon -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_with_warning_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{model.isWarning ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_warning_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_warning"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_product_with_warning_icon"
+                        style="@style/TextRegularSemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@{model.title}"
+                        android:textColor="@color/kv_gray9"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_warning_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Layout without Icon -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_product_without_icon"
+                    style="@style/TextRegularSemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{model.title}"
+                    android:textColor="@color/kv_gray9"
+                    android:visibility="@{model.isHot ? View.GONE : (model.isWarning ? View.GONE : View.VISIBLE)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_info"
+                style="@style/TextSmallMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text='@{"리뷰: " + model.reviewNumber + " | 등록일: " + model.registDate}'
+                android:textColor="@color/kv_gray5" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_shop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+                tools:listitem="@layout/item_search_shop" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

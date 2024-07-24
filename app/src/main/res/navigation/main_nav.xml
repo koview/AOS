@@ -61,4 +61,32 @@
         android:name="com.example.koview.presentation.ui.main.home.bottomsheet.HomeCategorySelectFragment"
         android:label="HomeCategorySelectFragment" />
 
+    <fragment
+        android:id="@+id/search_fragment"
+        android:name="com.example.koview.presentation.ui.main.home.search.SearchFragment"
+        android:label="SearchFragment">
+
+        <action
+            android:id="@+id/action_search_fragment_to_product_detail_fragment"
+            app:destination="@id/product_detail_fragment">
+            <argument
+                android:name="searchProduct"
+                app:argType="com.example.koview.presentation.ui.main.home.search.model.SearchProduct"
+                app:nullable="true" />
+        </action>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/product_detail_fragment"
+        android:name="com.example.koview.presentation.ui.main.home.search.productdetail.ProductDetailFragment"
+        android:label="ProductDetailFragment">
+
+        <action
+            android:id="@+id/action_product_detail_fragment_to_search_fragment"
+            app:destination="@id/search_fragment"/>
+
+    </fragment>
+
 </navigation>
