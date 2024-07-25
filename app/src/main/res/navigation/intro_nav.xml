@@ -36,7 +36,7 @@
             app:destination="@id/signup_complete_fragment" />
         <argument
             android:name="checkedShops"
-            app:argType="string[]" />
+            app:argType="integer[]" />
     </fragment>
 
     <fragment

@@ -16,7 +16,7 @@ import javax.inject.Inject
 sealed class SelectShopEvent {
     data object NavigateToBack : SelectShopEvent()
     // 인자를 전달하기 위해 data class로 변환
-    data class NavigateToSetInfo(val checkedShops: Array<String>) : SelectShopEvent()
+    data class NavigateToSetInfo(val checkedShops: Array<Int>) : SelectShopEvent()
 }
 
 @HiltViewModel
@@ -28,29 +28,22 @@ class SignUpSelectShopViewModel @Inject constructor() : ViewModel() {
     private val _isAnyCheckboxChecked = MutableLiveData(false)
     val isAnyCheckboxChecked: LiveData<Boolean> get() = _isAnyCheckboxChecked
 
-    private val _checkedTexts = MutableLiveData<List<String>>()
-    val checkedTexts: LiveData<List<String>> get() = _checkedTexts
+    private val _checkedShopsId = MutableLiveData<List<Int>>()
+    val checkedShopsId: LiveData<List<Int>> get() = _checkedShopsId
 
     private val _checkboxStates = MutableLiveData<BooleanArray>(booleanArrayOf(false, false, false, false, false))
     val checkboxStates: LiveData<BooleanArray> = _checkboxStates
 
-    val checkedShops: ArrayList<String> = arrayListOf("Amazon", "eBay", "AliExpress", "Walmart", "Target")
-
-    // 선택된 상점을 문자열로 변환하는 메서드(나중에 지워야함)
-    private fun getCheckedShopsString(): String {
-        return _checkedTexts.value?.joinToString(", ") ?: ""
-    }
-
     private fun getCheckedShops() {
-        val checkedShops = mutableListOf<String>()
+        val checkedShops = mutableListOf<Int>()
         val checkboxStatesValue = _checkboxStates.value ?: booleanArrayOf(false, false, false, false, false)
 
         for (i in checkboxStatesValue.indices) {
             if (checkboxStatesValue[i]) {
-                checkedShops.add(this.checkedShops[i])
+                checkedShops.add(i+1)
             }
         }
-        _checkedTexts.value = checkedShops
+        _checkedShopsId.value = checkedShops
     }
 
     // 체크박스 중에 체크된 게 있는지 확인 // 양방향 매핑을 위한 코드
@@ -81,8 +74,8 @@ class SignUpSelectShopViewModel @Inject constructor() : ViewModel() {
     fun navigateToNext() {
         viewModelScope.launch {
             getCheckedShops()
-            Log.d("SignUpSelectShopFragment", "Selected Shops String: ${getCheckedShopsString()}")
-            val checkedShops = _checkedTexts.value
+            Log.d("SignUpSelectShopFragment", "Selected Shops id: ${_checkedShopsId.value.toString()}")
+            val checkedShops = _checkedShopsId.value
             _event.emit(SelectShopEvent.NavigateToSetInfo(checkedShops!!.toTypedArray()))
         }
     }

@@ -6,6 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.koview.app.App
+import com.example.koview.data.model.BaseState
+import com.example.koview.data.model.requeset.SignInRequest
+import com.example.koview.data.model.requeset.SignUpRequest
+import com.example.koview.data.repository.IntroRepository
+import com.example.koview.presentation.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -19,7 +25,9 @@ sealed class SetInfoEvent {
 }
 
 @HiltViewModel
-class SignUpSetInfoViewModel @Inject constructor() : ViewModel() {
+class SignUpSetInfoViewModel @Inject constructor(
+    private val repository: IntroRepository,
+) : ViewModel() {
 
     private val _event = MutableSharedFlow<SetInfoEvent>()
     val event: SharedFlow<SetInfoEvent> = _event.asSharedFlow()
@@ -30,7 +38,7 @@ class SignUpSetInfoViewModel @Inject constructor() : ViewModel() {
     var password : MutableLiveData<String> = MutableLiveData("")
     var passwordCheck : MutableLiveData<String> = MutableLiveData("")
 
-    val selectedShops = MutableLiveData<List<String>>()
+    val selectedShops = MutableLiveData<List<Int>>()
 
     var signUpBtnOn : MutableLiveData<Boolean> = MutableLiveData(false)
     var passwordCheckVisible : MutableLiveData<Boolean> = MutableLiveData(false)
@@ -61,10 +69,33 @@ class SignUpSetInfoViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    // 회원가입 버튼 onClick
-    fun clickSignupBtn(){
-        Log.d("SignUpSetInfoFragment", getSignupDataToString())
-        navigateToNext()
+    fun checkSignUp(){
+        val emailValue = email.value
+        val pwValue = password.value
+        val nicknameValue = nickname.value
+        val ageValue = age.value?.toInt()
+        val shopListValue = selectedShops.value
+
+        if (!emailValue.isNullOrBlank() && !pwValue.isNullOrBlank() && !nicknameValue.isNullOrBlank() && ageValue != null && shopListValue!!.isNotEmpty()) {
+            viewModelScope.launch {
+                val request = SignUpRequest(emailValue, pwValue, nicknameValue, ageValue, shopListValue)
+                repository.memberSignUp(request).let {
+                    when (it) {
+                        is BaseState.Error -> {
+                            Log.d("SignUpSetInfoFragment", "SignUp ERROR(Request Success)")
+                            Log.d("SignUpSetInfoFragment", it.code.toString() +", "+ it.msg.toString())
+                        }
+
+                        is BaseState.Success -> {
+                            Log.d("SignUpSetInfoFragment", "SignUp SUCCESS")
+                            navigateToNext()
+                        }
+                    }
+                }
+            }
+        } else {
+            Log.d("SignUpSetInfoFragment", "SignUp ERROR(Request Error)")
+        }
     }
 
 
@@ -94,10 +125,6 @@ class SignUpSetInfoViewModel @Inject constructor() : ViewModel() {
             signUpBtnOn.value = true
             return
         }
-    }
-
-    fun getSignupDataToString(): String{
-        return "email : ${email.value.toString()}\nloginPw : ${password.value.toString()}\nnickname : ${nickname.value.toString()}\nage : ${age.value.toString().toInt()}\nselectedShops : ${selectedShops.value.toString()}"
     }
 
     fun navigateToBack() {
