@@ -25,7 +25,7 @@
 
         <ImageView
             android:id="@+id/iv_product"
-            android:layout_width="0dp"
+            android:layout_width="350dp"
             android:layout_height="220dp"
             android:background="@drawable/rect_whitefill_nostroke_16radius"
             app:layout_constraintEnd_toEndOf="parent"
