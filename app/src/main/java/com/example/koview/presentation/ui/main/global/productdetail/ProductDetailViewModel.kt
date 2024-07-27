@@ -1,4 +1,4 @@
-package com.example.koview.presentation.ui.main.home.search.productdetail
+package com.example.koview.presentation.ui.main.global.productdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

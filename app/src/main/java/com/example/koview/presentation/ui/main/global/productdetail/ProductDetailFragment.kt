@@ -1,4 +1,4 @@
-package com.example.koview.presentation.ui.main.home.search.productdetail
+package com.example.koview.presentation.ui.main.global.productdetail
 
 import android.os.Bundle
 import android.view.View
@@ -17,7 +17,7 @@ import com.example.koview.databinding.FragmentProductDetailBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.example.koview.presentation.ui.main.home.search.adapter.SearchShopAdapter
-import com.example.koview.presentation.ui.main.home.search.productdetail.adapter.ProductReviewAdapter
+import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent

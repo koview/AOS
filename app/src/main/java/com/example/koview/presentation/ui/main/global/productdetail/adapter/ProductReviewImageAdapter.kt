@@ -1,4 +1,4 @@
-package com.example.koview.presentation.ui.main.home.search.productdetail.adapter
+package com.example.koview.presentation.ui.main.global.productdetail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ class ProductReviewImageAdapter(private val reviewImageList: List<String>) :
     override fun onCreateViewHolder(
         viweGroup: ViewGroup,
         viewType: Int
-    ): ProductReviewImageAdapter.ProductReviewImageViewHolder {
+    ): ProductReviewImageViewHolder {
         val binding: ItemProductReviewImageBinding = ItemProductReviewImageBinding.inflate(
             LayoutInflater.from(viweGroup.context),
             viweGroup, false
@@ -24,7 +24,7 @@ class ProductReviewImageAdapter(private val reviewImageList: List<String>) :
     }
 
     override fun onBindViewHolder(
-        holder: ProductReviewImageAdapter.ProductReviewImageViewHolder,
+        holder: ProductReviewImageViewHolder,
         position: Int
     ) {
         val reviewImage = reviewImageList[position]

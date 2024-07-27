@@ -12,7 +12,7 @@
 
         <variable
             name="vm"
-            type="com.example.koview.presentation.ui.main.home.search.productdetail.ProductDetailViewModel" />
+            type="com.example.koview.presentation.ui.main.global.productdetail.ProductDetailViewModel" />
 
     </data>
 

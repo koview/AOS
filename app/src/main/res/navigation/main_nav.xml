@@ -89,7 +89,7 @@
 
     <fragment
         android:id="@+id/product_detail_fragment"
-        android:name="com.example.koview.presentation.ui.main.home.search.productdetail.ProductDetailFragment"
+        android:name="com.example.koview.presentation.ui.main.global.productdetail.ProductDetailFragment"
         android:label="ProductDetailFragment">
 
         <action

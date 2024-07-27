@@ -1,4 +1,4 @@
-package com.example.koview.presentation.ui.main.home.search.productdetail.adapter
+package com.example.koview.presentation.ui.main.global.productdetail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ class ProductReviewAdapter(private val viewModel: SearchViewModel, private val r
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): ProductReviewAdapter.ProductReviewViewHolder {
+    ): ProductReviewViewHolder {
         val binding: ItemProductReviewBinding = ItemProductReviewBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup,
@@ -23,7 +23,7 @@ class ProductReviewAdapter(private val viewModel: SearchViewModel, private val r
     }
 
     override fun onBindViewHolder(
-        holder: ProductReviewAdapter.ProductReviewViewHolder,
+        holder: ProductReviewViewHolder,
         position: Int
     ) {
         val review = reviewList[position]
