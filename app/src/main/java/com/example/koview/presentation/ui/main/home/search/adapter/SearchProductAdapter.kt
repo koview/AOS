@@ -45,46 +45,46 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
                 TagShop(title = "Shop B", isVerify = true)
             ),
             reviewList = listOf(
-                Review(
-                    nickname = "네로",
-                    content = "테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명",
-                    imageUrl = listOf(
-                        "https://ifh.cc/g/f9WcP4.jpg",
-                        "https://ifh.cc/g/f9WcP4.jpg"
-                    ),
-                    likeNumber = 10,
-                    commentNumber = 20,
-                    date = "2024-07-13"
-                ),
-                Review(
-                    nickname = "ddddd",
-                    content = "설명입니당",
-                    imageUrl = listOf(
-                        "https://ifh.cc/g/f9WcP4.jpg",
-                    ),
-                    likeNumber = 10,
-                    commentNumber = 20,
-                    date = "2024-07-13"
-                ),
-                Review(
-                    nickname = "2323",
-                    content = "설명입니당",
-                    imageUrl = listOf(),
-                    likeNumber = 10,
-                    commentNumber = 20,
-                    date = "2024-07-13"
-                ),
-                Review(
-                    nickname = "sssss",
-                    content = "설명입니당",
-                    imageUrl = listOf(
-                        "https://ifh.cc/g/f9WcP4.jpg",
-                        "https://ifh.cc/g/f9WcP4.jpg"
-                    ),
-                    likeNumber = 10,
-                    commentNumber = 20,
-                    date = "2024-07-13"
-                )
+//                Review(
+//                    nickname = "네로",
+//                    content = "테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명",
+//                    imageUrl = listOf(
+//                        "https://ifh.cc/g/f9WcP4.jpg",
+//                        "https://ifh.cc/g/f9WcP4.jpg"
+//                    ),
+//                    likeNumber = 10,
+//                    commentNumber = 20,
+//                    date = "2024-07-13"
+//                ),
+//                Review(
+//                    nickname = "ddddd",
+//                    content = "설명입니당",
+//                    imageUrl = listOf(
+//                        "https://ifh.cc/g/f9WcP4.jpg",
+//                    ),
+//                    likeNumber = 10,
+//                    commentNumber = 20,
+//                    date = "2024-07-13"
+//                ),
+//                Review(
+//                    nickname = "2323",
+//                    content = "설명입니당",
+//                    imageUrl = listOf(),
+//                    likeNumber = 10,
+//                    commentNumber = 20,
+//                    date = "2024-07-13"
+//                ),
+//                Review(
+//                    nickname = "sssss",
+//                    content = "설명입니당",
+//                    imageUrl = listOf(
+//                        "https://ifh.cc/g/f9WcP4.jpg",
+//                        "https://ifh.cc/g/f9WcP4.jpg"
+//                    ),
+//                    likeNumber = 10,
+//                    commentNumber = 20,
+//                    date = "2024-07-13"
+//                )
             )
         ),
         SearchProduct(
