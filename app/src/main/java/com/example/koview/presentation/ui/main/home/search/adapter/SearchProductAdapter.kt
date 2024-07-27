@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.koview.R
 import com.example.koview.databinding.ItemSearchProductBinding
+import com.example.koview.presentation.ui.main.home.model.Category
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.example.koview.presentation.ui.main.home.search.model.Review
 import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
@@ -30,6 +31,7 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             registDate = "2024-07-12",
             isWarning = true,
             isHot = false,
+            category = Category.TOY,
             shopList = listOf(
                 TagShop(title = "xpadfnejnnddf", isVerify = false),
                 TagShop(title = "xpadfnejnnddf", isVerify = true),
@@ -94,6 +96,7 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             registDate = "2024-07-13",
             isWarning = false,
             isHot = true,
+            category = Category.SANITARY,
             shopList = listOf(
 
             ),
@@ -148,6 +151,7 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             registDate = "2024-07-13",
             isWarning = false,
             isHot = false,
+            category = Category.ACCESSORIES,
             shopList = listOf(
                 TagShop(title = "Shop C", isVerify = true),
                 TagShop(title = "Shop D", isVerify = true),
@@ -205,6 +209,7 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             registDate = "2024-07-13",
             isWarning = true,
             isHot = false,
+            category = Category.STATIONARY,
             shopList = listOf(
                 TagShop(title = "Shop C", isVerify = false),
                 TagShop(title = "Shop D", isVerify = false),
@@ -287,31 +292,6 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             binding.vm = viewModel
             val context = binding.root.context
 
-            // ImageView의 크기가 결정된 후에 Glide로 이미지 로드
-            // ImageView의 크기를 얻음
-            binding.ivProduct.viewTreeObserver.addOnPreDrawListener(
-                object : ViewTreeObserver.OnPreDrawListener {
-                    override fun onPreDraw(): Boolean {
-                        binding.ivProduct.viewTreeObserver.removeOnPreDrawListener(this)
-                        val width = binding.ivProduct.width
-                        val height = binding.ivProduct.height
-
-                        val requestOptions =
-                            RequestOptions().transform(CenterCrop(), RoundedCorners(16))
-
-                        Glide.with(itemView)
-                            .load(searchProduct.imageUrl)
-                            .placeholder(R.drawable.default_product_image)
-                            .error(R.drawable.default_product_image)
-                            .apply(requestOptions)
-                            .override(width, height)
-                            .into(binding.ivProduct)
-
-                        return true
-                    }
-                }
-            )
-
             // FlexboxLayoutManager 설정
             val layoutManager = FlexboxLayoutManager(context)
             layoutManager.flexDirection = FlexDirection.ROW
@@ -319,8 +299,7 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             layoutManager.justifyContent = JustifyContent.FLEX_START
 
             binding.rvShop.layoutManager = layoutManager
-            val adapter = SearchShopAdapter(searchProduct.shopList)
-            binding.rvShop.adapter = adapter
+            binding.rvShop.adapter = SearchShopAdapter(searchProduct.shopList)
         }
 
     }

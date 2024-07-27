@@ -1,6 +1,6 @@
 package com.example.koview.presentation.ui.main.home.search.model
 
-import android.os.Parcelable
+import com.example.koview.presentation.ui.main.home.model.Category
 import java.io.Serializable
 
 data class SearchProduct(
@@ -10,6 +10,7 @@ data class SearchProduct(
     val registDate: String,
     val isWarning: Boolean,
     val isHot: Boolean,
+    val category: Category,
     val shopList: List<TagShop>,
     val reviewList: List<Review>
 ) : Serializable

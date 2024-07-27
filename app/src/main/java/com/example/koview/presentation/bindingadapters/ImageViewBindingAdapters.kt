@@ -6,6 +6,9 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.koview.R
 import com.example.koview.presentation.ui.main.home.model.Category
 
@@ -58,4 +61,14 @@ fun setCategoryColor(appCompatImageButton: AppCompatImageButton, curCategory: Ca
     } else {
         appCompatImageButton.setColorFilter(defaultColor)
     }
+}
+
+@BindingAdapter("searchProductImgUrl")
+fun bindSearchProductImg(imageView: ImageView, url: String?) {
+    Glide.with(imageView.context)
+        .load(url)
+        .placeholder(R.drawable.default_product_image)
+        .error(R.drawable.default_product_image)
+        .transform(CenterCrop(), RoundedCorners(32))
+        .into(imageView)
 }
