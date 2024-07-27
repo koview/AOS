@@ -19,6 +19,7 @@ sealed class HomeEvent {
     data object ShowCategoryBottomSheet : HomeEvent()
     data object NavigateToHarmfulProduct : HomeEvent()
     data object NavigateToPopularProduct : HomeEvent()
+    data object NavigateToSearch : HomeEvent()
 }
 
 @HiltViewModel
@@ -114,6 +115,12 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     fun navigateToPopularProduct() {
         viewModelScope.launch {
             _event.emit(HomeEvent.NavigateToPopularProduct)
+        }
+    }
+
+    fun navigateToSearch() {
+        viewModelScope.launch {
+            _event.emit(HomeEvent.NavigateToSearch)
         }
     }
 }

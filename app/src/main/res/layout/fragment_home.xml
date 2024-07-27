@@ -96,6 +96,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/rect_gray1fill_nostroke_32radius"
+                    android:onClick="@{()->vm.navigateToSearch()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_home_fragment_to_popular_product_framgnet"
             app:destination="@id/popular_product_framgnet" />
+        <action
+            android:id="@+id/action_home_fragment_to_search_fragment"
+            app:destination="@id/search_fragment"/>
     </fragment>
 
     <fragment
