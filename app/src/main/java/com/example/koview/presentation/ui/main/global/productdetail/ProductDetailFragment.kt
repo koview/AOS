@@ -36,7 +36,6 @@ class ProductDetailFragment :
         binding.model = parentViewModel.searchProduct.value
 
         initRecyclerview()
-        setProductImage()
         initEventObserve()
     }
 
@@ -57,32 +56,6 @@ class ProductDetailFragment :
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvReview.adapter =
             parentViewModel.searchProduct.value?.let { ProductReviewAdapter(parentViewModel, it.reviewList) }
-    }
-
-    private fun setProductImage() {
-        val productImageUrl = parentViewModel.searchProduct.value?.imageUrl
-        binding.ivProduct.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    binding.ivProduct.viewTreeObserver.removeOnPreDrawListener(this)
-                    val width = binding.ivProduct.width
-                    val height = binding.ivProduct.height
-
-                    val requestOptions =
-                        RequestOptions().transform(CenterCrop(), RoundedCorners(16))
-
-                    Glide.with(requireContext())
-                        .load(productImageUrl)
-                        .placeholder(R.drawable.default_product_image)
-                        .error(R.drawable.default_product_image)
-                        .apply(requestOptions)
-                        .override(width, height)
-                        .into(binding.ivProduct)
-
-                    return true
-                }
-            }
-        )
     }
 
     private fun initEventObserve() {

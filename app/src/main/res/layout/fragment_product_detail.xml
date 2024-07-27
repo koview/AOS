@@ -76,12 +76,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_top">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_product"
                         android:layout_width="350dp"
                         android:layout_height="220dp"
                         android:background="@drawable/rect_whitefill_nostroke_16radius"
                         android:layout_marginTop="15dp"
+                        android:scaleType="centerCrop"
+                        searchProductImgUrl="@{model.imageUrl}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
