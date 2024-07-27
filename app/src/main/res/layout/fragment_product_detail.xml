@@ -238,7 +238,7 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     android:layout_marginTop="30dp"
-                    linearLayoutVisibility="@{model.reviewList}"
+                    reviewLayoutVisibility="@{model.reviewList}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/line_review">

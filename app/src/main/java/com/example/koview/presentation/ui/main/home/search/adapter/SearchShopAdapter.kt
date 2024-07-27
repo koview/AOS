@@ -33,10 +33,6 @@ class SearchShopAdapter(private val tagList: List<TagShop>) :
 
         fun bind(tagShop: TagShop) {
             binding.model = tagShop
-            if (tagShop.isVerify) {
-                binding.layoutTag.backgroundTintList =
-                    ColorStateList.valueOf(Color.parseColor("#F60000"))
-            }
         }
 
     }
