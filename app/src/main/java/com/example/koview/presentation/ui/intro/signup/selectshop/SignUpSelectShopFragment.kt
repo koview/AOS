@@ -51,14 +51,14 @@ class SignUpSelectShopFragment :
             viewModel.event.collect {
                 when (it) {
                     SelectShopEvent.NavigateToBack -> findNavController().navigateUp()
-                    is SelectShopEvent.NavigateToSetInfo -> findNavController().toSetInfo(viewModel.checkedTexts.value!!.toTypedArray())
+                    is SelectShopEvent.NavigateToSetInfo -> findNavController().toSetInfo(viewModel.checkedShopsId.value!!.toTypedArray())
                 }
             }
         }
     }
 
-    private fun NavController.toSetInfo(checkedShops: Array<String>) {
-        val action = SignUpSelectShopFragmentDirections.actionSignupSelectShopFragmentToSignupSetInfoFragment(checkedShops)
+    private fun NavController.toSetInfo(checkedShops: Array<Int>) {
+        val action = SignUpSelectShopFragmentDirections.actionSignupSelectShopFragmentToSignupSetInfoFragment(checkedShops.toIntArray())
         navigate(action)
     }
 }

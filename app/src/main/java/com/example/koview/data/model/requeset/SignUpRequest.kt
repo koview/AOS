@@ -5,5 +5,5 @@ data class SignUpRequest(
     val loginPw: String,
     val nickname: String,
     val age: Int,
-    val shopIdList: Array<String>
+    val shopIdList: List<Int>
 )
