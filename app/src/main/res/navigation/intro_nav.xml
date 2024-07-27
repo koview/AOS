@@ -21,7 +21,9 @@
 
         <action
             android:id="@+id/action_signup_select_shop_fragment_to_signup_set_info_fragment"
-            app:destination="@id/signup_set_info_fragment" />
+            app:destination="@id/signup_set_info_fragment" >
+
+        </action>
     </fragment>
 
     <fragment
@@ -32,6 +34,9 @@
         <action
             android:id="@+id/action_signup_set_info_fragment_to_signup_complete_fragment"
             app:destination="@id/signup_complete_fragment" />
+        <argument
+            android:name="checkedShops"
+            app:argType="integer[]" />
     </fragment>
 
     <fragment

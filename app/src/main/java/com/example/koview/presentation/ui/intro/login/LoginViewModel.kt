@@ -38,7 +38,6 @@ class LoginViewModel @Inject constructor(
     private var _loginCheckVisible: MutableLiveData<Boolean> = MutableLiveData(false)
     val loginCheckVisible: LiveData<Boolean> get() = _loginCheckVisible
 
-//    val loginchecking : MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun checkLogin() {
 
