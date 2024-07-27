@@ -45,6 +45,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                             findNavController().toProductDetail(searchProduct)
                         }
                     }
+
+                    SearchEvent.NavigateToHome -> findNavController().toHome()
                 }
             }
         }
@@ -53,6 +55,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private fun NavController.toProductDetail(searchProduct: SearchProduct) {
         val action =
             SearchFragmentDirections.actionSearchFragmentToProductDetailFragment(searchProduct)
+        navigate(action)
+    }
+
+    private fun NavController.toHome() {
+        val action = SearchFragmentDirections.actionSearchFragmentToHomeFragment()
         navigate(action)
     }
 
