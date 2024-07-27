@@ -69,6 +69,6 @@ fun bindSearchProductImg(imageView: ImageView, url: String?) {
         .load(url)
         .placeholder(R.drawable.default_product_image)
         .error(R.drawable.default_product_image)
-        .transform(CenterCrop(), RoundedCorners(32))
+        .transform(CenterCrop(), RoundedCorners(36))
         .into(imageView)
 }

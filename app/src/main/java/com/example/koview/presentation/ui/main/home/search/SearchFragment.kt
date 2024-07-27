@@ -21,6 +21,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private val viewModel: SearchViewModel by activityViewModels()
     private val parentViewModel: HomeViewModel by activityViewModels()
+    private lateinit var productAdapter: SearchProductAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,16 +29,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         binding.vm = viewModel
         binding.parentVm = parentViewModel
 
+        productAdapter = SearchProductAdapter(viewModel)
+
         initSearchProductRecyclerview()
         initEventObserve()
+        initProductListObserver()
         enterSearch()
     }
 
     private fun initSearchProductRecyclerview() {
-        val adapter = SearchProductAdapter(viewModel)
         binding.rvProduct.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvProduct.adapter = adapter
+        binding.rvProduct.adapter = productAdapter
     }
 
     private fun initEventObserve() {
@@ -56,10 +59,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         }
         repeatOnStarted {
             parentViewModel.event.collect() {
-                when(it) {
+                when (it) {
                     HomeEvent.ShowCategoryBottomSheet -> findNavController().toCategoryBottomSheet()
                     else -> {}
                 }
+            }
+        }
+    }
+
+    private fun initProductListObserver() {
+        repeatOnStarted {
+            viewModel.searchProductList.collect { searchProductList ->
+                productAdapter.submitList(searchProductList)
+
             }
         }
     }
