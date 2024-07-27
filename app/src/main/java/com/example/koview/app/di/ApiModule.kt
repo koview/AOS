@@ -18,8 +18,8 @@ object ApiModule {
     fun provideIntroApi(retrofit: Retrofit): IntroApi = retrofit.create(IntroApi::class.java)
 
 
-//    @Singleton
-//    @Provides
-//    fun provideMainApi(retrofit: Retrofit): MainApi = retrofit.create(MainApi::class.java)
+    @Singleton
+    @Provides
+    fun provideMainApi(retrofit: Retrofit): MainApi = retrofit.create(MainApi::class.java)
 
 }

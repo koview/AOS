@@ -58,7 +58,7 @@ class LoginViewModel @Inject constructor(
 
                         is BaseState.Success -> {
                             sharedPreferences.edit()
-                                .putString(ACCESS_TOKEN, it.body.result.accessToken)
+                                .putString(ACCESS_TOKEN, it.body.result.accessToken).apply()
                             _loginCheckVisible.value = false
                             navigateToMain()
                         }
