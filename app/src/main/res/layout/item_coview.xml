@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <!--    프로필    -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/img_profile_ex" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            style="@style/TextSmallSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/kv_gray9"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile"
+            app:layout_constraintStart_toEndOf="@id/iv_profile"
+            app:layout_constraintTop_toTopOf="@id/iv_profile"
+            tools:text="닉네임" />
+
+        <!--    리뷰 이미지    -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/iv_profile"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_indicator"
+                style="@style/TagText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:background="@drawable/rect_blackfill_nostroke_16radius"
+                android:paddingHorizontal="7dp"
+                android:paddingVertical="4dp"
+                android:text="1/20"
+                android:visibility="visible"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@id/vp_images"
+                app:layout_constraintTop_toTopOf="@id/vp_images" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--    좋아요    -->
+        <LinearLayout
+            android:id="@+id/layout_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_image">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_like"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_image" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_unlike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_unlike"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_image" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_like_count"
+            style="@style/TextSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/kv_gray9"
+            app:layout_constraintBottom_toBottomOf="@id/layout_like"
+            app:layout_constraintStart_toEndOf="@id/layout_like"
+            app:layout_constraintTop_toTopOf="@id/layout_like"
+            tools:text="120" />
+
+        <!--    댓글    -->
+        <LinearLayout
+            android:id="@+id/layout_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@id/layout_like"
+            app:layout_constraintStart_toEndOf="@id/tv_like_count"
+            app:layout_constraintTop_toTopOf="@id/layout_like">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_comment" />
+
+            <TextView
+                android:id="@+id/tv_comment_count"
+                style="@style/TextSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/kv_gray9"
+                tools:text="20" />
+        </LinearLayout>
+
+        <!--    본문    -->
+        <TextView
+            android:id="@+id/tv_review"
+            style="@style/TextSmallMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/kv_gray9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_comment"
+            tools:text="리뷰 내용이 보이는 영역입니다.\n최대 두줄 까지 보이고 그 이상이면 내용이 잘려질 예정입니다. 잘려졌나?" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/TextTinyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/kv_gray5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_review"
+            tools:text="2024.07.27" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
