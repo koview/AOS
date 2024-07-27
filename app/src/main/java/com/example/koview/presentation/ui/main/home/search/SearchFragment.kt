@@ -12,17 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.databinding.FragmentSearchBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.home.HomeEvent
+import com.example.koview.presentation.ui.main.home.HomeViewModel
 import com.example.koview.presentation.ui.main.home.search.adapter.SearchProductAdapter
 import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
     private val viewModel: SearchViewModel by activityViewModels()
+    private val parentViewModel: HomeViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
+        binding.parentVm = parentViewModel
 
         initSearchProductRecyclerview()
         initEventObserve()
@@ -50,6 +54,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                 }
             }
         }
+        repeatOnStarted {
+            parentViewModel.event.collect() {
+                when(it) {
+                    HomeEvent.ShowCategoryBottomSheet -> findNavController().toCategoryBottomSheet()
+                    else -> {}
+                }
+            }
+        }
     }
 
     private fun NavController.toProductDetail(searchProduct: SearchProduct) {
@@ -60,6 +72,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private fun NavController.toHome() {
         val action = SearchFragmentDirections.actionSearchFragmentToHomeFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toCategoryBottomSheet() {
+        val action = SearchFragmentDirections.actionSearchFragmentToHomeCategorySelectFragment()
         navigate(action)
     }
 

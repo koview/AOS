@@ -84,6 +84,10 @@
             app:popUpTo="@id/home_fragment"
             app:popUpToInclusive="true"/>
 
+        <action
+            android:id="@+id/action_search_fragment_to_home_category_select_fragment"
+            app:destination="@id/home_category_select_fragment" />
+
     </fragment>
 
 

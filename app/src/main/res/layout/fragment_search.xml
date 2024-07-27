@@ -9,6 +9,10 @@
             name="vm"
             type="com.example.koview.presentation.ui.main.home.search.SearchViewModel" />
 
+        <variable
+            name="parentVm"
+            type="com.example.koview.presentation.ui.main.home.HomeViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -89,6 +93,8 @@
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_category"
                 android:background="@color/transparent"
+                android:onClick="@{()->parentVm.showCategoryBottomSheet()}"
+                setCategoryButtonColor="@{parentVm.category}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>

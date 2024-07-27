@@ -1,6 +1,5 @@
 package com.example.koview.presentation.ui.main.home
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.presentation.ui.main.home.model.AskUiData

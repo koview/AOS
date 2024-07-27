@@ -2,6 +2,7 @@ package com.example.koview.presentation.bindingadapters
 
 import android.util.Log
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -47,3 +48,14 @@ fun setCategoryColor(view: ImageView, targetCategory: Category, curCategory: Cat
     }
 }
 
+@BindingAdapter("setCategoryButtonColor")
+fun setCategoryColor(appCompatImageButton: AppCompatImageButton, curCategory: Category) {
+    val context = appCompatImageButton.context
+    val main3Color = ContextCompat.getColor(context, R.color.kv_main3)
+    val defaultColor = ContextCompat.getColor(context, R.color.kv_gray4)
+    if (curCategory != Category.ALL) {
+        appCompatImageButton.setColorFilter(main3Color)
+    } else {
+        appCompatImageButton.setColorFilter(defaultColor)
+    }
+}
