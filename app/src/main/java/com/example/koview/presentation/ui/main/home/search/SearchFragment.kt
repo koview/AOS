@@ -1,10 +1,14 @@
 package com.example.koview.presentation.ui.main.home.search
 
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.webkit.WebViewClient
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -54,6 +58,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                     }
 
                     SearchEvent.NavigateToHome -> findNavController().toHome()
+                    is SearchEvent.ClickTag -> clickTag(viewModel.searchProductUrl.value)
                 }
             }
         }
@@ -107,6 +112,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             }
             handled
         }
+    }
+
+    private fun clickTag(url: String?) {
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
 }

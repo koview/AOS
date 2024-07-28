@@ -1,5 +1,6 @@
 package com.example.koview.presentation.ui.main.home.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +22,7 @@ import javax.inject.Inject
 sealed class SearchEvent {
     data class NavigateToProductDetail(val searchProduct: SearchProduct) : SearchEvent()
     data object NavigateToHome : SearchEvent()
+    data class ClickTag(val productUrl: String?) : SearchEvent()
 }
 
 @HiltViewModel
@@ -34,6 +36,9 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 
     private val _event = MutableSharedFlow<SearchEvent>()
     val event: SharedFlow<SearchEvent> = _event.asSharedFlow()
+
+    private val _searchProductUrl = MutableLiveData<String?>()
+    val searchProductUrl: LiveData<String?> get() = _searchProductUrl
 
     init {
         setProductListData()
@@ -51,18 +56,66 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                 isHot = false,
                 category = Category.TOY,
                 shopList = listOf(
-                    TagShop(title = "xpadfnejnnddf", isVerify = false),
-                    TagShop(title = "xpadfnejnnddf", isVerify = true),
-                    TagShop(title = "xpadfnejnnddfdfsdfsdf", isVerify = true),
-                    TagShop(title = "Shop 1", isVerify = false),
-                    TagShop(title = "Shop 2", isVerify = true),
-                    TagShop(title = "Shop 3", isVerify = true),
-                    TagShop(title = "Shop 4", isVerify = true),
-                    TagShop(title = "Shop 5", isVerify = true),
-                    TagShop(title = "Shop 6", isVerify = true),
-                    TagShop(title = "Shop B", isVerify = true),
-                    TagShop(title = "Shop A", isVerify = true),
-                    TagShop(title = "Shop B", isVerify = true)
+                    TagShop(
+                        title = "xpadfnejnnddf",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = false
+                    ),
+                    TagShop(
+                        title = "xpadfnejnnddf",
+                        productUrl = "https://papago.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "xpadfnejnnddfdfsdfsdf",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 1",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = false
+                    ),
+                    TagShop(
+                        title = "Shop 2",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 3",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 4",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 5",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 6",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop B",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop A",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop B",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    )
                 ),
                 reviewList = listOf(
 //                Review(
@@ -171,9 +224,9 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                 isHot = false,
                 category = Category.ACCESSORIES,
                 shopList = listOf(
-                    TagShop(title = "Shop C", isVerify = true),
-                    TagShop(title = "Shop D", isVerify = true),
-                    TagShop(title = "Shop d", isVerify = true)
+                    TagShop(title = "Shop C", productUrl = "www.naver.com", isVerify = true),
+                    TagShop(title = "Shop D", productUrl = "www.naver.com", isVerify = true),
+                    TagShop(title = "Shop d", productUrl = "www.naver.com", isVerify = true)
                 ),
                 reviewList = listOf(
                     Review(
@@ -229,9 +282,9 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                 isHot = false,
                 category = Category.STATIONARY,
                 shopList = listOf(
-                    TagShop(title = "Shop C", isVerify = false),
-                    TagShop(title = "Shop D", isVerify = false),
-                    TagShop(title = "Shop d", isVerify = false)
+                    TagShop(title = "Shop C", productUrl = "www.naver.com", isVerify = false),
+                    TagShop(title = "Shop D", productUrl = "www.naver.com", isVerify = false),
+                    TagShop(title = "Shop d", productUrl = "www.naver.com", isVerify = false)
                 ),
                 reviewList = listOf(
                     Review(
@@ -295,6 +348,13 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 
     fun search() {
         // TODO: searchAPI 연동
+    }
+
+    fun clickTag(url: String?) {
+        _searchProductUrl.value = url
+        viewModelScope.launch {
+            _event.emit(SearchEvent.ClickTag(url))
+        }
     }
 
 }

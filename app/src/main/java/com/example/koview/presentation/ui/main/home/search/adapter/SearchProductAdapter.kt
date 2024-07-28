@@ -60,7 +60,7 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             layoutManager.justifyContent = JustifyContent.FLEX_START
 
             binding.rvShop.layoutManager = layoutManager
-            binding.rvShop.adapter = SearchShopAdapter(searchProduct.shopList)
+            binding.rvShop.adapter = SearchShopAdapter(viewModel, searchProduct.shopList)
         }
 
     }

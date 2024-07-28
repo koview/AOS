@@ -49,19 +49,29 @@ class ProductDetailFragment :
 
         binding.rvShop.layoutManager = layoutManager
         binding.rvShop.adapter =
-            parentViewModel.searchProduct.value?.let { SearchShopAdapter(it.shopList) }
+            parentViewModel.searchProduct.value?.let {
+                SearchShopAdapter(
+                    parentViewModel,
+                    it.shopList
+                )
+            }
 
         // 리뷰 리사이클러뷰 연결
         binding.rvReview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvReview.adapter =
-            parentViewModel.searchProduct.value?.let { ProductReviewAdapter(parentViewModel, it.reviewList) }
+            parentViewModel.searchProduct.value?.let {
+                ProductReviewAdapter(
+                    parentViewModel,
+                    it.reviewList
+                )
+            }
     }
 
     private fun initEventObserve() {
         repeatOnStarted {
             viewModel.event.collect {
-                when(it) {
+                when (it) {
                     ProductDetailEvent.NavigateToSearch -> findNavController().toSearch()
                 }
             }

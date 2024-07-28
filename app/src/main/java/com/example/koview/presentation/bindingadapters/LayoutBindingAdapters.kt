@@ -22,5 +22,4 @@ fun bindTagShopLayoutColor(layout: ConstraintLayout, isVerify: Boolean) {
     if (isVerify) {
         layout.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F60000"))
     }
-
 }

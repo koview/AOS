@@ -102,4 +102,7 @@ dependencies {
 
     // FlexBox
     implementation("com.google.android.flexbox:flexbox:3.0.0")
+
+    // Custom Tabs
+    implementation("androidx.browser:browser:1.5.0")
 }
