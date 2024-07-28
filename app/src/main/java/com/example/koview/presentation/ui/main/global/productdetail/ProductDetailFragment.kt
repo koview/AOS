@@ -1,27 +1,24 @@
 package com.example.koview.presentation.ui.main.global.productdetail
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.ViewTreeObserver
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.example.koview.R
 import com.example.koview.databinding.FragmentProductDetailBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
+import com.example.koview.presentation.ui.main.home.search.SearchEvent
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.example.koview.presentation.ui.main.home.search.adapter.SearchShopAdapter
-import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import kotlinx.coroutines.flow.collect
 
 class ProductDetailFragment :
     BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail) {
@@ -76,11 +73,24 @@ class ProductDetailFragment :
                 }
             }
         }
+        repeatOnStarted {
+            parentViewModel.event.collect {
+                when (it) {
+                    is SearchEvent.ClickTag -> clickTag(parentViewModel.searchProductUrl.value)
+                    else -> {}
+                }
+            }
+        }
     }
 
     private fun NavController.toSearch() {
         val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSearchFragment()
         navigate(action)
+    }
+
+    private fun clickTag(url: String?) {
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
 
