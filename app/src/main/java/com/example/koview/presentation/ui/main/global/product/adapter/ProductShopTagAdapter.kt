@@ -1,22 +1,22 @@
-package com.example.koview.presentation.ui.main.home.search.adapter
+package com.example.koview.presentation.ui.main.global.product.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.koview.databinding.ItemSearchShopBinding
+import com.example.koview.databinding.ItemProductShopTagBinding
 import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.home.search.model.TagShop
 
-class SearchShopAdapter(
+class ProductShopTagAdapter(
     private val viewModel: ProductViewModel,
     private val tagList: List<TagShop>
 ) :
-    RecyclerView.Adapter<SearchShopAdapter.SearchShopViewHolder>() {
+    RecyclerView.Adapter<ProductShopTagAdapter.SearchShopViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): SearchShopAdapter.SearchShopViewHolder {
-        val binding: ItemSearchShopBinding = ItemSearchShopBinding.inflate(
+    ): SearchShopViewHolder {
+        val binding: ItemProductShopTagBinding = ItemProductShopTagBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup,
             false
@@ -24,13 +24,13 @@ class SearchShopAdapter(
         return SearchShopViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: SearchShopAdapter.SearchShopViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchShopViewHolder, position: Int) {
         holder.bind(viewModel, tagList[position])
     }
 
     override fun getItemCount(): Int = tagList.size
 
-    class SearchShopViewHolder(private val binding: ItemSearchShopBinding) :
+    class SearchShopViewHolder(private val binding: ItemProductShopTagBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: ProductViewModel, tagShop: TagShop) {

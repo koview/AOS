@@ -1,18 +1,18 @@
-package com.example.koview.presentation.ui.main.home.search.adapter
+package com.example.koview.presentation.ui.main.global.product.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.koview.databinding.ItemSearchProductBinding
+import com.example.koview.databinding.ItemProductBinding
 import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
-class SearchProductAdapter(private val viewModel: ProductViewModel) :
-    RecyclerView.Adapter<SearchProductAdapter.SearchProductViewHolder>() {
+class ProductAdapter(private val viewModel: ProductViewModel) :
+    RecyclerView.Adapter<ProductAdapter.SearchProductViewHolder>() {
 
     private var productList: List<SearchProduct> = emptyList()
 
@@ -25,8 +25,8 @@ class SearchProductAdapter(private val viewModel: ProductViewModel) :
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): SearchProductAdapter.SearchProductViewHolder {
-        val binding: ItemSearchProductBinding = ItemSearchProductBinding.inflate(
+    ): SearchProductViewHolder {
+        val binding: ItemProductBinding = ItemProductBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup,
             false
@@ -35,7 +35,7 @@ class SearchProductAdapter(private val viewModel: ProductViewModel) :
     }
 
     override fun onBindViewHolder(
-        holder: SearchProductAdapter.SearchProductViewHolder,
+        holder: SearchProductViewHolder,
         position: Int
     ) {
         holder.bind(productList[position])
@@ -43,7 +43,7 @@ class SearchProductAdapter(private val viewModel: ProductViewModel) :
 
     override fun getItemCount(): Int = productList.size
     class SearchProductViewHolder(
-        private val binding: ItemSearchProductBinding,
+        private val binding: ItemProductBinding,
         private val viewModel: ProductViewModel
     ) :
         RecyclerView.ViewHolder(binding.root) {
@@ -60,7 +60,7 @@ class SearchProductAdapter(private val viewModel: ProductViewModel) :
             layoutManager.justifyContent = JustifyContent.FLEX_START
 
             binding.rvShop.layoutManager = layoutManager
-            binding.rvShop.adapter = SearchShopAdapter(viewModel, searchProduct.shopList)
+            binding.rvShop.adapter = ProductShopTagAdapter(viewModel, searchProduct.shopList)
         }
 
     }

@@ -18,7 +18,7 @@ import com.example.koview.presentation.ui.main.global.ProductEvent
 import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.home.HomeEvent
 import com.example.koview.presentation.ui.main.home.HomeViewModel
-import com.example.koview.presentation.ui.main.home.search.adapter.SearchProductAdapter
+import com.example.koview.presentation.ui.main.global.product.adapter.ProductAdapter
 import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
@@ -26,7 +26,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private val viewModel: SearchViewModel by activityViewModels()
     private val parentViewModel: HomeViewModel by activityViewModels()
     private val productViewModel: ProductViewModel by activityViewModels()
-    private lateinit var productAdapter: SearchProductAdapter
+    private lateinit var productAdapter: ProductAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +34,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         binding.vm = viewModel
         binding.parentVm = parentViewModel
 
-        productAdapter = SearchProductAdapter(productViewModel)
+        productAdapter = ProductAdapter(productViewModel)
 
         initSearchProductRecyclerview()
         initEventObserve()

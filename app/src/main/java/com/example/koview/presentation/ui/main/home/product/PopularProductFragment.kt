@@ -15,7 +15,7 @@ import com.example.koview.presentation.ui.main.global.ProductEvent
 import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.home.HomeEvent
 import com.example.koview.presentation.ui.main.home.HomeViewModel
-import com.example.koview.presentation.ui.main.home.search.adapter.SearchProductAdapter
+import com.example.koview.presentation.ui.main.global.product.adapter.ProductAdapter
 import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 
 class PopularProductFragment :
@@ -24,14 +24,14 @@ class PopularProductFragment :
     private val viewModel: PopularProductViewModel by activityViewModels()
     private val parentViewModel: HomeViewModel by activityViewModels()
     private val productViewModel: ProductViewModel by activityViewModels()
-    private lateinit var productAdapter: SearchProductAdapter
+    private lateinit var productAdapter: ProductAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.parentVm = parentViewModel
 
-        productAdapter = SearchProductAdapter(productViewModel)
+        productAdapter = ProductAdapter(productViewModel)
 
         initPopularProductRecyclerview()
         initPopularProductListObserver()

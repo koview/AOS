@@ -16,7 +16,7 @@ import com.example.koview.presentation.ui.main.global.ProductEvent
 import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
-import com.example.koview.presentation.ui.main.home.search.adapter.SearchShopAdapter
+import com.example.koview.presentation.ui.main.global.product.adapter.ProductShopTagAdapter
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -49,7 +49,7 @@ class ProductDetailFragment :
         binding.rvShop.layoutManager = layoutManager
         binding.rvShop.adapter =
             productViewModel.searchProduct.value?.let {
-                SearchShopAdapter(
+                ProductShopTagAdapter(
                     productViewModel,
                     it.shopList
                 )
