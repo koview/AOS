@@ -1,8 +1,10 @@
 package com.example.koview.presentation.ui.main.home.product
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -10,12 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.databinding.FragmentHarmfulProductBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.global.ProductEvent
 import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.home.HomeEvent
 import com.example.koview.presentation.ui.main.home.HomeViewModel
-import com.example.koview.presentation.ui.main.home.search.SearchFragmentDirections
-import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.example.koview.presentation.ui.main.home.search.adapter.SearchProductAdapter
+import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 
 class HarmfulProductFragment :
     BaseFragment<FragmentHarmfulProductBinding>(R.layout.fragment_harmful_product) {
@@ -46,9 +48,22 @@ class HarmfulProductFragment :
     private fun initEventObserve() {
         repeatOnStarted {
             parentViewModel.event.collect() {
-                when(it) {
+                when (it) {
                     HomeEvent.ShowCategoryBottomSheet -> findNavController().toCategoryBottomSheet()
                     else -> {}
+                }
+            }
+        }
+        repeatOnStarted {
+            productViewModel.event.collect { event ->
+                when (event) {
+                    is ProductEvent.NavigateToProductDetail -> {
+                        productViewModel.searchProduct.value?.let { searchProduct ->
+                            findNavController().toProductDetail(searchProduct)
+                        }
+                    }
+
+                    is ProductEvent.ClickTag -> clickTag(productViewModel.searchProductUrl.value)
                 }
             }
         }
@@ -64,7 +79,21 @@ class HarmfulProductFragment :
     }
 
     private fun NavController.toCategoryBottomSheet() {
-        val action = HarmfulProductFragmentDirections.actionHarmfulProductFragmentToHomeCategorySelectFragment()
+        val action =
+            HarmfulProductFragmentDirections.actionHarmfulProductFragmentToHomeCategorySelectFragment()
         navigate(action)
+    }
+
+    private fun NavController.toProductDetail(searchProduct: SearchProduct) {
+        val action =
+            HarmfulProductFragmentDirections.actionHarmfulProductFragmentToProductDetailFragment(
+                searchProduct
+            )
+        navigate(action)
+    }
+
+    private fun clickTag(url: String?) {
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 }
