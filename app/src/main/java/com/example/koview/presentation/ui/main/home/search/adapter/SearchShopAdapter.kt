@@ -1,16 +1,14 @@
 package com.example.koview.presentation.ui.main.home.search.adapter
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemSearchShopBinding
-import com.example.koview.presentation.ui.main.home.search.SearchViewModel
+import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.home.search.model.TagShop
 
 class SearchShopAdapter(
-    private val viewModel: SearchViewModel,
+    private val viewModel: ProductViewModel,
     private val tagList: List<TagShop>
 ) :
     RecyclerView.Adapter<SearchShopAdapter.SearchShopViewHolder>() {
@@ -35,9 +33,9 @@ class SearchShopAdapter(
     class SearchShopViewHolder(private val binding: ItemSearchShopBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: SearchViewModel, tagShop: TagShop) {
+        fun bind(viewModel: ProductViewModel, tagShop: TagShop) {
             binding.model = tagShop
-            binding.vm = viewModel
+            binding.productVm = viewModel
         }
 
     }

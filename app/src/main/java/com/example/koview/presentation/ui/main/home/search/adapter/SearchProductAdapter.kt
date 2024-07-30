@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemSearchProductBinding
-import com.example.koview.presentation.ui.main.home.search.SearchViewModel
+import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
-class SearchProductAdapter(private val viewModel: SearchViewModel) :
+class SearchProductAdapter(private val viewModel: ProductViewModel) :
     RecyclerView.Adapter<SearchProductAdapter.SearchProductViewHolder>() {
 
     private var productList: List<SearchProduct> = emptyList()
@@ -44,13 +44,13 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
     override fun getItemCount(): Int = productList.size
     class SearchProductViewHolder(
         private val binding: ItemSearchProductBinding,
-        private val viewModel: SearchViewModel
+        private val viewModel: ProductViewModel
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(searchProduct: SearchProduct) {
             binding.model = searchProduct
-            binding.vm = viewModel
+            binding.productVm = viewModel
             val context = binding.root.context
 
             // FlexboxLayoutManager 설정

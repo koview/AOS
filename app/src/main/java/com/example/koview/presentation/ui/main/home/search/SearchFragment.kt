@@ -3,11 +3,9 @@ package com.example.koview.presentation.ui.main.home.search
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.webkit.WebViewClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
@@ -16,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.databinding.FragmentSearchBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.global.ProductEvent
+import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.home.HomeEvent
 import com.example.koview.presentation.ui.main.home.HomeViewModel
 import com.example.koview.presentation.ui.main.home.search.adapter.SearchProductAdapter
@@ -25,6 +25,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private val viewModel: SearchViewModel by activityViewModels()
     private val parentViewModel: HomeViewModel by activityViewModels()
+    private val productViewModel: ProductViewModel by activityViewModels()
     private lateinit var productAdapter: SearchProductAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,7 +34,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         binding.vm = viewModel
         binding.parentVm = parentViewModel
 
-        productAdapter = SearchProductAdapter(viewModel)
+        productAdapter = SearchProductAdapter(productViewModel)
 
         initSearchProductRecyclerview()
         initEventObserve()
@@ -49,16 +50,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect { event ->
+            productViewModel.event.collect { event ->
                 when (event) {
-                    is SearchEvent.NavigateToProductDetail -> {
-                        viewModel.searchProduct.value?.let { searchProduct ->
+                    is ProductEvent.NavigateToProductDetail -> {
+                        productViewModel.searchProduct.value?.let { searchProduct ->
                             findNavController().toProductDetail(searchProduct)
                         }
                     }
 
+                    is ProductEvent.ClickTag -> clickTag(productViewModel.searchProductUrl.value)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.event.collect {
+                when (it) {
                     SearchEvent.NavigateToHome -> findNavController().toHome()
-                    is SearchEvent.ClickTag -> clickTag(viewModel.searchProductUrl.value)
                 }
             }
         }
@@ -72,11 +79,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         }
     }
 
+    // SearchViewModel data
     private fun initProductListObserver() {
         repeatOnStarted {
             viewModel.searchProductList.collect { searchProductList ->
                 productAdapter.submitList(searchProductList)
-
             }
         }
     }

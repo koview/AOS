@@ -1,8 +1,5 @@
 package com.example.koview.presentation.ui.main.home.search
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.presentation.ui.main.home.model.Category
@@ -20,9 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class SearchEvent {
-    data class NavigateToProductDetail(val searchProduct: SearchProduct) : SearchEvent()
     data object NavigateToHome : SearchEvent()
-    data class ClickTag(val productUrl: String?) : SearchEvent()
 }
 
 @HiltViewModel
@@ -31,14 +26,8 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     private val _searchProductList = MutableStateFlow<List<SearchProduct>>(emptyList())
     val searchProductList: StateFlow<List<SearchProduct>> = _searchProductList.asStateFlow()
 
-    private var _searchProduct = MutableLiveData<SearchProduct>()
-    val searchProduct: LiveData<SearchProduct> get() = _searchProduct
-
     private val _event = MutableSharedFlow<SearchEvent>()
     val event: SharedFlow<SearchEvent> = _event.asSharedFlow()
-
-    private val _searchProductUrl = MutableLiveData<String?>()
-    val searchProductUrl: LiveData<String?> get() = _searchProductUrl
 
     init {
         setProductListData()
@@ -333,13 +322,6 @@ class SearchViewModel @Inject constructor() : ViewModel() {
         _searchProductList.value = fetchedData
     }
 
-    fun navigateToProductDetail(searchProduct: SearchProduct) {
-        _searchProduct.value = searchProduct
-        viewModelScope.launch {
-            _event.emit(SearchEvent.NavigateToProductDetail(searchProduct))
-        }
-    }
-
     fun navigateToHome() {
         viewModelScope.launch {
             _event.emit(SearchEvent.NavigateToHome)
@@ -350,11 +332,5 @@ class SearchViewModel @Inject constructor() : ViewModel() {
         // TODO: searchAPI 연동
     }
 
-    fun clickTag(url: String?) {
-        _searchProductUrl.value = url
-        viewModelScope.launch {
-            _event.emit(SearchEvent.ClickTag(url))
-        }
-    }
 
 }
