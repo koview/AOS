@@ -7,5 +7,6 @@ data class CoviewUiData(
     var commentCount: Int = 0,
     var likeState: Boolean = false,
     var contents: String = "",
-    var date: String = ""
+    var date: String = "",
+    var imageList: List<String> = emptyList(),
 )
