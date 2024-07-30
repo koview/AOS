@@ -69,6 +69,10 @@
         android:name="com.example.koview.presentation.ui.main.home.product.PopularProductFragment"
         android:label="PopularProductFragment">
 
+        <action
+            android:id="@+id/action_popular_product_fragment_to_home_category_select_fragment"
+            app:destination="@id/home_category_select_fragment" />
+
     </fragment>
 
 

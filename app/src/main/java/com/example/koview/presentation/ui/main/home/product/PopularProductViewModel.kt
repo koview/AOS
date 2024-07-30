@@ -25,8 +25,8 @@ class PopularProductViewModel @Inject constructor() : ViewModel() {
                 imageUrl = "",
                 reviewNumber = 1,
                 registDate = "2024-07-12",
-                isWarning = true,
-                isHot = false,
+                isWarning = false,
+                isHot = true,
                 category = Category.TOY,
                 shopList = listOf(
                     TagShop(
@@ -135,11 +135,11 @@ class PopularProductViewModel @Inject constructor() : ViewModel() {
             ),
             SearchProduct(
                 title = "어라어라얼",
-                imageUrl = "https://ifh.cc/g/s1nljr.jpg",
+                imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
                 reviewNumber = 5,
                 registDate = "2024-07-13",
-                isWarning = true,
-                isHot = false,
+                isWarning = false,
+                isHot = true,
                 category = Category.SANITARY,
                 shopList = listOf(
 
@@ -190,11 +190,11 @@ class PopularProductViewModel @Inject constructor() : ViewModel() {
             ),
             SearchProduct(
                 title = "dd",
-                imageUrl = "https://ifh.cc/g/s1nljr.jpg",
+                imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
                 reviewNumber = 5,
                 registDate = "2024-07-13",
-                isWarning = true,
-                isHot = false,
+                isWarning = false,
+                isHot = true,
                 category = Category.ACCESSORIES,
                 shopList = listOf(
                     TagShop(title = "Shop C", productUrl = "www.naver.com", isVerify = true),
@@ -248,11 +248,11 @@ class PopularProductViewModel @Inject constructor() : ViewModel() {
             ),
             SearchProduct(
                 title = "dd",
-                imageUrl = "https://ifh.cc/g/s1nljr.jpg",
+                imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
                 reviewNumber = 5,
                 registDate = "2024-07-13",
-                isWarning = true,
-                isHot = false,
+                isWarning = false,
+                isHot = true,
                 category = Category.STATIONARY,
                 shopList = listOf(
                     TagShop(title = "Shop C", productUrl = "www.naver.com", isVerify = false),
