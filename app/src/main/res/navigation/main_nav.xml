@@ -17,7 +17,7 @@
             app:destination="@id/harmful_product_fragment" />
         <action
             android:id="@+id/action_home_fragment_to_popular_product_framgnet"
-            app:destination="@id/popular_product_framgnet" />
+            app:destination="@id/popular_product_fragment" />
         <action
             android:id="@+id/action_home_fragment_to_search_fragment"
             app:destination="@id/search_fragment"/>
@@ -49,10 +49,14 @@
         android:name="com.example.koview.presentation.ui.main.home.product.HarmfulProductFragment"
         android:label="HarmfulProductFragment">
 
+        <action
+            android:id="@+id/action_harmful_product_fragment_to_home_category_select_fragment"
+            app:destination="@id/home_category_select_fragment" />
+
     </fragment>
 
     <fragment
-        android:id="@+id/popular_product_framgnet"
+        android:id="@+id/popular_product_fragment"
         android:name="com.example.koview.presentation.ui.main.home.product.PopularProductFragment"
         android:label="PopularProductFragment">
 
