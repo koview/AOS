@@ -1,8 +1,9 @@
 package com.example.koview.presentation.ui.main.home.product
 
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -10,10 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.databinding.FragmentPopularProductBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.global.ProductEvent
 import com.example.koview.presentation.ui.main.global.ProductViewModel
 import com.example.koview.presentation.ui.main.home.HomeEvent
 import com.example.koview.presentation.ui.main.home.HomeViewModel
 import com.example.koview.presentation.ui.main.home.search.adapter.SearchProductAdapter
+import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 
 class PopularProductFragment :
     BaseFragment<FragmentPopularProductBinding>(R.layout.fragment_popular_product) {
@@ -50,6 +53,19 @@ class PopularProductFragment :
                 }
             }
         }
+        repeatOnStarted {
+            productViewModel.event.collect { event ->
+                when (event) {
+                    is ProductEvent.NavigateToProductDetail -> {
+                        productViewModel.searchProduct.value?.let { searchProduct ->
+                            findNavController().toProductDetail(searchProduct)
+                        }
+                    }
+
+                    is ProductEvent.ClickTag -> clickTag(productViewModel.searchProductUrl.value)
+                }
+            }
+        }
     }
 
     private fun initPopularProductListObserver() {
@@ -64,5 +80,18 @@ class PopularProductFragment :
         val action =
             PopularProductFragmentDirections.actionPopularProductFragmentToHomeCategorySelectFragment()
         navigate(action)
+    }
+
+    private fun NavController.toProductDetail(searchProduct: SearchProduct) {
+        val action =
+            PopularProductFragmentDirections.actionPopularProductFragmentToProductDetailFragment(
+                searchProduct
+            )
+        navigate(action)
+    }
+
+    private fun clickTag(url: String?) {
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 }

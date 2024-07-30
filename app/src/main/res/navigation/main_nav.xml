@@ -73,6 +73,15 @@
             android:id="@+id/action_popular_product_fragment_to_home_category_select_fragment"
             app:destination="@id/home_category_select_fragment" />
 
+        <action
+            android:id="@+id/action_popular_product_fragment_to_product_detail_fragment"
+            app:destination="@id/product_detail_fragment">
+            <argument
+                android:name="searchProduct"
+                app:argType="com.example.koview.presentation.ui.main.home.search.model.SearchProduct"
+                app:nullable="true" />
+        </action>
+
     </fragment>
 
 
