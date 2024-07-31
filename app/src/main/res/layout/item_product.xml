@@ -8,23 +8,16 @@
 
         <variable
             name="model"
-            type="com.example.koview.presentation.ui.main.home.search.model.SearchProduct" />
+            type="com.example.koview.presentation.ui.main.global.product.model.Product" />
 
-        <variable
-            name="vm"
-            type="com.example.koview.presentation.ui.main.home.search.SearchViewModel" />
-
-        <variable
-            name="productVm"
-            type="com.example.koview.presentation.ui.main.global.product.ProductViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:onClick="@{()->productVm.navigateToProductDetail(model)}"
         android:paddingBottom="10dp">
 
         <androidx.appcompat.widget.AppCompatImageView

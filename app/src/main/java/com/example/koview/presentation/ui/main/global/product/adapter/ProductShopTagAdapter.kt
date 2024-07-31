@@ -4,14 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemProductShopTagBinding
-import com.example.koview.presentation.ui.main.global.product.ProductViewModel
-import com.example.koview.presentation.ui.main.home.search.model.TagShop
+import com.example.koview.presentation.ui.main.global.product.ProductInterface
+import com.example.koview.presentation.ui.main.global.product.model.TagShop
 
 class ProductShopTagAdapter(
-    private val viewModel: ProductViewModel,
+    listener: ProductInterface,
     private val tagList: List<TagShop>
 ) :
     RecyclerView.Adapter<ProductShopTagAdapter.SearchShopViewHolder>() {
+
+    private val mCallBack = listener
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -21,22 +23,27 @@ class ProductShopTagAdapter(
             viewGroup,
             false
         )
-        return SearchShopViewHolder(binding)
+        return SearchShopViewHolder(binding, mCallBack)
     }
 
     override fun onBindViewHolder(holder: SearchShopViewHolder, position: Int) {
-        holder.bind(viewModel, tagList[position])
+        holder.bind(tagList[position])
     }
 
     override fun getItemCount(): Int = tagList.size
 
-    class SearchShopViewHolder(private val binding: ItemProductShopTagBinding) :
+    class SearchShopViewHolder(
+        private val binding: ItemProductShopTagBinding,
+        private val mCallBack: ProductInterface
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: ProductViewModel, tagShop: TagShop) {
+        fun bind(tagShop: TagShop) {
             binding.model = tagShop
-            binding.productVm = viewModel
-        }
 
+            binding.layoutTag.setOnClickListener {
+                mCallBack.onProductShopTagClick(tagShop.productUrl)
+            }
+        }
     }
 }

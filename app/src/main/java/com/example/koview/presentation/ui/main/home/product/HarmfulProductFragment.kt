@@ -2,7 +2,6 @@ package com.example.koview.presentation.ui.main.home.product
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
@@ -13,14 +12,16 @@ import com.example.koview.R
 import com.example.koview.databinding.FragmentHarmfulProductBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.global.product.ProductEvent
+import com.example.koview.presentation.ui.main.global.product.ProductInterface
 import com.example.koview.presentation.ui.main.global.product.ProductViewModel
+import com.example.koview.presentation.ui.main.global.product.adapter.ProductAdapter
+import com.example.koview.presentation.ui.main.global.product.model.Product
 import com.example.koview.presentation.ui.main.home.HomeEvent
 import com.example.koview.presentation.ui.main.home.HomeViewModel
-import com.example.koview.presentation.ui.main.global.product.adapter.ProductAdapter
-import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 
 class HarmfulProductFragment :
-    BaseFragment<FragmentHarmfulProductBinding>(R.layout.fragment_harmful_product) {
+    BaseFragment<FragmentHarmfulProductBinding>(R.layout.fragment_harmful_product),
+    ProductInterface {
 
     private val viewModel: HarmfulProductViewModel by activityViewModels()
     private val parentViewModel: HomeViewModel by activityViewModels()
@@ -32,7 +33,7 @@ class HarmfulProductFragment :
 
         binding.parentVm = parentViewModel
 
-        productAdapter = ProductAdapter(productViewModel)
+        productAdapter = ProductAdapter(this)
 
         initHarmfulProductRecyclerview()
         initHarmfulProductListObserver()
@@ -63,7 +64,6 @@ class HarmfulProductFragment :
                         }
                     }
 
-                    is ProductEvent.ClickTag -> clickTag(productViewModel.searchProductUrl.value)
                 }
             }
         }
@@ -73,7 +73,6 @@ class HarmfulProductFragment :
         repeatOnStarted {
             viewModel.harmfulProductList.collect { harmfulProductList ->
                 productAdapter.submitList(harmfulProductList)
-                Log.d("유해", harmfulProductList.toString())
             }
         }
     }
@@ -84,10 +83,10 @@ class HarmfulProductFragment :
         navigate(action)
     }
 
-    private fun NavController.toProductDetail(searchProduct: SearchProduct) {
+    private fun NavController.toProductDetail(harmfulProduct: Product) {
         val action =
             HarmfulProductFragmentDirections.actionHarmfulProductFragmentToProductDetailFragment(
-                searchProduct
+                harmfulProduct
             )
         navigate(action)
     }
@@ -95,5 +94,14 @@ class HarmfulProductFragment :
     private fun clickTag(url: String?) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
+    }
+
+
+    override fun onProductClick(product: Product) {
+        productViewModel.navigateToProductDetail(product)
+    }
+
+    override fun onProductShopTagClick(url: String) {
+        clickTag(url)
     }
 }

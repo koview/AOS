@@ -2,10 +2,10 @@ package com.example.koview.presentation.ui.main.home.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.koview.presentation.ui.main.global.product.model.Product
+import com.example.koview.presentation.ui.main.global.product.model.Review
+import com.example.koview.presentation.ui.main.global.product.model.TagShop
 import com.example.koview.presentation.ui.main.home.model.Category
-import com.example.koview.presentation.ui.main.home.search.model.Review
-import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
-import com.example.koview.presentation.ui.main.home.search.model.TagShop
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,8 +23,8 @@ sealed class SearchEvent {
 @HiltViewModel
 class SearchViewModel @Inject constructor() : ViewModel() {
 
-    private val _searchProductList = MutableStateFlow<List<SearchProduct>>(emptyList())
-    val searchProductList: StateFlow<List<SearchProduct>> = _searchProductList.asStateFlow()
+    private val _searchProductList = MutableStateFlow<List<Product>>(emptyList())
+    val searchProductList: StateFlow<List<Product>> = _searchProductList.asStateFlow()
 
     private val _event = MutableSharedFlow<SearchEvent>()
     val event: SharedFlow<SearchEvent> = _event.asSharedFlow()
@@ -36,7 +36,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     private fun setProductListData() {
         // todo: 상품 검색 데이터 가져오기
         val fetchedData = listOf(
-            SearchProduct(
+            Product(
                 title = "얏호",
                 imageUrl = "",
                 reviewNumber = 1,
@@ -149,7 +149,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 //                )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "어라어라얼",
                 imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
                 reviewNumber = 5,
@@ -204,7 +204,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "dd",
                 imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
                 reviewNumber = 5,
@@ -262,7 +262,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "dd",
                 imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
                 reviewNumber = 5,

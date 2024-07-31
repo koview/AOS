@@ -1,18 +1,18 @@
 package com.example.koview.presentation.ui.main.home.product
 
 import androidx.lifecycle.ViewModel
+import com.example.koview.presentation.ui.main.global.product.model.Product
+import com.example.koview.presentation.ui.main.global.product.model.Review
+import com.example.koview.presentation.ui.main.global.product.model.TagShop
 import com.example.koview.presentation.ui.main.home.model.Category
-import com.example.koview.presentation.ui.main.home.search.model.Review
-import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
-import com.example.koview.presentation.ui.main.home.search.model.TagShop
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class PopularProductViewModel @Inject constructor() : ViewModel() {
 
-    private val _popularProductList = MutableStateFlow<List<SearchProduct>>(emptyList())
-    val popularProductList: StateFlow<List<SearchProduct>> = _popularProductList
+    private val _popularProductList = MutableStateFlow<List<Product>>(emptyList())
+    val popularProductList: StateFlow<List<Product>> = _popularProductList
 
     init {
         setPopularProductListData()
@@ -20,7 +20,7 @@ class PopularProductViewModel @Inject constructor() : ViewModel() {
 
     private fun setPopularProductListData() {
         val fetchedData = listOf(
-            SearchProduct(
+            Product(
                 title = "얏호",
                 imageUrl = "",
                 reviewNumber = 1,
@@ -133,7 +133,7 @@ class PopularProductViewModel @Inject constructor() : ViewModel() {
 //                )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "어라어라얼",
                 imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
                 reviewNumber = 5,
@@ -188,7 +188,7 @@ class PopularProductViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "dd",
                 imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
                 reviewNumber = 5,
@@ -246,7 +246,7 @@ class PopularProductViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "dd",
                 imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
                 reviewNumber = 5,

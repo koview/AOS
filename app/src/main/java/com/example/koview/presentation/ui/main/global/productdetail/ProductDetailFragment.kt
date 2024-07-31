@@ -12,17 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.databinding.FragmentProductDetailBinding
 import com.example.koview.presentation.base.BaseFragment
-import com.example.koview.presentation.ui.main.global.product.ProductEvent
+import com.example.koview.presentation.ui.main.global.product.ProductInterface
 import com.example.koview.presentation.ui.main.global.product.ProductViewModel
+import com.example.koview.presentation.ui.main.global.product.adapter.ProductShopTagAdapter
+import com.example.koview.presentation.ui.main.global.product.model.Product
 import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
-import com.example.koview.presentation.ui.main.global.product.adapter.ProductShopTagAdapter
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
 class ProductDetailFragment :
-    BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail) {
+    BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail), ProductInterface {
 
     private val parentViewModel: SearchViewModel by activityViewModels()
     private val viewModel: ProductDetailViewModel by viewModels()
@@ -50,7 +51,7 @@ class ProductDetailFragment :
         binding.rvShop.adapter =
             productViewModel.searchProduct.value?.let {
                 ProductShopTagAdapter(
-                    productViewModel,
+                    this,
                     it.shopList
                 )
             }
@@ -61,7 +62,6 @@ class ProductDetailFragment :
         binding.rvReview.adapter =
             productViewModel.searchProduct.value?.let {
                 ProductReviewAdapter(
-                    parentViewModel,
                     it.reviewList
                 )
             }
@@ -72,14 +72,6 @@ class ProductDetailFragment :
             viewModel.event.collect {
                 when (it) {
                     ProductDetailEvent.NavigateToSearch -> findNavController().toSearch()
-                }
-            }
-        }
-        repeatOnStarted {
-            productViewModel.event.collect() {
-                when (it) {
-                    is ProductEvent.ClickTag -> clickTag(productViewModel.searchProductUrl.value)
-                    else -> {}
                 }
             }
         }
@@ -95,5 +87,12 @@ class ProductDetailFragment :
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
+    override fun onProductClick(product: Product) {
+        // 사용 X
+    }
+
+    override fun onProductShopTagClick(url: String) {
+        clickTag(url)
+    }
 
 }

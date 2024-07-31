@@ -58,7 +58,7 @@
             app:destination="@id/product_detail_fragment">
             <argument
                 android:name="searchProduct"
-                app:argType="com.example.koview.presentation.ui.main.home.search.model.SearchProduct"
+                app:argType="com.example.koview.presentation.ui.main.global.product.model.Product"
                 app:nullable="true" />
         </action>
 
@@ -78,7 +78,7 @@
             app:destination="@id/product_detail_fragment">
             <argument
                 android:name="searchProduct"
-                app:argType="com.example.koview.presentation.ui.main.home.search.model.SearchProduct"
+                app:argType="com.example.koview.presentation.ui.main.global.product.model.Product"
                 app:nullable="true" />
         </action>
 
@@ -100,7 +100,7 @@
             app:destination="@id/product_detail_fragment">
             <argument
                 android:name="searchProduct"
-                app:argType="com.example.koview.presentation.ui.main.home.search.model.SearchProduct"
+                app:argType="com.example.koview.presentation.ui.main.global.product.model.Product"
                 app:nullable="true" />
         </action>
 

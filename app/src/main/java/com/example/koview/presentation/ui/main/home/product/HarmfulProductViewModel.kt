@@ -1,18 +1,18 @@
 package com.example.koview.presentation.ui.main.home.product
 
 import androidx.lifecycle.ViewModel
+import com.example.koview.presentation.ui.main.global.product.model.Product
+import com.example.koview.presentation.ui.main.global.product.model.Review
+import com.example.koview.presentation.ui.main.global.product.model.TagShop
 import com.example.koview.presentation.ui.main.home.model.Category
-import com.example.koview.presentation.ui.main.home.search.model.Review
-import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
-import com.example.koview.presentation.ui.main.home.search.model.TagShop
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class HarmfulProductViewModel @Inject constructor() : ViewModel() {
 
-    private val _harmfulProductList = MutableStateFlow<List<SearchProduct>>(emptyList())
-    val harmfulProductList: StateFlow<List<SearchProduct>> = _harmfulProductList
+    private val _harmfulProductList = MutableStateFlow<List<Product>>(emptyList())
+    val harmfulProductList: StateFlow<List<Product>> = _harmfulProductList
 
     init {
         setHarmfulProductListData()
@@ -20,7 +20,7 @@ class HarmfulProductViewModel @Inject constructor() : ViewModel() {
 
     private fun setHarmfulProductListData() {
         val fetchedData = listOf(
-            SearchProduct(
+            Product(
                 title = "얏호",
                 imageUrl = "",
                 reviewNumber = 1,
@@ -133,7 +133,7 @@ class HarmfulProductViewModel @Inject constructor() : ViewModel() {
 //                )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "어라어라얼",
                 imageUrl = "https://ifh.cc/g/s1nljr.jpg",
                 reviewNumber = 5,
@@ -188,7 +188,7 @@ class HarmfulProductViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "dd",
                 imageUrl = "https://ifh.cc/g/s1nljr.jpg",
                 reviewNumber = 5,
@@ -246,7 +246,7 @@ class HarmfulProductViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "dd",
                 imageUrl = "https://ifh.cc/g/s1nljr.jpg",
                 reviewNumber = 5,

@@ -1,9 +1,9 @@
-package com.example.koview.presentation.ui.main.home.search.model
+package com.example.koview.presentation.ui.main.global.product.model
 
 import com.example.koview.presentation.ui.main.home.model.Category
 import java.io.Serializable
 
-data class SearchProduct(
+data class Product(
     val title: String,
     val imageUrl: String,
     val reviewNumber: Int,
