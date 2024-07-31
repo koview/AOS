@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.databinding.FragmentProductDetailBinding
 import com.example.koview.presentation.base.BaseFragment
-import com.example.koview.presentation.ui.main.global.ProductEvent
-import com.example.koview.presentation.ui.main.global.ProductViewModel
+import com.example.koview.presentation.ui.main.global.product.ProductEvent
+import com.example.koview.presentation.ui.main.global.product.ProductViewModel
 import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.example.koview.presentation.ui.main.global.product.adapter.ProductShopTagAdapter

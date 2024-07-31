@@ -1,4 +1,4 @@
-package com.example.koview.presentation.ui.main.global
+package com.example.koview.presentation.ui.main.global.product
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

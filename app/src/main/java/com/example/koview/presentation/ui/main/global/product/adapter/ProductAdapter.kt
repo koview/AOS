@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemProductBinding
-import com.example.koview.presentation.ui.main.global.ProductViewModel
+import com.example.koview.presentation.ui.main.global.product.ProductViewModel
 import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager

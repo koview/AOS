@@ -10,7 +10,7 @@
 
         <variable
             name="productVm"
-            type="com.example.koview.presentation.ui.main.global.ProductViewModel" />
+            type="com.example.koview.presentation.ui.main.global.product.ProductViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

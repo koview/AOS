@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemProductShopTagBinding
-import com.example.koview.presentation.ui.main.global.ProductViewModel
+import com.example.koview.presentation.ui.main.global.product.ProductViewModel
 import com.example.koview.presentation.ui.main.home.search.model.TagShop
 
 class ProductShopTagAdapter(
