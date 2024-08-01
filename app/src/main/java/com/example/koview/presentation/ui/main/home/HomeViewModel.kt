@@ -1,6 +1,5 @@
 package com.example.koview.presentation.ui.main.home
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.presentation.ui.main.home.model.AskUiData
@@ -19,6 +18,7 @@ sealed class HomeEvent {
     data object ShowCategoryBottomSheet : HomeEvent()
     data object NavigateToHarmfulProduct : HomeEvent()
     data object NavigateToPopularProduct : HomeEvent()
+    data object NavigateToSearch : HomeEvent()
 }
 
 @HiltViewModel
@@ -114,6 +114,12 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     fun navigateToPopularProduct() {
         viewModelScope.launch {
             _event.emit(HomeEvent.NavigateToPopularProduct)
+        }
+    }
+
+    fun navigateToSearch() {
+        viewModelScope.launch {
+            _event.emit(HomeEvent.NavigateToSearch)
         }
     }
 }

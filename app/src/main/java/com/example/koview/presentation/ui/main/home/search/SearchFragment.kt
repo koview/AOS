@@ -1,10 +1,14 @@
 package com.example.koview.presentation.ui.main.home.search
 
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.webkit.WebViewClient
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -12,28 +16,35 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.databinding.FragmentSearchBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.home.HomeEvent
+import com.example.koview.presentation.ui.main.home.HomeViewModel
 import com.example.koview.presentation.ui.main.home.search.adapter.SearchProductAdapter
 import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
     private val viewModel: SearchViewModel by activityViewModels()
+    private val parentViewModel: HomeViewModel by activityViewModels()
+    private lateinit var productAdapter: SearchProductAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
+        binding.parentVm = parentViewModel
+
+        productAdapter = SearchProductAdapter(viewModel)
 
         initSearchProductRecyclerview()
         initEventObserve()
+        initProductListObserver()
         enterSearch()
     }
 
     private fun initSearchProductRecyclerview() {
-        val adapter = SearchProductAdapter(viewModel)
         binding.rvProduct.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvProduct.adapter = adapter
+        binding.rvProduct.adapter = productAdapter
     }
 
     private fun initEventObserve() {
@@ -45,7 +56,27 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                             findNavController().toProductDetail(searchProduct)
                         }
                     }
+
+                    SearchEvent.NavigateToHome -> findNavController().toHome()
+                    is SearchEvent.ClickTag -> clickTag(viewModel.searchProductUrl.value)
                 }
+            }
+        }
+        repeatOnStarted {
+            parentViewModel.event.collect() {
+                when (it) {
+                    HomeEvent.ShowCategoryBottomSheet -> findNavController().toCategoryBottomSheet()
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun initProductListObserver() {
+        repeatOnStarted {
+            viewModel.searchProductList.collect { searchProductList ->
+                productAdapter.submitList(searchProductList)
+
             }
         }
     }
@@ -53,6 +84,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     private fun NavController.toProductDetail(searchProduct: SearchProduct) {
         val action =
             SearchFragmentDirections.actionSearchFragmentToProductDetailFragment(searchProduct)
+        navigate(action)
+    }
+
+    private fun NavController.toHome() {
+        val action = SearchFragmentDirections.actionSearchFragmentToHomeFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toCategoryBottomSheet() {
+        val action = SearchFragmentDirections.actionSearchFragmentToHomeCategorySelectFragment()
         navigate(action)
     }
 
@@ -71,6 +112,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             }
             handled
         }
+    }
+
+    private fun clickTag(url: String?) {
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
 }

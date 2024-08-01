@@ -23,11 +23,13 @@
         android:onClick="@{()->vm.navigateToProductDetail(model)}"
         android:paddingBottom="10dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_product"
-            android:layout_width="0dp"
+            android:layout_width="350dp"
             android:layout_height="220dp"
+            android:scaleType="centerCrop"
             android:background="@drawable/rect_whitefill_nostroke_16radius"
+            searchProductImgUrl="@{model.imageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

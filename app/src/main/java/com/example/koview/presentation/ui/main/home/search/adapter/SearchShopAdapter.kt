@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemSearchShopBinding
+import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.example.koview.presentation.ui.main.home.search.model.TagShop
 
-class SearchShopAdapter(private val tagList: List<TagShop>) :
+class SearchShopAdapter(
+    private val viewModel: SearchViewModel,
+    private val tagList: List<TagShop>
+) :
     RecyclerView.Adapter<SearchShopAdapter.SearchShopViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -23,7 +27,7 @@ class SearchShopAdapter(private val tagList: List<TagShop>) :
     }
 
     override fun onBindViewHolder(holder: SearchShopAdapter.SearchShopViewHolder, position: Int) {
-        holder.bind(tagList[position])
+        holder.bind(viewModel, tagList[position])
     }
 
     override fun getItemCount(): Int = tagList.size
@@ -31,12 +35,9 @@ class SearchShopAdapter(private val tagList: List<TagShop>) :
     class SearchShopViewHolder(private val binding: ItemSearchShopBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(tagShop: TagShop) {
+        fun bind(viewModel: SearchViewModel, tagShop: TagShop) {
             binding.model = tagShop
-            if (tagShop.isVerify) {
-                binding.layoutTag.backgroundTintList =
-                    ColorStateList.valueOf(Color.parseColor("#F60000"))
-            }
+            binding.vm = viewModel
         }
 
     }

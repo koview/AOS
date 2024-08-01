@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_home_fragment_to_popular_product_framgnet"
             app:destination="@id/popular_product_framgnet" />
+        <action
+            android:id="@+id/action_home_fragment_to_search_fragment"
+            app:destination="@id/search_fragment"/>
     </fragment>
 
     <fragment
@@ -75,17 +78,29 @@
                 app:nullable="true" />
         </action>
 
+        <action
+            android:id="@+id/action_search_fragment_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:popUpTo="@id/home_fragment"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_search_fragment_to_home_category_select_fragment"
+            app:destination="@id/home_category_select_fragment" />
+
     </fragment>
 
 
     <fragment
         android:id="@+id/product_detail_fragment"
-        android:name="com.example.koview.presentation.ui.main.home.search.productdetail.ProductDetailFragment"
+        android:name="com.example.koview.presentation.ui.main.global.productdetail.ProductDetailFragment"
         android:label="ProductDetailFragment">
 
         <action
             android:id="@+id/action_product_detail_fragment_to_search_fragment"
-            app:destination="@id/search_fragment"/>
+            app:destination="@id/search_fragment"
+            app:popUpTo="@id/search_fragment"
+            app:popUpToInclusive="true"/>
 
     </fragment>
 
