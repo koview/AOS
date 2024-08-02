@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="15dp">
+
+        <TextView
+            android:id="@+id/tv_point_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일일미션"
+            style="@style/TextSmallMedium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2024.08.02"
+            style="@style/TextTinyMedium"
+            android:textColor="@color/kv_gray5"
+            app:layout_constraintTop_toBottomOf="@id/tv_point_detail"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+100P"
+            style="@style/TextSmallSemiBold"
+            android:textColor="@color/kv_main4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

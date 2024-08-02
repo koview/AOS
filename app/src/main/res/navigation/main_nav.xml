@@ -42,6 +42,9 @@
         android:name="com.example.koview.presentation.ui.main.mypage.MyPageFragment"
         android:label="MyPageFragment">
 
+        <action
+            android:id="@+id/action_mypage_fragment_to_myPageSettingFragment"
+            app:destination="@id/myPageSettingFragment" />
     </fragment>
 
     <fragment
@@ -103,5 +106,31 @@
             app:popUpToInclusive="true"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/myPageSettingFragment"
+        android:name="com.example.koview.presentation.ui.main.mypage.setting.MyPageSettingFragment"
+        android:label="MyPageSettingFragment" >
+        <action
+            android:id="@+id/action_myPageSettingFragment_to_settingPointFragment"
+            app:destination="@id/settingPointFragment" />
+        <action
+            android:id="@+id/action_myPageSettingFragment_to_settingLoginInfoFragment"
+            app:destination="@id/settingLoginInfoFragment" />
+        <action
+            android:id="@+id/action_myPageSettingFragment_to_settingOperatingFragment"
+            app:destination="@id/settingOperatingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingLoginInfoFragment"
+        android:name="com.example.koview.presentation.ui.main.mypage.setting.logininfo.SettingLoginInfoFragment"
+        android:label="SettingLoginInfoFragment" />
+    <fragment
+        android:id="@+id/settingOperatingFragment"
+        android:name="com.example.koview.presentation.ui.main.mypage.setting.operating.SettingOperatingFragment"
+        android:label="SettingOperatingFragment" />
+    <fragment
+        android:id="@+id/settingPointFragment"
+        android:name="com.example.koview.presentation.ui.main.mypage.setting.point.SettingPointFragment"
+        android:label="SettingPointFragment" />
 
 </navigation>
