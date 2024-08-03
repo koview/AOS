@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="20dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_product"
@@ -32,6 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:id="@+id/layout_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -140,6 +141,16 @@
                 tools:listitem="@layout/item_product_shop_tag" />
 
         </LinearLayout>
+
+        <View
+            android:id="@+id/line_review"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/kv_gray3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_info"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
