@@ -1,40 +1,24 @@
-package com.example.koview.presentation.ui.main.home.search
+package com.example.koview.presentation.ui.main.home.product
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.koview.presentation.ui.main.global.product.model.Product
 import com.example.koview.presentation.ui.main.global.product.model.Review
 import com.example.koview.presentation.ui.main.global.product.model.TagShop
 import com.example.koview.presentation.ui.main.home.model.Category
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class SearchEvent {
-    data object NavigateToHome : SearchEvent()
-}
+class HarmfulProductViewModel @Inject constructor() : ViewModel() {
 
-@HiltViewModel
-class SearchViewModel @Inject constructor() : ViewModel() {
-
-    private val _searchProductList = MutableStateFlow<List<Product>>(emptyList())
-    val searchProductList: StateFlow<List<Product>> = _searchProductList.asStateFlow()
-
-    private val _event = MutableSharedFlow<SearchEvent>()
-    val event: SharedFlow<SearchEvent> = _event.asSharedFlow()
+    private val _harmfulProductList = MutableStateFlow<List<Product>>(emptyList())
+    val harmfulProductList: StateFlow<List<Product>> = _harmfulProductList
 
     init {
-        setProductListData()
+        setHarmfulProductListData()
     }
 
-    private fun setProductListData() {
-        // todo: 상품 검색 데이터 가져오기
+    private fun setHarmfulProductListData() {
         val fetchedData = listOf(
             Product(
                 title = "얏호",
@@ -151,11 +135,11 @@ class SearchViewModel @Inject constructor() : ViewModel() {
             ),
             Product(
                 title = "어라어라얼",
-                imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
+                imageUrl = "https://ifh.cc/g/s1nljr.jpg",
                 reviewNumber = 5,
                 registDate = "2024-07-13",
-                isWarning = false,
-                isHot = true,
+                isWarning = true,
+                isHot = false,
                 category = Category.SANITARY,
                 shopList = listOf(
 
@@ -206,10 +190,10 @@ class SearchViewModel @Inject constructor() : ViewModel() {
             ),
             Product(
                 title = "dd",
-                imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
+                imageUrl = "https://ifh.cc/g/s1nljr.jpg",
                 reviewNumber = 5,
                 registDate = "2024-07-13",
-                isWarning = false,
+                isWarning = true,
                 isHot = false,
                 category = Category.ACCESSORIES,
                 shopList = listOf(
@@ -264,7 +248,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
             ),
             Product(
                 title = "dd",
-                imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
+                imageUrl = "https://ifh.cc/g/s1nljr.jpg",
                 reviewNumber = 5,
                 registDate = "2024-07-13",
                 isWarning = true,
@@ -319,17 +303,6 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                 )
             )
         )
-        _searchProductList.value = fetchedData
+        _harmfulProductList.value = fetchedData
     }
-
-    fun navigateToHome() {
-        viewModelScope.launch {
-            _event.emit(SearchEvent.NavigateToHome)
-        }
-    }
-
-    fun search() {
-        // TODO: searchAPI 연동
-    }
-
 }

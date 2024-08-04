@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
-import com.example.koview.presentation.ui.main.home.search.model.Review
+import com.example.koview.presentation.ui.main.global.product.model.Review
 
 @BindingAdapter("reviewLayoutVisibility")
 fun bindReviewLayoutVisibility(layout: LinearLayout, reviewList: List<Review>) {

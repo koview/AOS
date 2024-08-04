@@ -3,11 +3,9 @@ package com.example.koview.presentation.ui.main.home.search
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.webkit.WebViewClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
@@ -16,16 +14,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.databinding.FragmentSearchBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.global.product.ProductEvent
+import com.example.koview.presentation.ui.main.global.product.ProductInterface
+import com.example.koview.presentation.ui.main.global.product.ProductViewModel
+import com.example.koview.presentation.ui.main.global.product.adapter.ProductAdapter
+import com.example.koview.presentation.ui.main.global.product.model.Product
 import com.example.koview.presentation.ui.main.home.HomeEvent
 import com.example.koview.presentation.ui.main.home.HomeViewModel
-import com.example.koview.presentation.ui.main.home.search.adapter.SearchProductAdapter
-import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search), ProductInterface {
 
     private val viewModel: SearchViewModel by activityViewModels()
     private val parentViewModel: HomeViewModel by activityViewModels()
-    private lateinit var productAdapter: SearchProductAdapter
+    private val productViewModel: ProductViewModel by activityViewModels()
+    private lateinit var productAdapter: ProductAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +35,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         binding.vm = viewModel
         binding.parentVm = parentViewModel
 
-        productAdapter = SearchProductAdapter(viewModel)
+        productAdapter = ProductAdapter(this)
 
         initSearchProductRecyclerview()
         initEventObserve()
@@ -49,16 +51,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect { event ->
+            productViewModel.event.collect { event ->
                 when (event) {
-                    is SearchEvent.NavigateToProductDetail -> {
-                        viewModel.searchProduct.value?.let { searchProduct ->
+                    is ProductEvent.NavigateToProductDetail -> {
+                        productViewModel.searchProduct.value?.let { searchProduct ->
                             findNavController().toProductDetail(searchProduct)
                         }
                     }
-
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.event.collect {
+                when (it) {
                     SearchEvent.NavigateToHome -> findNavController().toHome()
-                    is SearchEvent.ClickTag -> clickTag(viewModel.searchProductUrl.value)
                 }
             }
         }
@@ -72,16 +78,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         }
     }
 
+    // SearchViewModel data
     private fun initProductListObserver() {
         repeatOnStarted {
             viewModel.searchProductList.collect { searchProductList ->
                 productAdapter.submitList(searchProductList)
-
             }
         }
     }
 
-    private fun NavController.toProductDetail(searchProduct: SearchProduct) {
+    private fun NavController.toProductDetail(searchProduct: Product) {
         val action =
             SearchFragmentDirections.actionSearchFragmentToProductDetailFragment(searchProduct)
         navigate(action)
@@ -114,9 +120,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         }
     }
 
-    private fun clickTag(url: String?) {
+    private fun clickTag(url: String) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
+    }
+
+    override fun onProductClick(product: Product) {
+        productViewModel.navigateToProductDetail(product)
+    }
+
+    override fun onProductShopTagClick(url: String) {
+        clickTag(url)
     }
 
 }

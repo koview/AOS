@@ -106,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
-            tools:listitem="@layout/item_search_product"
+            tools:listitem="@layout/item_product"
             app:layout_constraintTop_toBottomOf="@id/layout_top"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

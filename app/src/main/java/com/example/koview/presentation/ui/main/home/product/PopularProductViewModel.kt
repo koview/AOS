@@ -1,48 +1,32 @@
-package com.example.koview.presentation.ui.main.home.search
+package com.example.koview.presentation.ui.main.home.product
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.koview.presentation.ui.main.global.product.model.Product
 import com.example.koview.presentation.ui.main.global.product.model.Review
 import com.example.koview.presentation.ui.main.global.product.model.TagShop
 import com.example.koview.presentation.ui.main.home.model.Category
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class SearchEvent {
-    data object NavigateToHome : SearchEvent()
-}
+class PopularProductViewModel @Inject constructor() : ViewModel() {
 
-@HiltViewModel
-class SearchViewModel @Inject constructor() : ViewModel() {
-
-    private val _searchProductList = MutableStateFlow<List<Product>>(emptyList())
-    val searchProductList: StateFlow<List<Product>> = _searchProductList.asStateFlow()
-
-    private val _event = MutableSharedFlow<SearchEvent>()
-    val event: SharedFlow<SearchEvent> = _event.asSharedFlow()
+    private val _popularProductList = MutableStateFlow<List<Product>>(emptyList())
+    val popularProductList: StateFlow<List<Product>> = _popularProductList
 
     init {
-        setProductListData()
+        setPopularProductListData()
     }
 
-    private fun setProductListData() {
-        // todo: 상품 검색 데이터 가져오기
+    private fun setPopularProductListData() {
         val fetchedData = listOf(
             Product(
                 title = "얏호",
                 imageUrl = "",
                 reviewNumber = 1,
                 registDate = "2024-07-12",
-                isWarning = true,
-                isHot = false,
+                isWarning = false,
+                isHot = true,
                 category = Category.TOY,
                 shopList = listOf(
                     TagShop(
@@ -151,7 +135,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
             ),
             Product(
                 title = "어라어라얼",
-                imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
+                imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
                 reviewNumber = 5,
                 registDate = "2024-07-13",
                 isWarning = false,
@@ -206,11 +190,11 @@ class SearchViewModel @Inject constructor() : ViewModel() {
             ),
             Product(
                 title = "dd",
-                imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
+                imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
                 reviewNumber = 5,
                 registDate = "2024-07-13",
                 isWarning = false,
-                isHot = false,
+                isHot = true,
                 category = Category.ACCESSORIES,
                 shopList = listOf(
                     TagShop(title = "Shop C", productUrl = "www.naver.com", isVerify = true),
@@ -264,11 +248,11 @@ class SearchViewModel @Inject constructor() : ViewModel() {
             ),
             Product(
                 title = "dd",
-                imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
+                imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
                 reviewNumber = 5,
                 registDate = "2024-07-13",
-                isWarning = true,
-                isHot = false,
+                isWarning = false,
+                isHot = true,
                 category = Category.STATIONARY,
                 shopList = listOf(
                     TagShop(title = "Shop C", productUrl = "www.naver.com", isVerify = false),
@@ -319,17 +303,6 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                 )
             )
         )
-        _searchProductList.value = fetchedData
+        _popularProductList.value = fetchedData
     }
-
-    fun navigateToHome() {
-        viewModelScope.launch {
-            _event.emit(SearchEvent.NavigateToHome)
-        }
-    }
-
-    fun search() {
-        // TODO: searchAPI 연동
-    }
-
 }

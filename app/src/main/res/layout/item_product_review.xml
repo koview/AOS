@@ -5,7 +5,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.koview.presentation.ui.main.home.search.model.Review" />
+            type="com.example.koview.presentation.ui.main.global.product.model.Review" />
 
         <variable
             name="vm"
