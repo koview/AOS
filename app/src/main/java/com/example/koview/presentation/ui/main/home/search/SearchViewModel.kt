@@ -332,5 +332,4 @@ class SearchViewModel @Inject constructor() : ViewModel() {
         // TODO: searchAPI 연동
     }
 
-
 }
