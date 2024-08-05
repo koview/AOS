@@ -32,6 +32,7 @@
                 style="@style/TextRegularSemiBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{item.contents}"
@@ -47,33 +48,51 @@
                     style="@style/TextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/kv_gray5"
-                    android:text="조회수: " />
+                    android:text="조회수"
+                    android:textColor="@color/kv_gray6" />
 
                 <TextView
                     android:id="@+id/tv_view"
                     style="@style/TextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/kv_gray5"
+                    android:layout_marginStart="3dp"
+                    android:textColor="@color/kv_gray6"
                     app:textFromInt="@{item.viewCount}"
                     tools:text="90" />
 
-                <TextView
-                    style="@style/TextSmall"
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/kv_gray5"
-                    android:text=" | 댓글: " />
+                    android:layout_marginStart="6dp"
+                    android:src="@drawable/ic_post" />
 
                 <TextView
-                    android:id="@+id/tv_comment"
+                    android:id="@+id/tv_reply"
                     style="@style/TextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/kv_gray5"
-                    app:textFromInt="@{item.commentsCount}"
+                    android:layout_marginStart="3dp"
+                    android:textColor="@color/kv_gray6"
+                    app:textFromInt="@{item.replyCount}"
                     tools:text="10" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:src="@drawable/ic_question_mark" />
+
+                <TextView
+                    android:id="@+id/tv_agree"
+                    style="@style/TextSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:textColor="@color/kv_gray6"
+                    app:textFromInt="@{item.agreeCount}"
+                    tools:text="30" />
+
             </LinearLayout>
 
         </LinearLayout>

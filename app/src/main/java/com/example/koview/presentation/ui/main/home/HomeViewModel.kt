@@ -73,18 +73,21 @@ class HomeViewModel @Inject constructor() : ViewModel() {
                     "이 목걸이 안전할까요? 실버라 조금 불안하네요.",
                     50,
                     30,
+                    10,
                     "https://ae01.alicdn.com/kf/Sb638d30edc6f47138b73e40d3e3dd765w/925.jpg_.webp"
                 ),
                 AskUiData(
                     "하트 눈사람 집게 찾습니다! 이 제품 어디서 파는지 아시는분",
                     35,
                     4,
+                    15,
                     "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4a39ca73b600f57ed33b50df574c5f06.jpg?imageView2/2/w/800/q/70/format/webp"
                 ),
                 AskUiData(
                     "침착맨이 테무깡에서 신은 금색 신발이 뭔지 궁금합니다. 친구 선물로 줄 예정입니다",
                     103,
                     25,
+                    50,
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt8BHAabSNHYgMLPjbnuWogrYJbjQp86C3cg&s"
                 )
             )
