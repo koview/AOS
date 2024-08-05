@@ -171,6 +171,13 @@
     <fragment
         android:id="@+id/ask_detail_fragment"
         android:name="com.example.koview.presentation.ui.main.ask.askdetail.AskDetailFragment"
-        android:label="AskDetailFragment"/>
+        android:label="AskDetailFragment">
+
+        <action
+            android:id="@+id/action_ask_detail_fragment_to_ask_fragment"
+            app:destination="@id/ask_fragment"
+            app:popUpTo="@id/ask_fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

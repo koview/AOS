@@ -2,11 +2,12 @@ package com.example.koview.presentation.ui.main.ask.askdetail
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.databinding.FragmentAskDetailBinding
@@ -14,8 +15,6 @@ import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.ask.AskViewModel
 import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskAnswerAdapter
 import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskShopTagAdapter
-import com.example.koview.presentation.ui.main.global.product.adapter.ProductShopTagAdapter
-import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -32,6 +31,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         binding.vm = viewModel
 
         initRecyclerview()
+        initEventObserve()
     }
 
     private fun initRecyclerview() {
@@ -51,6 +51,21 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvReview.adapter =
             parentViewModel.askDetail.value?.let { AskAnswerAdapter(it.reviewList) }
+    }
+
+    private fun initEventObserve() {
+        repeatOnStarted {
+            viewModel.event.collect {
+                when (it) {
+                    AskDetailEvent.NavigateToAsk -> findNavController().toAsk()
+                }
+            }
+        }
+    }
+
+    private fun NavController.toAsk() {
+        val action = AskDetailFragmentDirections.actionAskDetailFragmentToAskFragment()
+        navigate(action)
     }
 
     private fun clickTag(url: String?) {
