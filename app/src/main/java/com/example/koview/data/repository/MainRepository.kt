@@ -1,4 +1,9 @@
 package com.example.koview.data.repository
 
-class MainRepository {
+import com.example.koview.data.model.BaseState
+import com.example.koview.data.model.response.HomeResponse
+
+interface MainRepository {
+
+    suspend fun home(): BaseState<HomeResponse>
 }
