@@ -9,7 +9,9 @@ import com.example.koview.databinding.ActivitySplashBinding
 import com.example.koview.presentation.base.BaseActivity
 import com.example.koview.presentation.ui.intro.IntroActivity
 import com.example.koview.presentation.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
 
     private val viewModel: SplashViewModel by viewModels()
