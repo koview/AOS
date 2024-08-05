@@ -77,27 +77,32 @@
                         android:id="@+id/iv_profile"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="20dp"
                         android:src="@drawable/ic_profile"
-                        android:layout_marginTop="20dp"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/iv_profile"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="@id/iv_profile"
-                        app:layout_constraintStart_toEndOf="@id/iv_profile">
+                        app:layout_constraintStart_toEndOf="@id/iv_profile"
+                        app:layout_constraintTop_toTopOf="@id/iv_profile">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            style="TextSmallSemiBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{model.nickname}"/>
+                            android:text="@{model.nickname}" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            style="TextTinyMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{model.createdAt}"/>
+                            android:text="@{model.createdAt}"
+                            android:textColor="@color/kv_gray5" />
 
                     </LinearLayout>
 
@@ -172,6 +177,7 @@
                             style="TextSmallMedium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
                             android:text="@{model.contents}" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -217,7 +223,7 @@
                     app:layout_constraintTop_toBottomOf="@id/line_review" />
 
                 <LinearLayout
-
+                    reviewLayoutVisibility="@{model.reviewList}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
