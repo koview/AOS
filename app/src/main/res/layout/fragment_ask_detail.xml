@@ -97,7 +97,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{model.nickname}"/>
+                            android:text="@{model.createdAt}"/>
 
                     </LinearLayout>
 
@@ -134,7 +134,7 @@
                                 style="TextSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text='@{"조회수: " + model.viewCount }' />
+                                android:text='@{"조회수: " + String.valueOf(model.viewCount)}' />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/iv_answer"
@@ -217,7 +217,7 @@
                     app:layout_constraintTop_toBottomOf="@id/line_review" />
 
                 <LinearLayout
-                    reviewLayoutVisibility="@{model.reviewList}"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
