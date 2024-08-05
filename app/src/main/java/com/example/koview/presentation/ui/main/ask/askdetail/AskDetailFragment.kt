@@ -12,6 +12,7 @@ import com.example.koview.R
 import com.example.koview.databinding.FragmentAskDetailBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.ask.AskViewModel
+import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskAnswerAdapter
 import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskShopTagAdapter
 import com.example.koview.presentation.ui.main.global.product.adapter.ProductShopTagAdapter
 import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
@@ -19,7 +20,8 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
-class AskDetailFragment: BaseFragment<FragmentAskDetailBinding>(R.layout.fragment_ask_detail), AskDetailInterface {
+class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragment_ask_detail),
+    AskDetailInterface {
 
     private val viewModel: AskDetailViewModel by viewModels()
     private val parentViewModel: AskViewModel by activityViewModels()
@@ -41,17 +43,14 @@ class AskDetailFragment: BaseFragment<FragmentAskDetailBinding>(R.layout.fragmen
         layoutManager.justifyContent = JustifyContent.FLEX_START
 
         binding.rvShop.layoutManager = layoutManager
-        binding.rvShop.adapter = parentViewModel.askDetail.value?.let { AskShopTagAdapter(this, it.shopList) }
+        binding.rvShop.adapter =
+            parentViewModel.askDetail.value?.let { AskShopTagAdapter(this, it.shopList) }
 
-//        // 리뷰 리사이클러뷰 연결
-//        binding.rvReview.layoutManager =
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//        binding.rvReview.adapter =
-//            productViewModel.searchProduct.value?.let {
-//                ProductReviewAdapter(
-//                    it.reviewList
-//                )
-//            }
+        // 답변 리사이클러뷰 연결
+        binding.rvReview.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvReview.adapter =
+            parentViewModel.askDetail.value?.let { AskAnswerAdapter(it.reviewList) }
     }
 
     private fun clickTag(url: String?) {
