@@ -51,7 +51,6 @@ class AskFragment : BaseFragment<FragmentAskBinding>(R.layout.fragment_ask), Ask
                     is AskEvent.NavigateToAskDetail -> {
                         viewModel.askDetail.value?.let { askDetail ->
                             findNavController().toAskDetail(askDetail)
-                            Log.d("질문", askDetail.toString())
                         }
                     }
                 }
