@@ -2,6 +2,7 @@ package com.example.koview.presentation.ui.main.coview.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -46,13 +47,20 @@ class CoviewReviewViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
-    @SuppressLint("NotifyDataSetChanged")
     fun bind(item: CoviewUiData) {
         binding.item = item
 
         // 좋아요 업데이트
         binding.layoutLike.setOnClickListener {
             likeClickListener.onLikeClick(item)
+        }
+
+        // 리뷰 내용 클릭 리스너 추가
+        binding.tvReview.setOnClickListener {
+            item.isExpanded = !item.isExpanded
+            binding.layoutComment.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
+            binding.tvReview.maxLines = if (item.isExpanded) Integer.MAX_VALUE else 2
+            binding.rvShop.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
         }
     }
 

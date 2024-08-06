@@ -5,8 +5,9 @@ data class CoviewUiData(
     var profileImage: String = "",
     var likeCount: Int = 0,
     var commentCount: Int = 0,
-    var likeState: Boolean = false,
     var contents: String = "",
     var date: String = "",
     var imageList: List<String> = emptyList(),
+    var isLiked: Boolean = false,
+    var isExpanded: Boolean = false
 )

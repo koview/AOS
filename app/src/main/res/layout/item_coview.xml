@@ -62,10 +62,10 @@
                 style="@style/TagText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:minWidth="34dp"
                 android:layout_margin="15dp"
                 android:background="@drawable/rect_blackfill_nostroke_16radius"
+                android:gravity="center"
+                android:minWidth="34dp"
                 android:paddingHorizontal="9dp"
                 android:paddingVertical="4dp"
                 android:text="10/10"
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_like"
-                android:visibility="@{item.likeState? View.VISIBLE : View.GONE}"
+                android:visibility="@{item.isLiked? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_image" />
 
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_unlike"
-                android:visibility="@{item.likeState? View.GONE : View.VISIBLE}"
+                android:visibility="@{item.isLiked? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_image" />
         </LinearLayout>
@@ -119,7 +119,7 @@
 
         <!--    댓글    -->
         <LinearLayout
-            android:id="@+id/layout_comment"
+            android:id="@+id/layout_comment_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -146,19 +146,36 @@
         </LinearLayout>
 
         <!--    본문    -->
-        <TextView
-            android:id="@+id/tv_review"
-            style="@style/TextSmallMedium"
+        <LinearLayout
+            android:id="@+id/layout_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@{item.contents}"
-            android:textColor="@color/kv_gray9"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_comment"
-            tools:text="리뷰 내용이 보이는 영역입니다.\n최대 두줄 까지 보이고 그 이상이면 내용이 잘려질 예정입니다. 잘려졌나?" />
+            app:layout_constraintTop_toBottomOf="@id/layout_comment_info">
+
+            <TextView
+                android:id="@+id/tv_review"
+                style="@style/TextSmallMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{item.contents}"
+                android:textColor="@color/kv_gray9"
+                tools:text="리뷰 내용이 보이는 영역입니다.\n최대 두줄 까지 보이고 그 이상이면 내용이 잘려질 예정입니다. 잘려졌나?" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_shop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+                tools:listitem="@layout/item_search_shop"
+                tools:visibility="visible" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_date"
@@ -169,8 +186,59 @@
             android:text="@{item.date}"
             android:textColor="@color/kv_gray5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_review"
+            app:layout_constraintTop_toBottomOf="@id/layout_review"
             tools:text="2024.07.27" />
+
+        <!--    댓글 입력창    -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date"
+            tools:visibility="visible">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_my_profile"
+                profileImgUrl="@{item.profileImage}"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/img_profile_ex" />
+
+            <TextView
+                android:id="@+id/tv_comment"
+                style="@style/TextSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="댓글 추가하기"
+                android:textColor="@color/kv_gray5"
+                app:layout_constraintBottom_toBottomOf="@id/iv_my_profile"
+                app:layout_constraintStart_toEndOf="@id/iv_my_profile"
+                app:layout_constraintTop_toTopOf="@id/iv_my_profile" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_send"
+                app:layout_constraintBottom_toBottomOf="@id/iv_my_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_my_profile" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/kv_gray3"
+                app:layout_constraintBottom_toBottomOf="@id/iv_my_profile"
+                app:layout_constraintEnd_toEndOf="@id/iv_send"
+                app:layout_constraintStart_toStartOf="@id/tv_comment" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
