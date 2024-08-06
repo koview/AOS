@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/iv_profile"
-            app:layout_constraintTop_toBottomOf="@id/iv_profile" >
+            app:layout_constraintTop_toBottomOf="@id/iv_profile">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp_images"
@@ -62,11 +62,13 @@
                 style="@style/TagText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minWidth="34dp"
                 android:layout_margin="15dp"
                 android:background="@drawable/rect_blackfill_nostroke_16radius"
-                android:paddingHorizontal="7dp"
+                android:paddingHorizontal="9dp"
                 android:paddingVertical="4dp"
-                android:text="1/20"
+                android:text="10/10"
                 android:textColor="@color/white"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@id/vp_images"

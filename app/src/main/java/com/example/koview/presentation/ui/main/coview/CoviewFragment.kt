@@ -41,6 +41,7 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
         binding.rvCoviewList.adapter = adapter
     }
 
+    // 리뷰 아이템 좋아요 클릭 시 호출
     override fun onLikeClick(item: CoviewUiData) {
         viewModel.onLikeClick(item)
     }
