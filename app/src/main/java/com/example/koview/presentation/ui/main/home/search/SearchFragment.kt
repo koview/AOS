@@ -109,7 +109,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             // 확인 버튼 눌렀을 때
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 // TODO: 여기서 ViewModel 함수 호출
-                viewModel.search()
+//                viewModel.search()
                 // 키보드 내려가기
                 val inputMethodManager =
                     activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

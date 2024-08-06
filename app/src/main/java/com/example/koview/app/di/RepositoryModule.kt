@@ -21,7 +21,7 @@ abstract class RepositoryModule {
     @Binds
     abstract fun bindIntroRepository(introRepositoryImpl: IntroRepositoryImpl): IntroRepository
 
-//    @Binds
-//    abstract fun bindMainRepository(globalRepositoryImpl: MainRepositoryImpl): MainRepository
+    @Binds
+    abstract fun bindMainRepository(globalRepositoryImpl: MainRepositoryImpl): MainRepository
 
 }

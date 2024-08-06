@@ -9,8 +9,8 @@ interface MainRepository {
 
     suspend fun getProducts(
         status: Status,
-        category: Category,
-        searchTerm: String,
+        category: Category? = null,
+        searchTerm: String? = "",
         page: Int,
         size: Int
     ): BaseState<ProductsResponse>

@@ -10,7 +10,7 @@ data class ProductsResponse(
 )
 
 data class ProductsResult(
-    val productList: SingleProduct,
+    val productList: List<SingleProduct>,
     val getNumber: Int,
     val hasPrevious: Boolean,
     val hasNext: Boolean
@@ -19,13 +19,13 @@ data class ProductsResult(
 data class SingleProduct(
     val productId: Long,
     val productName: String,
-    val category: Category,
+    val category: Category?,
     val createdDate: String,
-    val restrictedDate: String,
+    val restrictedDate: String?,
     val reviewCount: Long,
     val status: Status,
-    val productImageUrls: ProductImageUrls,
-    val purchaseLinkList: PurchaseLinkList
+    val productImageUrls: List<ProductImageUrls>?,
+    val purchaseLinkList: List<PurchaseLinkList>?
 )
 
 data class ProductImageUrls(

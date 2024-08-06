@@ -12,8 +12,8 @@ interface MainApi {
     @GET("products")
     suspend fun getProducts(
         @Query("status") status: Status,
-        @Query("category") category: Category,
-        @Query("searchTerm") searchTerm: String,
+        @Query("category") category: Category?,
+        @Query("searchTerm") searchTerm: String?,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Response<ProductsResponse>
