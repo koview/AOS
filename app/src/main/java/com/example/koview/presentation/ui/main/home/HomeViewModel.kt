@@ -2,6 +2,8 @@ package com.example.koview.presentation.ui.main.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.koview.data.model.BaseState
+import com.example.koview.data.repository.MainRepository
 import com.example.koview.presentation.ui.main.home.model.AskUiData
 import com.example.koview.presentation.ui.main.home.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,10 +21,13 @@ sealed class HomeEvent {
     data object NavigateToHarmfulProduct : HomeEvent()
     data object NavigateToPopularProduct : HomeEvent()
     data object NavigateToSearch : HomeEvent()
+    data class ShowToastMessage(val msg: String) : HomeEvent()
 }
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val repository: MainRepository,
+) : ViewModel() {
 
     private val _event = MutableSharedFlow<HomeEvent>()
     val event: SharedFlow<HomeEvent> = _event.asSharedFlow()
@@ -46,22 +51,21 @@ class HomeViewModel @Inject constructor() : ViewModel() {
 
     private fun setProductImage() {
         viewModelScope.launch {
-            // todo: 상품 이미지들 받아오기
-            val harmfulProductImage = listOf(
-                "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/5d8296abf8d5260b630e74508b8c9c51.jpg?imageView2/2/w/800/q/70/format/webp",
-                "https://img.kwcdn.com/product/algo_check/auto/aeebef2ef2081edf541899246c703c31_1713448043944.jpg?imageView2/2/w/800/q/70/format/webp",
-                "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4f1c51012c5d5a84a363295f7f29659c.jpg?imageView2/2/w/800/q/70/format/webp",
-                "https://img.kwcdn.com/product/fancy/7c643556-e4ef-46b1-ba91-e63305486754.jpg?imageView2/2/w/800/q/70/format/webp"
-            )
+            repository.home().let { it ->
+                when (it) {
+                    is BaseState.Success -> {
+                        val famousProducts = it.body.result.famousFourProducts
+                        val restrictedProducts = it.body.result.restrictedFourProducts
 
-            val popularProductImage = listOf(
-                "https://ae01.alicdn.com/kf/Sb638d30edc6f47138b73e40d3e3dd765w/925.jpg_.webp",
-                "https://img.kwcdn.com/product/fancy/e5b6a07b-cd3b-4c7a-939c-fd176dd5d3f5.jpg?imageView2/2/w/800/q/70/format/webp",
-                "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/005b5a62d120479080a5cc2d3596da29.jpg?imageView2/2/w/800/q/70/format/webp",
-                "https://img.kwcdn.com/product/fancy/c3008653-f77d-436e-8254-4baa645912e4.jpg?imageView2/2/w/800/q/70/format/webp"
-            )
-            _harmfulProdImage.value = harmfulProductImage
-            _popularProdImage.value = popularProductImage
+                        _harmfulProdImage.value = restrictedProducts.map { it.image.url }
+                        _popularProdImage.value = famousProducts.map { it.image.url }
+                    }
+
+                    is BaseState.Error -> {
+                        _event.emit(HomeEvent.ShowToastMessage(it.msg))
+                    }
+                }
+            }
         }
     }
 
