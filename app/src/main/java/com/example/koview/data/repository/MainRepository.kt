@@ -7,7 +7,7 @@ import com.example.koview.presentation.ui.main.home.model.Category
 
 interface MainRepository {
 
-    suspend fun products(
+    suspend fun getProducts(
         status: Status,
         category: Category,
         searchTerm: String,

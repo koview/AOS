@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface MainApi {
 
     @GET("products")
-    suspend fun products(
+    suspend fun getProducts(
         @Query("status") status: Status,
         @Query("category") category: Category,
         @Query("searchTerm") searchTerm: String,
