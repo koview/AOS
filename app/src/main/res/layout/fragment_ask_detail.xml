@@ -77,7 +77,7 @@
                         android:id="@+id/iv_profile"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="35dp"
                         android:src="@drawable/ic_profile"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -139,7 +139,7 @@
                                 style="TextSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text='@{"조회수: " + String.valueOf(model.viewCount)}' />
+                                android:text='@{"조회수 " + String.valueOf(model.viewCount)}' />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/iv_answer"
@@ -197,7 +197,7 @@
                     style="@style/Title4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="35dp"
                     android:text="답변"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

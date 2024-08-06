@@ -45,7 +45,7 @@
                     style="TextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{"조회수: " + model.viewCount }'
+                    android:text='@{"조회수 " + model.viewCount }'
                     android:textColor="@color/kv_gray6" />
 
                 <androidx.appcompat.widget.AppCompatImageView
