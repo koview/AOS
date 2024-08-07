@@ -1,20 +1,21 @@
 package com.example.koview.data.model.response
 
 import com.example.koview.presentation.ui.main.home.model.Category
+import java.io.Serializable
 
 data class ProductsResponse(
     val isSuccess: Boolean,
     val code: String,
     val message: String,
     val result: ProductsResult
-)
+) : Serializable
 
 data class ProductsResult(
-    val productList: List<SingleProduct>,
-    val getNumber: Int,
-    val hasPrevious: Boolean,
-    val hasNext: Boolean
-)
+    val productList: List<SingleProduct> = emptyList(),
+    val getNumber: Int = 0,
+    val hasPrevious: Boolean = false,
+    val hasNext: Boolean = false
+) : Serializable
 
 data class SingleProduct(
     val productId: Long,
@@ -25,13 +26,13 @@ data class SingleProduct(
     val reviewCount: Long,
     val status: Status,
     val productImageUrls: List<ProductImageUrls>?,
-    val purchaseLinkList: List<PurchaseLinkList>?
-)
+    val purchaseLinkList: List<PurchaseLinkList>
+) : Serializable
 
 data class ProductImageUrls(
     val imageId: Long,
     val url: String
-)
+) : Serializable
 
 data class PurchaseLinkList(
     val purchaseLinkId: Long,
@@ -39,13 +40,13 @@ data class PurchaseLinkList(
     val purchaseUrl: String,
     val shopName: String,
     val verifiedType: VerifiedType
-)
+) : Serializable
 
 enum class Status() {
     NORMAL, FAMOUS, RESTRICTED
 }
 
 enum class VerifiedType() {
-    UNDEFINED, DEFINED
+    UNVERIFIED, VERIFIED
 }
 

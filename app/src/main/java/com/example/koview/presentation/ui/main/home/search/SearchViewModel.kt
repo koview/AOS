@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.response.ProductsResult
+import com.example.koview.data.model.response.SingleProduct
 import com.example.koview.data.model.response.Status
 import com.example.koview.data.repository.MainRepository
 import com.example.koview.presentation.ui.main.global.product.model.Product
@@ -35,12 +36,14 @@ class SearchViewModel @Inject constructor(private val repository: MainRepository
     private val _event = MutableSharedFlow<SearchEvent>()
     val event: SharedFlow<SearchEvent> = _event.asSharedFlow()
 
-//    private val _getProducts = MutableStateFlow<ProductsResult>()
-//    val getProducts: StateFlow<List<ProductsResult>> = _searchProductList.asStateFlow()
+    private val _getProducts = MutableStateFlow<List<SingleProduct>>(emptyList())
+    val getProducts: StateFlow<List<SingleProduct>> = _getProducts.asStateFlow()
+//    private val _getProducts = MutableStateFlow(ProductsResult())
+//    val getProducts: StateFlow<ProductsResult> = _getProducts.asStateFlow()
 
 
     init {
-        setProductListData()
+//        setProductListData()
         getProducts()
     }
 
@@ -353,8 +356,8 @@ class SearchViewModel @Inject constructor(private val repository: MainRepository
                     }
 
                     is BaseState.Success -> {
-                        val getProducts: ProductsResult = it.body.result
-                        Log.d("응답,,,,", getProducts.toString())
+//                        val getProducts: ProductsResult = it.body.result
+                        _getProducts.value = it.body.result.productList
                     }
                 }
             }
