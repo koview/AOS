@@ -12,11 +12,18 @@ import com.example.koview.presentation.ui.main.global.product.model.Review
 import com.example.koview.presentation.ui.main.global.product.model.TagShop
 import com.example.koview.presentation.ui.main.home.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+sealed class PopularProductEvent {
+    data object NavigateToHome : PopularProductEvent()
+}
 
 @HiltViewModel
 class PopularProductViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
@@ -27,8 +34,17 @@ class PopularProductViewModel @Inject constructor(private val repository: MainRe
     private val _getProducts = MutableStateFlow<List<SingleProduct>>(emptyList())
     val getProducts: StateFlow<List<SingleProduct>> = _getProducts.asStateFlow()
 
+    private val _event = MutableSharedFlow<PopularProductEvent>()
+    val event: SharedFlow<PopularProductEvent> = _event.asSharedFlow()
+
     init {
         getProducts()
+    }
+
+    fun navigateToHome() {
+        viewModelScope.launch {
+            _event.emit(PopularProductEvent.NavigateToHome)
+        }
     }
 
     private fun getProducts() {
