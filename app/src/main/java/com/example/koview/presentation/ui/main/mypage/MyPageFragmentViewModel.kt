@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.koview.data.model.BaseState
+import com.example.koview.data.model.response.ReviewList
 import com.example.koview.data.repository.MyPageRepository
+import com.example.koview.presentation.ui.main.home.search.model.Review
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +37,13 @@ class MyPageFragmentViewModel @Inject constructor(
     private val _profileImg = MutableStateFlow("")
     val profileImg: StateFlow<String> = _profileImg.asStateFlow()
 
+    // 리뷰 리스트와 현재 페이지 추가
+    private val _myReviews = MutableStateFlow<List<ReviewList>>(emptyList())
+    val myReviews: StateFlow<List<ReviewList>> = _myReviews.asStateFlow()
+
+    private var currentPage = 1
+    private val pageSize = 10 // 페이지당 리뷰 수
+
     fun getMyDetail(){
         viewModelScope.launch {
             repository.getMyDetail().let {
@@ -46,6 +55,27 @@ class MyPageFragmentViewModel @Inject constructor(
                     is BaseState.Success -> {
                         _nickname.value = it.body.result.nickname
                         _profileImg.value = it.body.result.url
+                    }
+                }
+            }
+        }
+    }
+
+    fun getMyReviews() {
+        viewModelScope.launch {
+            val response = repository.getMyReviews(page = currentPage, size = pageSize)
+
+            when (response) {
+                is BaseState.Error -> {
+                    Log.d("MyPageFragment", response.code.toString() + ", " + response.msg.toString())
+                }
+                is BaseState.Success -> {
+                    // 새로운 리뷰를 현재 리스트에 추가
+                    if (response.body.isSuccess) {
+                        _myReviews.value = _myReviews.value + response.body.result.reviewList
+                        currentPage++ // 다음 페이지로 이동
+                    } else {
+                        Log.d("MyPageFragment", response.body.message)
                     }
                 }
             }

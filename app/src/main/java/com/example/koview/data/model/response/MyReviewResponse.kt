@@ -1,5 +1,7 @@
 package com.example.koview.data.model.response
 
+import java.time.LocalDate
+
 // 내 정보 조회
 data class GetMyDetailResponse(
     val isSuccess: Boolean,
@@ -33,10 +35,20 @@ data class ReviewList(
     val reviewId: Long,
     val content: String,
     val writer: String,
-    val imagePathIdList: List<Long>,
+    val imageList: List<ImageDTO>,
     val totalCommentCount: Long,
-    val totalLikesCount: Long
+    val totalLikesCount: Long,
+    val createdAt: String,
+    val updatedAt: String
 )
+
+// 이미지 DTO
+data class ImageDTO(
+    val imageId: Long,
+    val url: String,
+)
+
+
 
 // 내 리뷰 상세 조회
 data class GetMyReviewDetailResponse(
@@ -61,6 +73,7 @@ data class DeleteMyReviewsResponse(
     val code: String,
     val message: String
 )
+
 
 
 
