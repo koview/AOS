@@ -74,6 +74,12 @@
                 app:nullable="true" />
         </action>
 
+        <action
+            android:id="@+id/action_harmful_fragment_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:popUpTo="@id/home_fragment"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
