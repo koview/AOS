@@ -52,9 +52,9 @@
                 <!-- Layout with hot Icon -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_with_hot_icon"
+                    FamousIconLayoutVisibility="@{model.status}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    FamousIconLayoutVisibility="@{model.status}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -63,19 +63,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_fire"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_product_with_hot_icon"
                         style="@style/TextRegularSemiBold"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="@{model.productName}"
                         android:textColor="@color/kv_gray9"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_hot_icon"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,30 +84,30 @@
                 <!-- Layout with warning Icon -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_with_warning_icon"
+                    RestrictedIconLayoutVisibility="@{model.status}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    RestrictedIconLayoutVisibility="@{model.status}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_warning_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_warning"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_product_with_warning_icon"
                         style="@style/TextRegularSemiBold"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="@{model.productName}"
                         android:textColor="@color/kv_gray9"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_warning_icon"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -117,12 +117,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_product_without_icon"
                     style="@style/TextRegularSemiBold"
-                    android:layout_width="wrap_content"
+                    NormalTextviewVisibility="@{model.status}"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@{model.productName}"
                     android:textColor="@color/kv_gray9"
-                    NormalTextviewVisibility="@{model.status}"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,7 +155,7 @@
             android:background="@color/kv_gray3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_info"/>
+            app:layout_constraintTop_toBottomOf="@id/layout_info" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
