@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
+import com.example.koview.data.model.response.SingleProduct
 import com.example.koview.databinding.FragmentPopularProductBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.global.product.ProductEvent
@@ -71,7 +72,7 @@ class PopularProductFragment :
 
     private fun initPopularProductListObserver() {
         repeatOnStarted {
-            viewModel.popularProductList.collect { popularProductList ->
+            viewModel.getProducts.collect { popularProductList ->
                 productAdapter.submitList(popularProductList)
             }
         }
@@ -83,7 +84,7 @@ class PopularProductFragment :
         navigate(action)
     }
 
-    private fun NavController.toProductDetail(popularProduct: Product) {
+    private fun NavController.toProductDetail(popularProduct: SingleProduct) {
         val action =
             PopularProductFragmentDirections.actionPopularProductFragmentToProductDetailFragment(
                 popularProduct
@@ -96,7 +97,7 @@ class PopularProductFragment :
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
-    override fun onProductClick(product: Product) {
+    override fun onProductClick(product: SingleProduct) {
         productViewModel.navigateToProductDetail(product)
     }
 
