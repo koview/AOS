@@ -1,14 +1,11 @@
 package com.example.koview.presentation.ui.main.home.search
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.koview.presentation.ui.main.global.product.model.Product
+import com.example.koview.presentation.ui.main.global.product.model.Review
+import com.example.koview.presentation.ui.main.global.product.model.TagShop
 import com.example.koview.presentation.ui.main.home.model.Category
-import com.example.koview.presentation.ui.main.home.search.model.Review
-import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
-import com.example.koview.presentation.ui.main.home.search.model.TagShop
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,25 +17,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class SearchEvent {
-    data class NavigateToProductDetail(val searchProduct: SearchProduct) : SearchEvent()
     data object NavigateToHome : SearchEvent()
-    data class ClickTag(val productUrl: String?) : SearchEvent()
 }
 
 @HiltViewModel
 class SearchViewModel @Inject constructor() : ViewModel() {
 
-    private val _searchProductList = MutableStateFlow<List<SearchProduct>>(emptyList())
-    val searchProductList: StateFlow<List<SearchProduct>> = _searchProductList.asStateFlow()
-
-    private var _searchProduct = MutableLiveData<SearchProduct>()
-    val searchProduct: LiveData<SearchProduct> get() = _searchProduct
+    private val _searchProductList = MutableStateFlow<List<Product>>(emptyList())
+    val searchProductList: StateFlow<List<Product>> = _searchProductList.asStateFlow()
 
     private val _event = MutableSharedFlow<SearchEvent>()
     val event: SharedFlow<SearchEvent> = _event.asSharedFlow()
-
-    private val _searchProductUrl = MutableLiveData<String?>()
-    val searchProductUrl: LiveData<String?> get() = _searchProductUrl
 
     init {
         setProductListData()
@@ -47,7 +36,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     private fun setProductListData() {
         // todo: 상품 검색 데이터 가져오기
         val fetchedData = listOf(
-            SearchProduct(
+            Product(
                 title = "얏호",
                 imageUrl = "",
                 reviewNumber = 1,
@@ -160,7 +149,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 //                )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "어라어라얼",
                 imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
                 reviewNumber = 5,
@@ -215,7 +204,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "dd",
                 imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
                 reviewNumber = 5,
@@ -273,7 +262,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ),
-            SearchProduct(
+            Product(
                 title = "dd",
                 imageUrl = "https://ifh.cc/g/f9WcP4.jpg",
                 reviewNumber = 5,
@@ -333,13 +322,6 @@ class SearchViewModel @Inject constructor() : ViewModel() {
         _searchProductList.value = fetchedData
     }
 
-    fun navigateToProductDetail(searchProduct: SearchProduct) {
-        _searchProduct.value = searchProduct
-        viewModelScope.launch {
-            _event.emit(SearchEvent.NavigateToProductDetail(searchProduct))
-        }
-    }
-
     fun navigateToHome() {
         viewModelScope.launch {
             _event.emit(SearchEvent.NavigateToHome)
@@ -348,13 +330,6 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 
     fun search() {
         // TODO: searchAPI 연동
-    }
-
-    fun clickTag(url: String?) {
-        _searchProductUrl.value = url
-        viewModelScope.launch {
-            _event.emit(SearchEvent.ClickTag(url))
-        }
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.koview.app.di
 
+import com.example.koview.data.repository.AuthRepository
+import com.example.koview.data.repository.AuthRepositoryImpl
 import com.example.koview.data.repository.IntroRepository
 import com.example.koview.data.repository.IntroRepositoryImpl
 import com.example.koview.data.repository.MainRepository
@@ -16,12 +18,15 @@ import dagger.hilt.components.SingletonComponent
 abstract class RepositoryModule {
 
     @Binds
+    abstract fun bindAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
+
+    @Binds
     abstract fun bindIntroRepository(introRepositoryImpl: IntroRepositoryImpl): IntroRepository
 
     @Binds
-    abstract fun bindMyPageRepository(myPageRepositoryImpl: MyPageRepositoryImpl): MyPageRepository
+    abstract fun bindMainRepository(globalRepositoryImpl: MainRepositoryImpl): MainRepository
 
-//    @Binds
-//    abstract fun bindMainRepository(globalRepositoryImpl: MainRepositoryImpl): MainRepository
+    @Binds
+    abstract fun bindMyPageRepository(myPageRepositoryImpl: MyPageRepositoryImpl): MyPageRepository
 
 }

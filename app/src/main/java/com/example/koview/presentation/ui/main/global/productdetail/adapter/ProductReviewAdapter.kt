@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemProductReviewBinding
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
-import com.example.koview.presentation.ui.main.home.search.model.Review
+import com.example.koview.presentation.ui.main.global.product.model.Review
 
-class ProductReviewAdapter(private val viewModel: SearchViewModel, private val reviewList: List<Review>) :
+class ProductReviewAdapter(private val reviewList: List<Review>) :
     RecyclerView.Adapter<ProductReviewAdapter.ProductReviewViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,

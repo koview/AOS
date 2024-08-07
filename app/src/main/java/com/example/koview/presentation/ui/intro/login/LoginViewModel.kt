@@ -10,6 +10,7 @@ import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.SignInRequest
 import com.example.koview.data.repository.IntroRepository
 import com.example.koview.presentation.utils.Constants.ACCESS_TOKEN
+import com.example.koview.presentation.utils.Constants.REFRESH_TOKEN
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -40,9 +41,6 @@ class LoginViewModel @Inject constructor(
 
 
     fun checkLogin() {
-
-        // todo: 로그인 response accessToken 저장
-
         val emailValue = email.value
         val pwValue = password.value
 
@@ -58,7 +56,9 @@ class LoginViewModel @Inject constructor(
                         is BaseState.Success -> {
                             sharedPreferences.edit()
                                 .putString(ACCESS_TOKEN, it.body.result.accessToken)
+                                .putString(REFRESH_TOKEN, it.body.result.refreshToken)
                                 .apply()
+
                             _loginCheckVisible.value = false
                             navigateToMain()
                         }

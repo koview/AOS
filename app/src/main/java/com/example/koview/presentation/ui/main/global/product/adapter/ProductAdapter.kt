@@ -1,23 +1,24 @@
-package com.example.koview.presentation.ui.main.home.search.adapter
+package com.example.koview.presentation.ui.main.global.product.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.koview.databinding.ItemSearchProductBinding
-import com.example.koview.presentation.ui.main.home.search.SearchViewModel
-import com.example.koview.presentation.ui.main.home.search.model.SearchProduct
+import com.example.koview.databinding.ItemProductBinding
+import com.example.koview.presentation.ui.main.global.product.ProductInterface
+import com.example.koview.presentation.ui.main.global.product.model.Product
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
-class SearchProductAdapter(private val viewModel: SearchViewModel) :
-    RecyclerView.Adapter<SearchProductAdapter.SearchProductViewHolder>() {
+class ProductAdapter(listener: ProductInterface) :
+    RecyclerView.Adapter<ProductAdapter.SearchProductViewHolder>() {
 
-    private var productList: List<SearchProduct> = emptyList()
+    private val mCallBack = listener
+    private var productList: List<Product> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(newItems: List<SearchProduct>) {
+    fun submitList(newItems: List<Product>) {
         productList = newItems
         notifyDataSetChanged()
     }
@@ -25,17 +26,17 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): SearchProductAdapter.SearchProductViewHolder {
-        val binding: ItemSearchProductBinding = ItemSearchProductBinding.inflate(
+    ): SearchProductViewHolder {
+        val binding: ItemProductBinding = ItemProductBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup,
             false
         )
-        return SearchProductViewHolder(binding, viewModel)
+        return SearchProductViewHolder(binding, mCallBack)
     }
 
     override fun onBindViewHolder(
-        holder: SearchProductAdapter.SearchProductViewHolder,
+        holder: SearchProductViewHolder,
         position: Int
     ) {
         holder.bind(productList[position])
@@ -43,14 +44,13 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
 
     override fun getItemCount(): Int = productList.size
     class SearchProductViewHolder(
-        private val binding: ItemSearchProductBinding,
-        private val viewModel: SearchViewModel
+        private val binding: ItemProductBinding,
+        private val mCallBack: ProductInterface
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(searchProduct: SearchProduct) {
+        fun bind(searchProduct: Product) {
             binding.model = searchProduct
-            binding.vm = viewModel
             val context = binding.root.context
 
             // FlexboxLayoutManager 설정
@@ -60,8 +60,11 @@ class SearchProductAdapter(private val viewModel: SearchViewModel) :
             layoutManager.justifyContent = JustifyContent.FLEX_START
 
             binding.rvShop.layoutManager = layoutManager
-            binding.rvShop.adapter = SearchShopAdapter(viewModel, searchProduct.shopList)
-        }
+            binding.rvShop.adapter = ProductShopTagAdapter(mCallBack, searchProduct.shopList)
 
+            binding.layoutProduct.setOnClickListener {
+                mCallBack.onProductClick(searchProduct)
+            }
+        }
     }
 }

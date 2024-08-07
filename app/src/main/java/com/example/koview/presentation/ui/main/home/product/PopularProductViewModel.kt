@@ -1,0 +1,308 @@
+package com.example.koview.presentation.ui.main.home.product
+
+import androidx.lifecycle.ViewModel
+import com.example.koview.presentation.ui.main.global.product.model.Product
+import com.example.koview.presentation.ui.main.global.product.model.Review
+import com.example.koview.presentation.ui.main.global.product.model.TagShop
+import com.example.koview.presentation.ui.main.home.model.Category
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
+
+class PopularProductViewModel @Inject constructor() : ViewModel() {
+
+    private val _popularProductList = MutableStateFlow<List<Product>>(emptyList())
+    val popularProductList: StateFlow<List<Product>> = _popularProductList
+
+    init {
+        setPopularProductListData()
+    }
+
+    private fun setPopularProductListData() {
+        val fetchedData = listOf(
+            Product(
+                title = "얏호",
+                imageUrl = "",
+                reviewNumber = 1,
+                registDate = "2024-07-12",
+                isWarning = false,
+                isHot = true,
+                category = Category.TOY,
+                shopList = listOf(
+                    TagShop(
+                        title = "xpadfnejnnddf",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = false
+                    ),
+                    TagShop(
+                        title = "xpadfnejnnddf",
+                        productUrl = "https://papago.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "xpadfnejnnddfdfsdfsdf",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 1",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = false
+                    ),
+                    TagShop(
+                        title = "Shop 2",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 3",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 4",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 5",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop 6",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop B",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop A",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    ),
+                    TagShop(
+                        title = "Shop B",
+                        productUrl = "https://www.naver.com/",
+                        isVerify = true
+                    )
+                ),
+                reviewList = listOf(
+//                Review(
+//                    nickname = "네로",
+//                    content = "테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명테스트설명",
+//                    imageUrl = listOf(
+//                        "https://ifh.cc/g/f9WcP4.jpg",
+//                        "https://ifh.cc/g/f9WcP4.jpg"
+//                    ),
+//                    likeNumber = 10,
+//                    commentNumber = 20,
+//                    date = "2024-07-13"
+//                ),
+//                Review(
+//                    nickname = "ddddd",
+//                    content = "설명입니당",
+//                    imageUrl = listOf(
+//                        "https://ifh.cc/g/f9WcP4.jpg",
+//                    ),
+//                    likeNumber = 10,
+//                    commentNumber = 20,
+//                    date = "2024-07-13"
+//                ),
+//                Review(
+//                    nickname = "2323",
+//                    content = "설명입니당",
+//                    imageUrl = listOf(),
+//                    likeNumber = 10,
+//                    commentNumber = 20,
+//                    date = "2024-07-13"
+//                ),
+//                Review(
+//                    nickname = "sssss",
+//                    content = "설명입니당",
+//                    imageUrl = listOf(
+//                        "https://ifh.cc/g/f9WcP4.jpg",
+//                        "https://ifh.cc/g/f9WcP4.jpg"
+//                    ),
+//                    likeNumber = 10,
+//                    commentNumber = 20,
+//                    date = "2024-07-13"
+//                )
+                )
+            ),
+            Product(
+                title = "어라어라얼",
+                imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
+                reviewNumber = 5,
+                registDate = "2024-07-13",
+                isWarning = false,
+                isHot = true,
+                category = Category.SANITARY,
+                shopList = listOf(
+
+                ),
+                reviewList = listOf(
+                    Review(
+                        nickname = "커너",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    ),
+                    Review(
+                        nickname = "ddddd",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    ),
+                    Review(
+                        nickname = "2323",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    ),
+                    Review(
+                        nickname = "sssss",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg",
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    )
+                )
+            ),
+            Product(
+                title = "dd",
+                imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
+                reviewNumber = 5,
+                registDate = "2024-07-13",
+                isWarning = false,
+                isHot = true,
+                category = Category.ACCESSORIES,
+                shopList = listOf(
+                    TagShop(title = "Shop C", productUrl = "www.naver.com", isVerify = true),
+                    TagShop(title = "Shop D", productUrl = "www.naver.com", isVerify = true),
+                    TagShop(title = "Shop d", productUrl = "www.naver.com", isVerify = true)
+                ),
+                reviewList = listOf(
+                    Review(
+                        nickname = "멜리",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    ),
+                    Review(
+                        nickname = "ddddd",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg",
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    ),
+                    Review(
+                        nickname = "2323",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg",
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    ),
+                    Review(
+                        nickname = "sssss",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    )
+                )
+            ),
+            Product(
+                title = "dd",
+                imageUrl = "https://ifh.cc/g/nbVK7k.jpg",
+                reviewNumber = 5,
+                registDate = "2024-07-13",
+                isWarning = false,
+                isHot = true,
+                category = Category.STATIONARY,
+                shopList = listOf(
+                    TagShop(title = "Shop C", productUrl = "www.naver.com", isVerify = false),
+                    TagShop(title = "Shop D", productUrl = "www.naver.com", isVerify = false),
+                    TagShop(title = "Shop d", productUrl = "www.naver.com", isVerify = false)
+                ),
+                reviewList = listOf(
+                    Review(
+                        nickname = "네로",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    ),
+                    Review(
+                        nickname = "ddddd",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    ),
+                    Review(
+                        nickname = "2323",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    ),
+                    Review(
+                        nickname = "sssss",
+                        content = "설명입니당",
+                        imageUrl = listOf(
+                            "https://ifh.cc/g/f9WcP4.jpg"
+                        ),
+                        likeNumber = 10,
+                        commentNumber = 20,
+                        date = "2024-07-13"
+                    )
+                )
+            )
+        )
+        _popularProductList.value = fetchedData
+    }
+}

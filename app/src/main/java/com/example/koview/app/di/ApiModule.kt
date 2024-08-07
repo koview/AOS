@@ -1,5 +1,6 @@
 package com.example.koview.app.di
 
+import com.example.koview.data.remote.AuthApi
 import com.example.koview.data.remote.IntroApi
 import com.example.koview.data.remote.MainApi
 import com.example.koview.data.remote.MyPageApi
@@ -16,6 +17,10 @@ object ApiModule {
 
     @Singleton
     @Provides
+    fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
+
+    @Singleton
+    @Provides
     fun provideIntroApi(retrofit: Retrofit): IntroApi = retrofit.create(IntroApi::class.java)
 
     @Singleton
@@ -23,8 +28,8 @@ object ApiModule {
     fun provideMyPageApi(retrofit: Retrofit): MyPageApi = retrofit.create(MyPageApi::class.java)
 
 
-//    @Singleton
-//    @Provides
-//    fun provideMainApi(retrofit: Retrofit): MainApi = retrofit.create(MainApi::class.java)
+    @Singleton
+    @Provides
+    fun provideMainApi(retrofit: Retrofit): MainApi = retrofit.create(MainApi::class.java)
 
 }
