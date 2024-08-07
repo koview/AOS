@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
+import com.example.koview.data.model.response.SingleProduct
 import com.example.koview.databinding.FragmentHarmfulProductBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.global.product.ProductEvent
@@ -71,7 +72,7 @@ class HarmfulProductFragment :
 
     private fun initHarmfulProductListObserver() {
         repeatOnStarted {
-            viewModel.harmfulProductList.collect { harmfulProductList ->
+            viewModel.getProducts.collect { harmfulProductList ->
                 productAdapter.submitList(harmfulProductList)
             }
         }
@@ -83,7 +84,7 @@ class HarmfulProductFragment :
         navigate(action)
     }
 
-    private fun NavController.toProductDetail(harmfulProduct: Product) {
+    private fun NavController.toProductDetail(harmfulProduct: SingleProduct) {
         val action =
             HarmfulProductFragmentDirections.actionHarmfulProductFragmentToProductDetailFragment(
                 harmfulProduct
@@ -91,13 +92,13 @@ class HarmfulProductFragment :
         navigate(action)
     }
 
-    private fun clickTag(url: String?) {
+    private fun clickTag(url: String) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
 
-    override fun onProductClick(product: Product) {
+    override fun onProductClick(product: SingleProduct) {
         productViewModel.navigateToProductDetail(product)
     }
 
