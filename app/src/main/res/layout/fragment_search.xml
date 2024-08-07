@@ -9,6 +9,10 @@
             name="vm"
             type="com.example.koview.presentation.ui.main.home.search.SearchViewModel" />
 
+        <variable
+            name="parentVm"
+            type="com.example.koview.presentation.ui.main.home.HomeViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,6 +39,7 @@
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_back"
                 android:background="@color/transparent"
+                android:onClick="@{()->vm.navigateToHome()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -88,6 +93,8 @@
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_category"
                 android:background="@color/transparent"
+                android:onClick="@{()->parentVm.showCategoryBottomSheet()}"
+                setCategoryButtonColor="@{parentVm.category}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -99,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
-            tools:listitem="@layout/item_search_product"
+            tools:listitem="@layout/item_product"
             app:layout_constraintTop_toBottomOf="@id/layout_top"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

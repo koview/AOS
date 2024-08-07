@@ -1,4 +1,4 @@
-package com.example.koview.presentation.ui.main.home.search.productdetail.adapter
+package com.example.koview.presentation.ui.main.global.productdetail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemProductReviewBinding
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
-import com.example.koview.presentation.ui.main.home.search.model.Review
+import com.example.koview.presentation.ui.main.global.product.model.Review
 
-class ProductReviewAdapter(private val viewModel: SearchViewModel, private val reviewList: List<Review>) :
+class ProductReviewAdapter(private val reviewList: List<Review>) :
     RecyclerView.Adapter<ProductReviewAdapter.ProductReviewViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
-    ): ProductReviewAdapter.ProductReviewViewHolder {
+    ): ProductReviewViewHolder {
         val binding: ItemProductReviewBinding = ItemProductReviewBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup,
@@ -23,7 +23,7 @@ class ProductReviewAdapter(private val viewModel: SearchViewModel, private val r
     }
 
     override fun onBindViewHolder(
-        holder: ProductReviewAdapter.ProductReviewViewHolder,
+        holder: ProductReviewViewHolder,
         position: Int
     ) {
         val review = reviewList[position]

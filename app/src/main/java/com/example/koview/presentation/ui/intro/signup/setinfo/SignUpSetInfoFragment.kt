@@ -10,7 +10,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.koview.R
 import com.example.koview.databinding.FragmentSignupSetInfoBinding
 import com.example.koview.presentation.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpSetInfoFragment : BaseFragment<FragmentSignupSetInfoBinding>(R.layout.fragment_signup_set_info) {
 
     private val viewModel: SignUpSetInfoViewModel by viewModels()
@@ -22,7 +24,7 @@ class SignUpSetInfoFragment : BaseFragment<FragmentSignupSetInfoBinding>(R.layou
 
         // 선택한 상점 데이터 꺼낸 후 뷰모델에 저장
         val args: SignUpSetInfoFragmentArgs by navArgs()
-        val selectedShops: List<String> = args.checkedShops.toList()
+        val selectedShops: List<Int> = args.checkedShops.toList()
         viewModel.selectedShops.value = selectedShops
 
 // To-do : 잘 들어오는 지에 대한 것이기 때문에 나중에 삭제

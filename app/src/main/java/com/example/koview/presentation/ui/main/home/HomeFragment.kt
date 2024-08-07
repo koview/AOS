@@ -46,6 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     HomeEvent.ShowCategoryBottomSheet -> findNavController().toCategoryBottomSheet()
                     HomeEvent.NavigateToHarmfulProduct -> findNavController().toHarmfulProduct()
                     HomeEvent.NavigateToPopularProduct -> findNavController().toPopularProduct()
+                    HomeEvent.NavigateToSearch -> findNavController().toSearch()
                 }
             }
         }
@@ -63,6 +64,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun NavController.toPopularProduct() {
         val action = HomeFragmentDirections.actionHomeFragmentToPopularProductFramgnet()
+        navigate(action)
+    }
+
+    private fun NavController.toSearch() {
+        val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment()
         navigate(action)
     }
 }

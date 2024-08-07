@@ -165,7 +165,7 @@
             app:layout_constraintTop_toBottomOf="@id/tl_password_check"
             android:layout_marginTop="26dp"
             android:clickable="false"
-            android:onClick="@{()->vm.clickSignupBtn()}"/>
+            android:onClick="@{()->vm.checkSignUp()}"/>
 
 
 

@@ -1,21 +1,23 @@
-package com.example.koview.presentation.ui.main.home.search.model
+package com.example.koview.presentation.ui.main.global.product.model
 
-import android.os.Parcelable
+import com.example.koview.presentation.ui.main.home.model.Category
 import java.io.Serializable
 
-data class SearchProduct(
+data class Product(
     val title: String,
     val imageUrl: String,
     val reviewNumber: Int,
     val registDate: String,
     val isWarning: Boolean,
     val isHot: Boolean,
+    val category: Category,
     val shopList: List<TagShop>,
     val reviewList: List<Review>
 ) : Serializable
 
 data class TagShop(
     val title: String,
+    val productUrl: String,
     val isVerify: Boolean
 ) : Serializable
 

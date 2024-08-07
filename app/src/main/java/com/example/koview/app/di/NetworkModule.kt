@@ -2,6 +2,7 @@ package com.example.koview.app.di
 
 import com.example.koview.BuildConfig
 import com.example.koview.data.config.AccessTokenInterceptor
+import com.example.koview.data.config.BearerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,12 +16,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+object NetworkModule {
 
-    @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_DEV_URL)
             .client(okHttpClient)
@@ -29,17 +28,19 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         }
     }
 
-    @Singleton
+    @Provides
+    fun provideBearerInterceptor(): BearerInterceptor = BearerInterceptor()
+
     @Provides
     fun provideOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        bearerInterceptor: BearerInterceptor
     ): OkHttpClient {
 
         return OkHttpClient.Builder()
@@ -47,6 +48,7 @@ class NetworkModule {
             .connectTimeout(30000, TimeUnit.MILLISECONDS)
             .addInterceptor(httpLoggingInterceptor)
             .addNetworkInterceptor(AccessTokenInterceptor())
+            .addInterceptor(bearerInterceptor)
             .build()
     }
 
