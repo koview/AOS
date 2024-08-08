@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
+import com.example.koview.data.model.response.SingleProduct
 import com.example.koview.databinding.FragmentProductDetailBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.global.product.ProductInterface
@@ -34,6 +35,7 @@ class ProductDetailFragment :
 
         binding.vm = viewModel
         binding.model = productViewModel.searchProduct.value
+        binding.imageUrl = productViewModel.searchProduct.value?.productImageUrls?.get(0)?.url ?: ""
 
         initRecyclerview()
         initEventObserve()
@@ -52,19 +54,19 @@ class ProductDetailFragment :
             productViewModel.searchProduct.value?.let {
                 ProductShopTagAdapter(
                     this,
-                    it.shopList
+                    it.purchaseLinkList
                 )
             }
 
-        // 리뷰 리사이클러뷰 연결
-        binding.rvReview.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvReview.adapter =
-            productViewModel.searchProduct.value?.let {
-                ProductReviewAdapter(
-                    it.reviewList
-                )
-            }
+//        // 리뷰 리사이클러뷰 연결
+//        binding.rvReview.layoutManager =
+//            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//        binding.rvReview.adapter =
+//            productViewModel.searchProduct.value?.let {
+//                ProductReviewAdapter(
+//                    it.reviewList
+//                )
+//            }
     }
 
     private fun initEventObserve() {
@@ -87,7 +89,7 @@ class ProductDetailFragment :
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
-    override fun onProductClick(product: Product) {
+    override fun onProductClick(product: SingleProduct) {
         // 사용 X
     }
 

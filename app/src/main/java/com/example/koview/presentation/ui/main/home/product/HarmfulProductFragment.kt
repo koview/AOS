@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
+import com.example.koview.data.model.response.SingleProduct
 import com.example.koview.databinding.FragmentHarmfulProductBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.global.product.ProductEvent
@@ -31,6 +32,7 @@ class HarmfulProductFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.vm = viewModel
         binding.parentVm = parentViewModel
 
         productAdapter = ProductAdapter(this)
@@ -50,6 +52,7 @@ class HarmfulProductFragment :
         repeatOnStarted {
             parentViewModel.event.collect() {
                 when (it) {
+                    // 카테고리 선택 바텀시트
                     HomeEvent.ShowCategoryBottomSheet -> findNavController().toCategoryBottomSheet()
                     else -> {}
                 }
@@ -58,6 +61,7 @@ class HarmfulProductFragment :
         repeatOnStarted {
             productViewModel.event.collect { event ->
                 when (event) {
+                    // ProductDetail 화면으로 데이터를 같이 넘김
                     is ProductEvent.NavigateToProductDetail -> {
                         productViewModel.searchProduct.value?.let { searchProduct ->
                             findNavController().toProductDetail(searchProduct)
@@ -67,11 +71,19 @@ class HarmfulProductFragment :
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.event.collect {
+                when (it) {
+                    // Home 화면으로 이동
+                    HarmfulProductEvent.NavigateToHome -> findNavController().toHome()
+                }
+            }
+        }
     }
 
     private fun initHarmfulProductListObserver() {
         repeatOnStarted {
-            viewModel.harmfulProductList.collect { harmfulProductList ->
+            viewModel.getProducts.collect { harmfulProductList ->
                 productAdapter.submitList(harmfulProductList)
             }
         }
@@ -83,7 +95,7 @@ class HarmfulProductFragment :
         navigate(action)
     }
 
-    private fun NavController.toProductDetail(harmfulProduct: Product) {
+    private fun NavController.toProductDetail(harmfulProduct: SingleProduct) {
         val action =
             HarmfulProductFragmentDirections.actionHarmfulProductFragmentToProductDetailFragment(
                 harmfulProduct
@@ -91,13 +103,18 @@ class HarmfulProductFragment :
         navigate(action)
     }
 
-    private fun clickTag(url: String?) {
+    private fun NavController.toHome() {
+        val action = HarmfulProductFragmentDirections.actionHarmfulFragmentToHomeFragment()
+        navigate(action)
+    }
+
+    private fun clickTag(url: String) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
 
-    override fun onProductClick(product: Product) {
+    override fun onProductClick(product: SingleProduct) {
         productViewModel.navigateToProductDetail(product)
     }
 

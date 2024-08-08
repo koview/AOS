@@ -5,6 +5,10 @@ import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
 import com.example.koview.data.model.response.GetMyReviewDetailResponse
 import com.example.koview.data.model.response.GetMyReviewsResponse
+import com.example.koview.data.model.response.HomeResponse
+import com.example.koview.data.model.response.ProductsResponse
+import com.example.koview.data.model.response.Status
+import com.example.koview.presentation.ui.main.home.model.Category
 
 interface MainRepository {
 
@@ -24,4 +28,15 @@ interface MainRepository {
     suspend fun deleteMyReviews(
         reviewIdList: List<Long>
     ): BaseState<DeleteMyReviewsResponse>
+  
+    suspend fun getProducts(
+          status: Status,
+          category: Category? = null,
+          searchTerm: String? = "",
+          page: Int,
+          size: Int
+      ): BaseState<ProductsResponse>
+
+    suspend fun home(): BaseState<HomeResponse>
+  
 }

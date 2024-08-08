@@ -5,8 +5,12 @@ import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
 import com.example.koview.data.model.response.GetMyReviewDetailResponse
 import com.example.koview.data.model.response.GetMyReviewsResponse
+import com.example.koview.data.model.response.HomeResponse
+import com.example.koview.data.model.response.ProductsResponse
+import com.example.koview.data.model.response.Status
 import com.example.koview.data.model.runRemote
 import com.example.koview.data.remote.MainApi
+import com.example.koview.presentation.ui.main.home.model.Category
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRepository {
@@ -26,4 +30,15 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
 
     override suspend fun deleteMyReviews(reviewIdList: List<Long>): BaseState<DeleteMyReviewsResponse> =
         runRemote { api.deleteMyReviews(reviewIdList) }
+  
+    override suspend fun getProducts(
+        status: Status,
+        category: Category?,
+        searchTerm: String?,
+        page: Int,
+        size: Int
+    ): BaseState<ProductsResponse> =
+        runRemote { api.getProducts(status, category, searchTerm, page, size) }
+
+    override suspend fun home(): BaseState<HomeResponse> = runRemote { api.home() }
 }

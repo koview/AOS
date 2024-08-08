@@ -70,9 +70,15 @@
             app:destination="@id/product_detail_fragment">
             <argument
                 android:name="searchProduct"
-                app:argType="com.example.koview.presentation.ui.main.global.product.model.Product"
+                app:argType="com.example.koview.data.model.response.SingleProduct"
                 app:nullable="true" />
         </action>
+
+        <action
+            android:id="@+id/action_harmful_fragment_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:popUpTo="@id/home_fragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -90,9 +96,15 @@
             app:destination="@id/product_detail_fragment">
             <argument
                 android:name="searchProduct"
-                app:argType="com.example.koview.presentation.ui.main.global.product.model.Product"
+                app:argType="com.example.koview.data.model.response.SingleProduct"
                 app:nullable="true" />
         </action>
+
+        <action
+            android:id="@+id/action_popular_fragment_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:popUpTo="@id/home_fragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -112,7 +124,7 @@
             app:destination="@id/product_detail_fragment">
             <argument
                 android:name="searchProduct"
-                app:argType="com.example.koview.presentation.ui.main.global.product.model.Product"
+                app:argType="com.example.koview.data.model.response.SingleProduct"
                 app:nullable="true" />
         </action>
 

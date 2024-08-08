@@ -8,7 +8,11 @@
 
         <variable
             name="model"
-            type="com.example.koview.presentation.ui.main.global.product.model.Product" />
+            type="com.example.koview.data.model.response.SingleProduct" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
 
     </data>
 
@@ -22,7 +26,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_product"
-            searchProductImgUrl="@{model.imageUrl}"
+
             android:layout_width="350dp"
             android:layout_height="220dp"
             android:background="@drawable/rect_whitefill_nostroke_16radius"
@@ -48,9 +52,9 @@
                 <!-- Layout with hot Icon -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_with_hot_icon"
+                    FamousIconLayoutVisibility="@{model.status}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="@{model.isHot ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -59,19 +63,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_fire"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_product_with_hot_icon"
                         style="@style/TextRegularSemiBold"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="@{model.title}"
+                        android:text="@{model.productName}"
                         android:textColor="@color/kv_gray9"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_hot_icon"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,30 +84,30 @@
                 <!-- Layout with warning Icon -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_with_warning_icon"
+                    RestrictedIconLayoutVisibility="@{model.status}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="@{model.isWarning ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_warning_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_warning"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_product_with_warning_icon"
                         style="@style/TextRegularSemiBold"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="@{model.title}"
+                        android:text="@{model.productName}"
                         android:textColor="@color/kv_gray9"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_warning_icon"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,12 +117,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_product_without_icon"
                     style="@style/TextRegularSemiBold"
-                    android:layout_width="wrap_content"
+                    NormalTextviewVisibility="@{model.status}"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{model.title}"
+                    android:text="@{model.productName}"
                     android:textColor="@color/kv_gray9"
-                    android:visibility="@{model.isHot ? View.GONE : (model.isWarning ? View.GONE : View.VISIBLE)}"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -130,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text='@{"리뷰: " + model.reviewNumber + " | 등록일: " + model.registDate}'
+                android:text='@{"리뷰: " + model.reviewCount + " | 등록일: " + model.restrictedDate}'
                 android:textColor="@color/kv_gray5" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -150,7 +155,7 @@
             android:background="@color/kv_gray3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_info"/>
+            app:layout_constraintTop_toBottomOf="@id/layout_info" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

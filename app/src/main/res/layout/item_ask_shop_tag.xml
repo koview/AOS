@@ -6,13 +6,12 @@
 
         <variable
             name="model"
-            type="com.example.koview.data.model.response.PurchaseLinkList" />
+            type="com.example.koview.presentation.ui.main.global.product.model.TagShop" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_tag"
-        tagShopLayoutColor="@{model.verifiedType}"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -28,7 +27,7 @@
             style="@style/TagText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.shopName}"
+            android:text="@{model.title}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
