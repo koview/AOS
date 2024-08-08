@@ -1,9 +1,11 @@
 package com.example.koview.presentation.bindingadapters
 
+import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.example.koview.R
+import com.example.koview.data.model.response.Status
 import com.example.koview.presentation.ui.main.home.model.Category
 
 @BindingAdapter("textFromInt")
@@ -25,4 +27,9 @@ fun setCategoryColor(view: TextView, targetCategory: Category, curCategory: Cate
     } else {
         view.setTextColor(defaultColor)
     }
+}
+
+@BindingAdapter("NormalTextviewVisibility")
+fun bindNormalIconLayoutVisibility(view: TextView, status: Status) {
+    view.visibility = if (status == Status.NORMAL) View.VISIBLE else View.GONE
 }

@@ -8,11 +8,15 @@
 
         <variable
             name="model"
-            type="com.example.koview.presentation.ui.main.global.product.model.Product" />
+            type="com.example.koview.data.model.response.SingleProduct" />
 
         <variable
             name="vm"
             type="com.example.koview.presentation.ui.main.global.productdetail.ProductDetailViewModel" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
 
     </data>
 
@@ -78,7 +82,7 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_product"
-                        searchProductImgUrl="@{model.imageUrl}"
+                        searchProductImgUrl="@{imageUrl}"
                         android:layout_width="350dp"
                         android:layout_height="220dp"
                         android:layout_marginTop="15dp"
@@ -106,7 +110,7 @@
                                 android:id="@+id/layout_with_hot_icon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:visibility="@{model.isHot ? View.VISIBLE : View.GONE}"
+                                FamousIconLayoutVisibility="@{model.status}"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
@@ -125,7 +129,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
-                                    android:text="@{model.title}"
+                                    android:text="@{model.productName}"
                                     android:textColor="@color/kv_gray9"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/iv_hot_icon"
@@ -138,7 +142,7 @@
                                 android:id="@+id/layout_with_warning_icon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:visibility="@{model.isWarning ? View.VISIBLE : View.GONE}"
+                                RestrictedIconLayoutVisibility="@{model.status}"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
@@ -157,7 +161,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
-                                    android:text="@{model.title}"
+                                    android:text="@{model.productName}"
                                     android:textColor="@color/kv_gray9"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/iv_warning_icon"
@@ -171,9 +175,9 @@
                                 style="@style/TextRegularSemiBold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{model.title}"
+                                android:text="@{model.productName}"
                                 android:textColor="@color/kv_gray9"
-                                android:visibility="@{model.isHot ? View.GONE : (model.isWarning ? View.GONE : View.VISIBLE)}"
+                                NormalTextviewVisibility="@{model.status}"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -187,7 +191,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:text='@{"리뷰: " + model.reviewNumber + " | 등록일: " + model.registDate}'
+                            android:text='@{"리뷰: " + model.reviewCount + " | 등록일: " + model.restrictedDate}'
                             android:textColor="@color/kv_gray5" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -233,7 +237,7 @@
                     app:layout_constraintTop_toBottomOf="@id/line_review" />
 
                 <LinearLayout
-                    reviewLayoutVisibility="@{model.reviewList}"
+                    reviewLayoutVisibility="@{model.reviewCount}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"

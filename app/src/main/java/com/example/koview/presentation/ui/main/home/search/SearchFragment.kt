@@ -12,6 +12,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
+import com.example.koview.data.model.response.ProductsResult
+import com.example.koview.data.model.response.SingleProduct
 import com.example.koview.databinding.FragmentSearchBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.global.product.ProductEvent
@@ -80,14 +82,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     // SearchViewModel data
     private fun initProductListObserver() {
+//        repeatOnStarted {
+//            viewModel.searchProductList.collect { searchProductList ->
+//                productAdapter.submitList(searchProductList)
+//            }
+//        }
         repeatOnStarted {
-            viewModel.searchProductList.collect { searchProductList ->
-                productAdapter.submitList(searchProductList)
+            viewModel.getProducts.collect {singleProductList ->
+                productAdapter.submitList(singleProductList)
             }
         }
     }
 
-    private fun NavController.toProductDetail(searchProduct: Product) {
+    private fun NavController.toProductDetail(searchProduct: SingleProduct) {
         val action =
             SearchFragmentDirections.actionSearchFragmentToProductDetailFragment(searchProduct)
         navigate(action)
@@ -109,7 +116,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             // 확인 버튼 눌렀을 때
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 // TODO: 여기서 ViewModel 함수 호출
-                viewModel.search()
+//                viewModel.search()
                 // 키보드 내려가기
                 val inputMethodManager =
                     activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -125,7 +132,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
-    override fun onProductClick(product: Product) {
+    override fun onProductClick(product: SingleProduct) {
         productViewModel.navigateToProductDetail(product)
     }
 

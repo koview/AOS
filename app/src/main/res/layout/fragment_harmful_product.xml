@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="vm"
+            type="com.example.koview.presentation.ui.main.home.product.HarmfulProductViewModel" />
+
+        <variable
             name="parentVm"
             type="com.example.koview.presentation.ui.main.home.HomeViewModel" />
 
@@ -38,6 +42,7 @@
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/btn_back"
+                        android:onClick="@{()->vm.navigateToHome()}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"

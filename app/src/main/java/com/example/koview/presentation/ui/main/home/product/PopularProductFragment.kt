@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
+import com.example.koview.data.model.response.SingleProduct
 import com.example.koview.databinding.FragmentPopularProductBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.global.product.ProductEvent
@@ -31,6 +32,7 @@ class PopularProductFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.vm = viewModel
         binding.parentVm = parentViewModel
 
         productAdapter = ProductAdapter(this)
@@ -50,6 +52,7 @@ class PopularProductFragment :
         repeatOnStarted {
             parentViewModel.event.collect() {
                 when (it) {
+                    // 카테고리 선택 바텀시트
                     HomeEvent.ShowCategoryBottomSheet -> findNavController().toCategoryBottomSheet()
                     else -> {}
                 }
@@ -58,6 +61,7 @@ class PopularProductFragment :
         repeatOnStarted {
             productViewModel.event.collect { event ->
                 when (event) {
+                    // ProductDetail 화면으로 데이터를 같이 넘김
                     is ProductEvent.NavigateToProductDetail -> {
                         productViewModel.searchProduct.value?.let { searchProduct ->
                             findNavController().toProductDetail(searchProduct)
@@ -67,11 +71,18 @@ class PopularProductFragment :
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.event.collect {
+                when (it) {
+                    PopularProductEvent.NavigateToHome -> findNavController().toHome()
+                }
+            }
+        }
     }
 
     private fun initPopularProductListObserver() {
         repeatOnStarted {
-            viewModel.popularProductList.collect { popularProductList ->
+            viewModel.getProducts.collect { popularProductList ->
                 productAdapter.submitList(popularProductList)
             }
         }
@@ -83,11 +94,16 @@ class PopularProductFragment :
         navigate(action)
     }
 
-    private fun NavController.toProductDetail(popularProduct: Product) {
+    private fun NavController.toProductDetail(popularProduct: SingleProduct) {
         val action =
             PopularProductFragmentDirections.actionPopularProductFragmentToProductDetailFragment(
                 popularProduct
             )
+        navigate(action)
+    }
+
+    private fun NavController.toHome() {
+        val action = PopularProductFragmentDirections.actionPopularFragmentToHomeFragment()
         navigate(action)
     }
 
@@ -96,7 +112,7 @@ class PopularProductFragment :
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
-    override fun onProductClick(product: Product) {
+    override fun onProductClick(product: SingleProduct) {
         productViewModel.navigateToProductDetail(product)
     }
 
