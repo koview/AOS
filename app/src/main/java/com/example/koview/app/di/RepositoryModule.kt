@@ -6,8 +6,6 @@ import com.example.koview.data.repository.IntroRepository
 import com.example.koview.data.repository.IntroRepositoryImpl
 import com.example.koview.data.repository.MainRepository
 import com.example.koview.data.repository.MainRepositoryImpl
-import com.example.koview.data.repository.MyPageRepository
-import com.example.koview.data.repository.MyPageRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,8 +23,5 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindMainRepository(globalRepositoryImpl: MainRepositoryImpl): MainRepository
-
-    @Binds
-    abstract fun bindMyPageRepository(myPageRepositoryImpl: MyPageRepositoryImpl): MyPageRepository
 
 }

@@ -6,8 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.response.ReviewList
-import com.example.koview.data.repository.MyPageRepository
-import com.example.koview.presentation.ui.main.home.search.model.Review
+import com.example.koview.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +24,7 @@ sealed class MypageEvent {
 
 @HiltViewModel
 class MyPageFragmentViewModel @Inject constructor(
-    private val repository: MyPageRepository,
+    private val repository: MainRepository,
 ) : ViewModel() {
 
     private val _event = MutableSharedFlow<MypageEvent>()
