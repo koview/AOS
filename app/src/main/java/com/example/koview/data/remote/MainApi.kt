@@ -1,5 +1,6 @@
 package com.example.koview.data.remote
 
+import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductsResponse
 import com.example.koview.data.model.response.Status
 import com.example.koview.presentation.ui.main.home.model.Category
@@ -17,4 +18,8 @@ interface MainApi {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Response<ProductsResponse>
+
+    @GET("home")
+    suspend fun home(): Response<HomeResponse>
+
 }

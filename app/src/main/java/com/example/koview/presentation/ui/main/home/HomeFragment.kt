@@ -47,6 +47,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     HomeEvent.NavigateToHarmfulProduct -> findNavController().toHarmfulProduct()
                     HomeEvent.NavigateToPopularProduct -> findNavController().toPopularProduct()
                     HomeEvent.NavigateToSearch -> findNavController().toSearch()
+                    is HomeEvent.ShowToastMessage -> showToastMessage(it.msg)
                 }
             }
         }
