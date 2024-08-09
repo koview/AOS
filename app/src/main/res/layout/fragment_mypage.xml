@@ -15,16 +15,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="16dp">
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="90dp">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_review"
             android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_mypage"
@@ -104,6 +109,7 @@
                     android:overScrollMode="never"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
                     app:layout_constraintTop_toBottomOf="@id/tv_myreview"
                     android:layout_marginTop="11dp"/>
 
@@ -138,20 +144,18 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btn_create_review"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_review"
+            style="@style/TextRegularSemiBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="12dp"
-            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rect_blackfill_nostroke_12radius"
             android:text="리뷰 작성"
-            style="@style/TextRegularSemiBold"
             android:textColor="@color/white"
-            android:backgroundTint="@color/black"
-            android:elevation="0dp"
-            app:cornerRadius="12dp"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

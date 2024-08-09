@@ -29,12 +29,6 @@ class MyPageSettingFragmentViewModel @Inject constructor() : ViewModel() {
     private val _event = MutableSharedFlow<MypageSettingEvent>()
     val event: SharedFlow<MypageSettingEvent> = _event.asSharedFlow()
 
-    private val _nickname = MutableStateFlow("네로")
-    val nickname: StateFlow<String> = _nickname.asStateFlow()
-
-    val profileText: String
-        get() = "안녕하세요, ${_nickname.value}!"
-
 
     fun navigateToPoint() {
         viewModelScope.launch {
