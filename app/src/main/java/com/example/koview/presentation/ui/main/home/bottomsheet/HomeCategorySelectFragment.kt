@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.koview.R
 import com.example.koview.databinding.FragmentHomeCategoryBottomSheetBinding
 import com.example.koview.presentation.ui.main.home.HomeViewModel
+import com.example.koview.presentation.ui.main.home.product.HarmfulProductViewModel
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class HomeCategorySelectFragment() : BottomSheetDialogFragment() {
     private val parentViewModel: HomeViewModel by activityViewModels()
     private val viewModel: HomeCategorySelectViewModel by viewModels()
     private val searchViewModel: SearchViewModel by activityViewModels()
+    private val harmfulProductViewModel: HarmfulProductViewModel by activityViewModels()
 
     private var _binding: FragmentHomeCategoryBottomSheetBinding? = null
     private val binding get() = _binding!!
@@ -55,11 +57,14 @@ class HomeCategorySelectFragment() : BottomSheetDialogFragment() {
                 when (it) {
                     is HomeCategorySelectEvent.ApplySelectedCategory -> {
                         if (it.filter == null) {
-                            parentViewModel.applyFilter(parentViewModel.category.value)
-                            searchViewModel.getProducts(searchTerm = searchViewModel.searchTerm.value, category = parentViewModel.category.value)
+                            val selectCategory = parentViewModel.category.value
+                            parentViewModel.applyFilter(selectCategory)
+                            searchViewModel.getProducts(searchTerm = searchViewModel.searchTerm.value, category = selectCategory)
+                            harmfulProductViewModel.getProducts(category = selectCategory)
                         } else {
                             parentViewModel.applyFilter(it.filter)
                             searchViewModel.getProducts(searchTerm = searchViewModel.searchTerm.value, category = it.filter)
+                            harmfulProductViewModel.getProducts(category = it.filter)
                         }
                         dismiss()
                     }
