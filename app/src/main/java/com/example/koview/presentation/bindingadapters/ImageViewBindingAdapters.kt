@@ -29,7 +29,7 @@ fun bindAskImg(imageView: ImageView, url: String?) {
 @BindingAdapter("productImgUrl")
 fun bindProductImage(imageView: ImageView, url: String?) {
     Glide.with(imageView.context)
-        .load(url)
+        .load(url ?: R.drawable.default_product_image)
         .error(R.drawable.img_product_ex_2)
         .into(imageView)
 }
