@@ -1,9 +1,12 @@
 package com.example.koview.presentation.ui.main.coview.model
 
+import com.example.koview.data.model.response.PurchaseLinkList
+
 data class CoviewUiData(
     var reviewId: Long = 0L,
     var writer: String = "",
     var profileImage: String? = "",
+    var purchaseLinkList: List<PurchaseLinkList> = emptyList(),
     var totalCommentCount: Long = 0L,
     var totalLikesCount: Long = 0L,
     var content: String = "",

@@ -1,19 +1,21 @@
 package com.example.koview.presentation.ui.main.coview
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.viewModels
 import com.example.koview.R
 import com.example.koview.databinding.FragmentCoviewBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.coview.adapter.CoviewClickListener
 import com.example.koview.presentation.ui.main.coview.adapter.CoviewReviewAdapter
-import com.example.koview.presentation.ui.main.coview.adapter.OnLikeClickListener
 import com.example.koview.presentation.ui.main.coview.model.CoviewUiData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_coview),
-    OnLikeClickListener {
+    CoviewClickListener {
 
     private val viewModel: CoviewViewModel by viewModels()
     private var adapter: CoviewReviewAdapter? = null
@@ -84,5 +86,15 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
     // 리뷰 아이템 좋아요 클릭 시 호출
     override fun onLikeClick(item: CoviewUiData) {
         viewModel.onLikeClick(item)
+    }
+
+    // 상품 링크 클릭 시 호출
+    override fun onShopTagClick(url: String) {
+        clickTag(url)
+    }
+
+    private fun clickTag(url: String) {
+        val customTabsIntent = CustomTabsIntent.Builder().build()
+        customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 }

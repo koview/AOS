@@ -10,12 +10,16 @@ import com.bumptech.glide.Glide
 import com.example.koview.R
 import com.example.koview.databinding.ItemCoviewBinding
 import com.example.koview.presentation.ui.main.coview.model.CoviewUiData
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 
-interface OnLikeClickListener {
+interface CoviewClickListener {
     fun onLikeClick(item: CoviewUiData)
+    fun onShopTagClick(url: String)
 }
 
-class CoviewReviewAdapter(private val likeClickListener: OnLikeClickListener) :
+class CoviewReviewAdapter(private val coviewClickListener: CoviewClickListener) :
     RecyclerView.Adapter<CoviewReviewViewHolder>() {
 
     private var reviewList: List<CoviewUiData> = emptyList()
@@ -26,7 +30,7 @@ class CoviewReviewAdapter(private val likeClickListener: OnLikeClickListener) :
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ), likeClickListener
+            ), coviewClickListener
         )
 
     override fun getItemCount(): Int = reviewList.size
@@ -50,16 +54,15 @@ class CoviewReviewAdapter(private val likeClickListener: OnLikeClickListener) :
 
 class CoviewReviewViewHolder(
     private val binding: ItemCoviewBinding,
-    private val likeClickListener: OnLikeClickListener,
-) :
-    RecyclerView.ViewHolder(binding.root) {
+    private val coviewClickListener: CoviewClickListener,
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: CoviewUiData) {
         binding.item = item
 
         // 좋아요 업데이트
         binding.layoutLike.setOnClickListener {
-            likeClickListener.onLikeClick(item)
+            coviewClickListener.onLikeClick(item)
         }
 
         // 리뷰 내용 클릭 리스너 추가
@@ -69,6 +72,18 @@ class CoviewReviewViewHolder(
             binding.tvReview.maxLines = if (item.isExpanded) Integer.MAX_VALUE else 2
             binding.rvShop.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
         }
+
+        // 상품 링크 연결
+        val context = binding.root.context
+
+        // FlexboxLayoutManager 설정
+        val layoutManager = FlexboxLayoutManager(context)
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.flexWrap = com.google.android.flexbox.FlexWrap.WRAP
+        layoutManager.justifyContent = JustifyContent.FLEX_START
+
+        binding.rvShop.layoutManager = layoutManager
+        binding.rvShop.adapter = CoviewShopTagAdapter(coviewClickListener, item.purchaseLinkList)
     }
 
     fun setupViewPager(imageList: List<String?>) {

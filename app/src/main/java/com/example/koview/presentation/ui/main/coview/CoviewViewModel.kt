@@ -71,6 +71,7 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                                     reviewId = review.reviewId,
                                     writer = review.writer,
                                     profileImage = review.profileImage?.url,
+                                    purchaseLinkList = review.purchaseLinkList,
                                     totalCommentCount = review.totalCommentCount,
                                     totalLikesCount = review.totalLikesCount,
                                     content = review.content,
