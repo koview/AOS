@@ -47,10 +47,16 @@ class PopularProductViewModel @Inject constructor(private val repository: MainRe
         }
     }
 
-    private fun getProducts() {
+    fun getProducts(category: Category? = null) {
+        val selectedCategory = if (category == Category.ALL) {
+            null
+        } else {
+            category
+        }
         viewModelScope.launch {
             repository.getProducts(
                 status = Status.FAMOUS,
+                category = selectedCategory,
                 page = 1,
                 size = 20
             ).let {
