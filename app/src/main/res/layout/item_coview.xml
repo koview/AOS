@@ -11,6 +11,10 @@
             name="item"
             type="com.example.koview.presentation.ui.main.coview.model.CoviewUiData" />
 
+        <variable
+            name="vm"
+            type="com.example.koview.presentation.ui.main.coview.CoviewViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -202,7 +206,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_my_profile"
-                profileImgUrl="@{item.profileImage}"
+                profileImgUrl="@{vm.uiState.profileImgUrl}"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 app:layout_constraintStart_toStartOf="parent"

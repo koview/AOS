@@ -23,12 +23,25 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
 
         binding.vm = viewModel
 
-        initDataObserve()
+        viewModel.getUserInfo()
+
+        initEventObserver()
+        initDataObserver()
         initAdapter()
     }
 
+    private fun initEventObserver() {
+        repeatOnStarted {
+            viewModel.event.collect {
+                when (it) {
+                    is CoviewEvent.ShowToastMessage -> showToastMessage(it.msg)
+                }
+            }
+        }
+    }
+
     // 리뷰 데이터 설정
-    private fun initDataObserve() {
+    private fun initDataObserver() {
         repeatOnStarted {
             viewModel.reviewList.collect {
                 adapter?.setList(it)

@@ -1,16 +1,31 @@
 package com.example.koview.presentation.ui.main.coview
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.koview.data.model.BaseState
 import com.example.koview.data.repository.MainRepository
 import com.example.koview.presentation.ui.main.coview.model.CoviewUiData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+data class CoviewUiState(
+    val page: Int = 0,
+    val hasNext: Boolean = true,
+    val profileImgUrl: String? = "",
+)
+
+sealed class CoviewEvent {
+    data class ShowToastMessage(val msg: String) : CoviewEvent()
+}
 
 @HiltViewModel
 class CoviewViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
@@ -18,7 +33,32 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
     private val _reviewList = MutableStateFlow<List<CoviewUiData>>(emptyList())
     val reviewList: StateFlow<List<CoviewUiData>> = _reviewList.asStateFlow()
 
-    init {
+    private val _uiState = MutableStateFlow(CoviewUiState())
+    val uiState: StateFlow<CoviewUiState> = _uiState.asStateFlow()
+
+    private val _event = MutableSharedFlow<CoviewEvent>()
+    val event: SharedFlow<CoviewEvent> = _event.asSharedFlow()
+
+    // 댓글 입력 창에 보여줄 프로필 사진
+    fun getUserInfo() {
+        viewModelScope.launch {
+            repository.getMyDetail().let {
+                when (it) {
+                    is BaseState.Success -> {
+                        _uiState.update { state ->
+                            state.copy(
+                                profileImgUrl = it.body.result.url
+                            )
+                        }
+                    }
+
+                    is BaseState.Error -> {
+                        _event.emit(CoviewEvent.ShowToastMessage(it.msg))
+                    }
+                }
+            }
+        }
+
         setReviewDate()
     }
 
@@ -92,6 +132,8 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                 isLiked = true,
                 isExpanded = false
             )
+
+
         )
 
         _reviewList.update { reviewList }
