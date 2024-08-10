@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:onClick="@{()->vm.setCategory(Category.CLOTHES)}"
+                android:onClick="@{()->vm.setCategory(Category.CHILD_CLOTHES)}"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_clothes"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.CLOTHES}" />
+                    app:targetCategory="@{Category.CHILD_CLOTHES}" />
 
                 <TextView
                     android:id="@+id/tv_clothes"
@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:text="의상"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.CLOTHES}" />
+                    app:targetCategory="@{Category.CHILD_CLOTHES}" />
             </LinearLayout>
 
             <LinearLayout
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:gravity="center"
-                android:onClick="@{()->vm.setCategory(Category.ACCESSORIES)}"
+                android:onClick="@{()->vm.setCategory(Category.CHILD_ACCESSORIES)}"
                 android:orientation="vertical"
                 app:layout_constraintStart_toEndOf="@id/layout_clothes"
                 app:layout_constraintTop_toTopOf="parent">
@@ -155,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_watch"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.ACCESSORIES}" />
+                    app:targetCategory="@{Category.CHILD_ACCESSORIES}" />
 
                 <TextView
                     android:id="@+id/tv_accessories"
@@ -164,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:text="패션 소품"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.ACCESSORIES}" />
+                    app:targetCategory="@{Category.CHILD_ACCESSORIES}" />
             </LinearLayout>
 
 
@@ -174,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:gravity="center"
-                android:onClick="@{()->vm.setCategory(Category.STATIONARY)}"
+                android:onClick="@{()->vm.setCategory(Category.CHILD_STATIONARY)}"
                 android:orientation="vertical"
                 app:layout_constraintStart_toEndOf="@id/layout_accessories"
                 app:layout_constraintTop_toBottomOf="@id/tv_title">
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_pencil"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.STATIONARY}" />
+                    app:targetCategory="@{Category.CHILD_STATIONARY}" />
 
                 <TextView
                     android:id="@+id/tv_stationary"
@@ -194,7 +194,7 @@
                     android:layout_height="wrap_content"
                     android:text="학용품"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.STATIONARY}" />
+                    app:targetCategory="@{Category.CHILD_STATIONARY}" />
             </LinearLayout>
 
             <LinearLayout
@@ -203,7 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:gravity="center"
-                android:onClick="@{()->vm.setCategory(Category.SANITARY)}"
+                android:onClick="@{()->vm.setCategory(Category.CHILD_SANITARY)}"
                 android:orientation="vertical"
                 app:layout_constraintStart_toEndOf="@id/layout_accessories"
                 app:layout_constraintTop_toBottomOf="@id/tv_title">
@@ -214,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_tissue"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.SANITARY}" />
+                    app:targetCategory="@{Category.CHILD_SANITARY}" />
 
                 <TextView
                     android:id="@+id/tv_sanitary"
@@ -223,7 +223,7 @@
                     android:layout_height="wrap_content"
                     android:text="위생 용품"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.SANITARY}" />
+                    app:targetCategory="@{Category.CHILD_SANITARY}" />
             </LinearLayout>
 
             <LinearLayout
@@ -232,7 +232,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:gravity="center"
-                android:onClick="@{()->vm.setCategory(Category.TOY)}"
+                android:onClick="@{()->vm.setCategory(Category.CHILD_TOY)}"
                 android:orientation="vertical"
                 app:layout_constraintStart_toEndOf="@id/layout_sanitary"
                 app:layout_constraintTop_toBottomOf="@id/tv_title">
@@ -243,7 +243,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_toy"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.TOY}" />
+                    app:targetCategory="@{Category.CHILD_TOY}" />
 
                 <TextView
                     android:id="@+id/tv_toy"
@@ -252,7 +252,7 @@
                     android:layout_height="wrap_content"
                     android:text="완구"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.TOY}" />
+                    app:targetCategory="@{Category.CHILD_TOY}" />
             </LinearLayout>
 
             <LinearLayout
