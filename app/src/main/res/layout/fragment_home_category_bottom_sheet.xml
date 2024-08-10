@@ -261,7 +261,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:gravity="center"
-                android:onClick="@{()->vm.setCategory(Category.CHILDREN_ETC)}"
+                android:onClick="@{()->vm.setCategory(Category.CHILD_ETC)}"
                 android:orientation="vertical"
                 app:layout_constraintStart_toEndOf="@id/layout_sanitary"
                 app:layout_constraintTop_toBottomOf="@id/tv_title">
@@ -272,7 +272,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_etc"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.CHILDREN_ETC}" />
+                    app:targetCategory="@{Category.CHILD_ETC}" />
 
                 <TextView
                     android:id="@+id/tv_children_etc"
@@ -281,7 +281,7 @@
                     android:layout_height="wrap_content"
                     android:text="기타"
                     app:curCategory="@{vm.category}"
-                    app:targetCategory="@{Category.CHILDREN_ETC}" />
+                    app:targetCategory="@{Category.CHILD_ETC}" />
             </LinearLayout>
 
         </com.google.android.flexbox.FlexboxLayout>

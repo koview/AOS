@@ -3,6 +3,7 @@ package com.example.koview.presentation.ui.main.home.search
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -82,11 +83,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     // SearchViewModel data
     private fun initProductListObserver() {
-//        repeatOnStarted {
-//            viewModel.searchProductList.collect { searchProductList ->
-//                productAdapter.submitList(searchProductList)
-//            }
-//        }
         repeatOnStarted {
             viewModel.getProducts.collect {singleProductList ->
                 productAdapter.submitList(singleProductList)

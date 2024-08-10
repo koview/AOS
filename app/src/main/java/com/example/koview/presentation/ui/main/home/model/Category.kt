@@ -7,7 +7,7 @@ enum class Category(val text: String) {
     STATIONARY("학용품"),
     SANITARY("위생용품"),
     TOY("완구"),
-    CHILDREN_ETC("기타"),
+    CHILD_ETC("기타"),
     FOOD_CONTAINER("식품 용기"),
     GENERAL_ETC("기타")
 }

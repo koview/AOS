@@ -1,11 +1,9 @@
 package com.example.koview.presentation.ui.main.home.bottomsheet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -13,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.koview.R
 import com.example.koview.databinding.FragmentHomeCategoryBottomSheetBinding
 import com.example.koview.presentation.ui.main.home.HomeViewModel
-import com.example.koview.presentation.ui.main.home.model.Category
+import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 
@@ -21,6 +19,7 @@ class HomeCategorySelectFragment() : BottomSheetDialogFragment() {
 
     private val parentViewModel: HomeViewModel by activityViewModels()
     private val viewModel: HomeCategorySelectViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by activityViewModels()
 
     private var _binding: FragmentHomeCategoryBottomSheetBinding? = null
     private val binding get() = _binding!!
@@ -57,8 +56,10 @@ class HomeCategorySelectFragment() : BottomSheetDialogFragment() {
                     is HomeCategorySelectEvent.ApplySelectedCategory -> {
                         if (it.filter == null) {
                             parentViewModel.applyFilter(parentViewModel.category.value)
+                            searchViewModel.getProducts(parentViewModel.category.value)
                         } else {
                             parentViewModel.applyFilter(it.filter)
+                            searchViewModel.getProducts(it.filter)
                         }
                         dismiss()
                     }
