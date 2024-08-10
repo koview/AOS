@@ -56,10 +56,10 @@ class HomeCategorySelectFragment() : BottomSheetDialogFragment() {
                     is HomeCategorySelectEvent.ApplySelectedCategory -> {
                         if (it.filter == null) {
                             parentViewModel.applyFilter(parentViewModel.category.value)
-                            searchViewModel.getProducts(parentViewModel.category.value)
+                            searchViewModel.getProducts(searchTerm = searchViewModel.searchTerm.value, category = parentViewModel.category.value)
                         } else {
                             parentViewModel.applyFilter(it.filter)
-                            searchViewModel.getProducts(it.filter)
+                            searchViewModel.getProducts(searchTerm = searchViewModel.searchTerm.value, category = it.filter)
                         }
                         dismiss()
                     }

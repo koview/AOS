@@ -43,6 +43,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         initSearchProductRecyclerview()
         initEventObserve()
         initProductListObserver()
+        initSearchTerm()
         enterSearch()
     }
 
@@ -90,6 +91,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         }
     }
 
+    // 다른 화면으로 갔다가 돌아 왔을 때 검색어 초기화
+    private fun initSearchTerm() {
+        repeatOnStarted {
+            viewModel.getProducts(searchTerm = null, category = parentViewModel.category.value)
+        }
+    }
+
     private fun NavController.toProductDetail(searchProduct: SingleProduct) {
         val action =
             SearchFragmentDirections.actionSearchFragmentToProductDetailFragment(searchProduct)
@@ -111,8 +119,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             var handled = false
             // 확인 버튼 눌렀을 때
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                // TODO: 여기서 ViewModel 함수 호출
-//                viewModel.search()
+                val searchTerm = if (binding.etSearch.text.toString() == "") {
+                    null
+                } else {
+                    binding.etSearch.text.toString()
+                }
+                viewModel.setSearchTerm(searchTerm)
+
+                viewModel.getProducts(searchTerm = searchTerm, category = parentViewModel.category.value)
                 // 키보드 내려가기
                 val inputMethodManager =
                     activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

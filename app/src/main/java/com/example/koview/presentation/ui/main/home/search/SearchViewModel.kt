@@ -38,6 +38,9 @@ class SearchViewModel @Inject constructor(private val repository: MainRepository
     private val _searchProdImage = MutableStateFlow<List<String>>(emptyList())
     val searchProdImage: StateFlow<List<String>> = _searchProdImage.asStateFlow()
 
+    private val _searchTerm = MutableStateFlow<String?>("")
+    val searchTerm : StateFlow<String?> = _searchTerm.asStateFlow()
+
     init {
         getProducts()
     }
@@ -48,7 +51,13 @@ class SearchViewModel @Inject constructor(private val repository: MainRepository
         }
     }
 
-    fun getProducts(category: Category? = null) {
+    fun setSearchTerm(term: String?) {
+        viewModelScope.launch {
+            _searchTerm.value = term
+        }
+    }
+
+    fun getProducts(searchTerm: String? = null, category: Category? = null) {
         val selectedCategory = if (category == Category.ALL) {
             null
         } else {
@@ -58,6 +67,7 @@ class SearchViewModel @Inject constructor(private val repository: MainRepository
             repository.getProducts(
                 status = Status.FAMOUS,
                 category = selectedCategory,
+                searchTerm = searchTerm,
                 page = 1,
                 size = 20
             ).let {
@@ -77,29 +87,4 @@ class SearchViewModel @Inject constructor(private val repository: MainRepository
             }
         }
     }
-
-//    fun getProducts() {
-//        viewModelScope.launch {
-//            repository.getProducts(
-//                status = Status.FAMOUS,
-//                page = 1,
-//                size = 20
-//            ).let {
-//                when (it) {
-//                    is BaseState.Error -> {
-//                        Log.d("SearchFragment", "GetProducts ERROR(Request Success)")
-//                        Log.d("SearchFragment", it.code + ", " + it.msg)
-//                    }
-//
-//                    is BaseState.Success -> {
-//                        _getProducts.value = it.body.result.productList
-//
-////                        val singleProducts = it.body.result.productList[0].
-//
-//                    }
-//                }
-//            }
-//        }
-//    }
-
 }
