@@ -7,7 +7,8 @@ import com.bumptech.glide.Glide
 import com.example.koview.R
 import com.example.koview.databinding.ItemCoviewImageBinding
 
-class CoviewImageVPAdapter(private var data: List<String>) : RecyclerView.Adapter<CoviewImageViewHolder>() {
+class CoviewImageVPAdapter(private var data: List<String?>) :
+    RecyclerView.Adapter<CoviewImageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoviewImageViewHolder =
         CoviewImageViewHolder(
@@ -30,12 +31,10 @@ class CoviewImageVPAdapter(private var data: List<String>) : RecyclerView.Adapte
 class CoviewImageViewHolder(private val binding: ItemCoviewImageBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: String) {
+    fun bind(item: String?) {
         Glide.with(binding.root.context)
             .load(item)
             .error(R.drawable.img_review_ex)
             .into(binding.ivReview)
-
-        //Log.d("review", "리뷰 이미지: $item")
     }
 }

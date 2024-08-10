@@ -3,6 +3,8 @@ package com.example.koview.presentation.ui.main.coview
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.R
 import com.example.koview.databinding.FragmentCoviewBinding
 import com.example.koview.presentation.base.BaseFragment
@@ -18,6 +20,8 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
     private val viewModel: CoviewViewModel by viewModels()
     private var adapter: CoviewReviewAdapter? = null
 
+    private var bottomScrollState = true
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -26,8 +30,9 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
         viewModel.getUserInfo()
 
         initEventObserver()
-        initDataObserver()
+        initStateObserver()
         initAdapter()
+        addOnScrollListener()
     }
 
     private fun initEventObserver() {
@@ -41,10 +46,10 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
     }
 
     // 리뷰 데이터 설정
-    private fun initDataObserver() {
+    private fun initStateObserver() {
         repeatOnStarted {
-            viewModel.reviewList.collect {
-                adapter?.setList(it)
+            viewModel.uiState.collect {
+                adapter?.setList(it.reviewList)
             }
         }
     }
@@ -52,6 +57,22 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
     private fun initAdapter() {
         adapter = CoviewReviewAdapter(this)
         binding.rvCoviewList.adapter = adapter
+    }
+
+    // 무한 스크롤
+    private fun addOnScrollListener() {
+        binding.layoutScroll.setOnScrollChangeListener { v, _, scrollY, _, _ ->
+
+            if (scrollY > binding.layoutScroll.getChildAt(0).measuredHeight - v.measuredHeight) {
+                // 화면 하단에 도달
+                if (bottomScrollState) {
+                    bottomScrollState = false
+                    viewModel.getReviews()
+                }
+            } else {
+                bottomScrollState = true
+            }
+        }
     }
 
     // 리뷰 아이템 좋아요 클릭 시 호출

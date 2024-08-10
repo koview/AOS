@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.example.koview.R
 import com.example.koview.databinding.ItemCoviewBinding
 import com.example.koview.presentation.ui.main.coview.model.CoviewUiData
 
@@ -31,7 +33,12 @@ class CoviewReviewAdapter(private val likeClickListener: OnLikeClickListener) :
 
     override fun onBindViewHolder(holder: CoviewReviewViewHolder, position: Int) {
         holder.bind(reviewList[position])
-        holder.setupViewPager(reviewList[position].imageList)
+
+        if (reviewList[position].imageList.isEmpty()) {
+            holder.bindDefaultImage()
+        } else {
+            holder.setupViewPager(reviewList[position].imageList)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -64,14 +71,19 @@ class CoviewReviewViewHolder(
         }
     }
 
-    fun setupViewPager(imageList: List<String>) {
+    fun setupViewPager(imageList: List<String?>) {
 
         // 리뷰 이미지 ViewPager adapter 설정
         val adapter = CoviewImageVPAdapter(imageList)
         binding.vpImages.adapter = adapter
 
         // 초기 indicator 설정
-        binding.tvIndicator.text = "1 / ${imageList.size}"
+        if (imageList.size == 1) {
+            binding.tvIndicator.visibility = View.GONE
+        } else {
+            binding.tvIndicator.visibility = View.VISIBLE
+            binding.tvIndicator.text = "1 / ${imageList.size}"
+        }
 
         // 페이지 변경 콜백 설정
         binding.vpImages.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -80,5 +92,15 @@ class CoviewReviewViewHolder(
                 binding.tvIndicator.text = "${position + 1} / ${imageList.size}"
             }
         })
+    }
+
+    fun bindDefaultImage() {
+        // 리뷰 이미지 리스트 null 일 때 기본 이미지 설정
+        binding.vpImages.visibility = View.GONE
+        binding.cvReview.visibility = View.VISIBLE
+
+        Glide.with(binding.root.context)
+            .load(R.drawable.img_review_ex)
+            .into(binding.ivReview)
     }
 }
