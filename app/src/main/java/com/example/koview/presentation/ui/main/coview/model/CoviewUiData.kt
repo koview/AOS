@@ -9,6 +9,7 @@ data class CoviewUiData(
     var content: String = "",
     var createdAt: String = "",
     var imageList: List<String?> = emptyList(),
+    var myProfileImage: String? = "",
     var isLiked: Boolean = false,
     var isExpanded: Boolean = false
 )

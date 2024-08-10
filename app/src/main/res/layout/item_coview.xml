@@ -225,12 +225,11 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_my_profile"
-                profileImgUrl="@{vm.uiState.profileImgUrl}"
+                profileImgUrl="@{item.myProfileImage}"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/img_profile_ex" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_comment"

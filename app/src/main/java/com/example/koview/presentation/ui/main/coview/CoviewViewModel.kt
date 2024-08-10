@@ -20,11 +20,12 @@ data class CoviewUiState(
     val page: Int = 1,
     val hasNext: Boolean = true,
     val reviewList: List<CoviewUiData> = emptyList(),
-    val profileImgUrl: String? = "",
 )
 
 sealed class CoviewEvent {
     data class ShowToastMessage(val msg: String) : CoviewEvent()
+    data object ShowLoading : CoviewEvent()
+    data object DismissLoading : CoviewEvent()
 }
 
 @HiltViewModel
@@ -36,17 +37,15 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
     private val _event = MutableSharedFlow<CoviewEvent>()
     val event: SharedFlow<CoviewEvent> = _event.asSharedFlow()
 
+    var profileImgUrl: String? = ""
+
     // 댓글 입력 창에 보여줄 프로필 사진
     fun getUserInfo() {
         viewModelScope.launch {
             repository.getMyDetail().let {
                 when (it) {
                     is BaseState.Success -> {
-                        _uiState.update { state ->
-                            state.copy(
-                                profileImgUrl = it.body.result.url
-                            )
-                        }
+                        profileImgUrl = it.body.result.url
                     }
 
                     is BaseState.Error -> {
@@ -61,6 +60,9 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
     fun getReviews() {
         viewModelScope.launch {
             if (uiState.value.hasNext) {
+                // 로딩 띄우기
+                _event.emit(CoviewEvent.ShowLoading)
+
                 repository.getCoviewReviews(uiState.value.page, 15).let {
                     when (it) {
                         is BaseState.Success -> {
@@ -74,9 +76,10 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                                     content = review.content,
                                     createdAt = review.createdAt,
                                     imageList = review.imageList.map { image -> image?.url },
+                                    myProfileImage = profileImgUrl,
                                     // todo : isLiked는 api 수정되면 반영
                                     isLiked = false,
-                                    isExpanded = false
+                                    isExpanded = false,
                                 )
                             }
                             _uiState.update { state ->
@@ -92,6 +95,7 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                             _event.emit(CoviewEvent.ShowToastMessage(it.msg))
                         }
                     }
+                    _event.emit(CoviewEvent.DismissLoading)
                 }
             }
         }
