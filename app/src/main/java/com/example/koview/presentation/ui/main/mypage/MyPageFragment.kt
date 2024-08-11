@@ -1,6 +1,7 @@
 package com.example.koview.presentation.ui.main.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +20,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage) {
+class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage), ConfirmDialogInterface  {
 
     private val viewModel: MyPageFragmentViewModel by activityViewModels()
     private lateinit var reviewsAdapter: ReviewsAdapter
@@ -54,6 +55,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         })
         setMyReviewOnClick()
 
+        binding.btnDeleteReview.setOnClickListener { dialogDeleteReviews() }
 
     }
 
@@ -121,5 +123,18 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     private fun NavController.toSetting() {
         val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
         navigate(action)
+    }
+
+    fun dialogDeleteReviews(){
+        Log.d("MyPageFragment", "dialogDeleteReviews 호출")
+        val title = "해당 리뷰를 삭제하시겠어요?"
+        val dialog = ConfirmDialog(this@MyPageFragment, title, null, 0)
+        // 알림창이 띄워져있는 동안 배경 클릭 막기
+        dialog.isCancelable = false
+        activity?.let { dialog.show(it.supportFragmentManager, "ConfirmDialog") }
+    }
+
+    override fun onClickYesButton(id: Int) {
+        viewModel.deleteMyReviews()
     }
 }
