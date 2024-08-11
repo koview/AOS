@@ -4,17 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.koview.databinding.ItemProductReviewBinding
+import com.example.koview.databinding.ItemAskAnswerBinding
 import com.example.koview.presentation.ui.main.global.product.model.Review
-import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
-import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewImageAdapter
 
-class AskAnswerAdapter(private val answerList: List<Review>) : RecyclerView.Adapter<AskAnswerAdapter.AskAnswerViewHolder>(){
+class AskAnswerAdapter(private val answerList: List<Review>) :
+    RecyclerView.Adapter<AskAnswerAdapter.AskAnswerViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
     ): AskAnswerAdapter.AskAnswerViewHolder {
-        val binding: ItemProductReviewBinding = ItemProductReviewBinding.inflate(
+        val binding: ItemAskAnswerBinding = ItemAskAnswerBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup,
             false
@@ -29,7 +28,7 @@ class AskAnswerAdapter(private val answerList: List<Review>) : RecyclerView.Adap
 
     override fun getItemCount(): Int = answerList.size
 
-    class AskAnswerViewHolder(private val binding: ItemProductReviewBinding) :
+    class AskAnswerViewHolder(private val binding: ItemAskAnswerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(review: Review) {
@@ -37,8 +36,9 @@ class AskAnswerAdapter(private val answerList: List<Review>) : RecyclerView.Adap
 
             binding.model = review
 
-            binding.rvImage.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            binding.rvImage.adapter = ProductReviewImageAdapter(review.imageUrl)
+            binding.rvImage.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.rvImage.adapter = AskAnswerImageAdapter(review.imageUrl)
         }
 
     }

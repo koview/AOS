@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.koview.databinding.ItemAskAnswerImageBinding
 import com.example.koview.databinding.ItemProductReviewImageBinding
 
 class AskAnswerImageAdapter(private val answerImageList: List<String>) :
@@ -16,7 +17,7 @@ class AskAnswerImageAdapter(private val answerImageList: List<String>) :
         viweGroup: ViewGroup,
         viewType: Int
     ): AskAnswerImageViewHolder {
-        val binding: ItemProductReviewImageBinding = ItemProductReviewImageBinding.inflate(
+        val binding: ItemAskAnswerImageBinding = ItemAskAnswerImageBinding.inflate(
             LayoutInflater.from(viweGroup.context),
             viweGroup, false
         )
@@ -33,7 +34,7 @@ class AskAnswerImageAdapter(private val answerImageList: List<String>) :
 
     override fun getItemCount(): Int = answerImageList.size
 
-    class AskAnswerImageViewHolder(private val binding: ItemProductReviewImageBinding) :
+    class AskAnswerImageViewHolder(private val binding: ItemAskAnswerImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(reviewImage: String) {
             // ImageView의 크기가 결정된 후에 Glide로 이미지 로드
