@@ -21,6 +21,7 @@
     <color name="kv_main4">#3170D6</color>
     <color name="kv_main5">#6FA9F7</color>
     <color name="kv_main6">#9CC6FF</color>
+    <color name="kv_main7">#4D9CC6FF</color>
 
     <color name="kv_red">#FF0000</color>
 </resources>

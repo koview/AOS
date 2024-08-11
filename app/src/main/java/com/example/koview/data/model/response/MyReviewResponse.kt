@@ -42,6 +42,19 @@ data class ReviewList(
     val updatedAt: String
 )
 
+// 마이페이지 리뷰 화면을 위한 데이터 클래스
+data class MyReview(
+    val reviewId: Long,
+    val content: String,
+    val writer: String,
+    val imageList: List<ImageDTO>,
+    val totalCommentCount: Long,
+    val totalLikesCount: Long,
+    val createdAt: String,
+    val updatedAt: String,
+    var isSelected: Boolean = false
+)
+
 // 이미지 DTO
 data class ImageDTO(
     val imageId: Long,
