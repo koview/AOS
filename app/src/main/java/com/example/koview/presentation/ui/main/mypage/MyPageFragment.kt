@@ -105,6 +105,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         // 새로운 리뷰 관찰
         viewModel.myReviews.onEach { reviews ->
             reviewsAdapter.updateReviews(reviews) // 새로운 리뷰로 어댑터 업데이트
+            viewModel.checkReviewsIsEmpty()
         }.launchIn(viewLifecycleOwner.lifecycleScope) // Flow를 관찰
     }
 

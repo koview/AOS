@@ -46,6 +46,9 @@ class MyPageFragmentViewModel @Inject constructor(
     private val _profileImg = MutableStateFlow("")
     val profileImg: StateFlow<String> = _profileImg.asStateFlow()
 
+    private val _isEmpty = MutableStateFlow(true)
+    val isEmpty: StateFlow<Boolean> = _isEmpty.asStateFlow()
+
     // 리뷰 리스트와 현재 페이지 추가
     private val _myReviews = MutableStateFlow<List<MyReview>>(emptyList())
     val myReviews: StateFlow<List<MyReview>> = _myReviews.asStateFlow()
@@ -169,6 +172,10 @@ class MyPageFragmentViewModel @Inject constructor(
     fun changeSelectedById(reviewId: Long){
         val review = _myReviews.value.find { it.reviewId == reviewId }
         review!!.isSelected = !review.isSelected
+    }
+
+    fun checkReviewsIsEmpty(){
+        _isEmpty.value = _myReviews.value.isEmpty()
     }
 
 
