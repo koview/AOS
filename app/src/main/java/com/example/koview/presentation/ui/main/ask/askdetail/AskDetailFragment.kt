@@ -58,6 +58,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
             viewModel.event.collect {
                 when (it) {
                     AskDetailEvent.NavigateToAsk -> findNavController().toAsk()
+                    AskDetailEvent.NavigateToAskAnswer -> findNavController().toAskAnswer()
                 }
             }
         }
@@ -65,6 +66,11 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
 
     private fun NavController.toAsk() {
         val action = AskDetailFragmentDirections.actionAskDetailFragmentToAskFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toAskAnswer() {
+        val action = AskDetailFragmentDirections.actionAskDetailFragmentToAskAnswerFragment()
         navigate(action)
     }
 
