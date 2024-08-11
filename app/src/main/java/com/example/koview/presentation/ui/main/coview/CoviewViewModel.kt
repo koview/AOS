@@ -80,7 +80,6 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                                     myProfileImage = profileImgUrl,
                                     // todo : isLiked는 api 수정되면 반영
                                     isLiked = false,
-                                    isExpanded = false,
                                 )
                             }
                             _uiState.update { state ->
@@ -114,7 +113,7 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                         if (it.reviewId == item.reviewId) {
                             updatedItem
                         } else {
-                            item
+                            it
                         }
                     }
                 )

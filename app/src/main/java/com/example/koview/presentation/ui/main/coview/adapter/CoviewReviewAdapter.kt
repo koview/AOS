@@ -41,7 +41,7 @@ class CoviewReviewAdapter(private val coviewClickListener: CoviewClickListener) 
         if (reviewList[position].imageList.isEmpty()) {
             holder.bindDefaultImage()
         } else {
-            holder.setupViewPager(reviewList[position].imageList)
+            holder.setupViewPager(reviewList[position])
         }
     }
 
@@ -86,25 +86,29 @@ class CoviewReviewViewHolder(
         binding.rvShop.adapter = CoviewShopTagAdapter(coviewClickListener, item.purchaseLinkList)
     }
 
-    fun setupViewPager(imageList: List<String?>) {
+    fun setupViewPager(item: CoviewUiData) {
 
         // 리뷰 이미지 ViewPager adapter 설정
-        val adapter = CoviewImageVPAdapter(imageList)
+        val adapter = CoviewImageVPAdapter(item.imageList)
         binding.vpImages.adapter = adapter
 
+        // 현재 페이지 설정
+        binding.vpImages.setCurrentItem(item.currentPage, false)
+
         // 초기 indicator 설정
-        if (imageList.size == 1) {
+        if (item.imageList.size == 1) {
             binding.tvIndicator.visibility = View.GONE
         } else {
             binding.tvIndicator.visibility = View.VISIBLE
-            binding.tvIndicator.text = "1 / ${imageList.size}"
+            binding.tvIndicator.text = "${item.currentPage + 1} / ${item.imageList.size}"
         }
 
         // 페이지 변경 콜백 설정
         binding.vpImages.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                binding.tvIndicator.text = "${position + 1} / ${imageList.size}"
+                binding.tvIndicator.text = "${position + 1} / ${item.imageList.size}"
+                item.currentPage = position // 현재 페이지 인덱스 업데이트
             }
         })
     }

@@ -14,5 +14,6 @@ data class CoviewUiData(
     var imageList: List<String?> = emptyList(),
     var myProfileImage: String? = "",
     var isLiked: Boolean = false,
-    var isExpanded: Boolean = false
+    var isExpanded: Boolean = false,
+    var currentPage: Int = 0    // 현재 리뷰 사진 페이지
 )
