@@ -76,8 +76,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                 } else{
                     // todo: 리뷰 상세화면 이동
                 }
-
-                showToastMessage("${viewModel.deleteReviewList.value}")
             }
         })
     }
