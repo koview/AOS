@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="point"
+            type="com.example.koview.data.model.response.PointDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +18,7 @@
             android:id="@+id/tv_point_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="일일미션"
+            android:text="@{point.title}"
             style="@style/TextSmallMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -23,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2024.08.02"
+            android:text="@{point.createdAt}"
             style="@style/TextTinyMedium"
             android:textColor="@color/kv_gray5"
             app:layout_constraintTop_toBottomOf="@id/tv_point_detail"
@@ -33,7 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+100P"
+            android:text="@{point.pointString}"
             style="@style/TextSmallSemiBold"
             android:textColor="@color/kv_main4"
             app:layout_constraintEnd_toEndOf="parent"
