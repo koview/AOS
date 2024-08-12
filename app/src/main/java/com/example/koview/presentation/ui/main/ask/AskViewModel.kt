@@ -297,6 +297,7 @@ class AskViewModel @Inject constructor() : ViewModel() {
                 askCount = item.askCount + if (item.isAsk) -1 else 1
             )
 
+            _askDetail.value = updatedItem
 
             _askList.update { list ->
                 list.map {

@@ -27,11 +27,16 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.model = parentViewModel.askDetail.value
         binding.vm = viewModel
+
+        // 데이터 관찰
+        parentViewModel.askDetail.observe(viewLifecycleOwner) { askDetail ->
+            binding.model = askDetail
+        }
 
         initRecyclerview()
         initEventObserve()
+        clickAsk()
     }
 
     private fun initRecyclerview() {
@@ -77,6 +82,12 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
     private fun clickTag(url: String?) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
+    }
+
+    private fun clickAsk() {
+        binding.layoutAskIcon.setOnClickListener {
+            parentViewModel.askDetail.value?.let { parentViewModel.onAskClick(it) }
+        }
     }
 
     override fun onClickTag(url: String) {
