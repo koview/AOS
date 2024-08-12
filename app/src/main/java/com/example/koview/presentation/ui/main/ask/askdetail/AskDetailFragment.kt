@@ -15,6 +15,7 @@ import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.ask.AskViewModel
 import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskAnswerAdapter
 import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskShopTagAdapter
+import com.example.koview.presentation.ui.main.global.product.model.Review
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -24,6 +25,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
 
     private val viewModel: AskDetailViewModel by viewModels()
     private val parentViewModel: AskViewModel by activityViewModels()
+    private val askAnswerAdapter = AskAnswerAdapter(this)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -32,6 +34,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         // 데이터 관찰
         parentViewModel.askDetail.observe(viewLifecycleOwner) { askDetail ->
             binding.model = askDetail
+            askDetail?.let { askAnswerAdapter.updateReviews(it.reviewList) }
         }
 
         initRecyclerview()
@@ -54,8 +57,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         // 답변 리사이클러뷰 연결
         binding.rvReview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvReview.adapter =
-            parentViewModel.askDetail.value?.let { AskAnswerAdapter(it.reviewList) }
+        binding.rvReview.adapter = askAnswerAdapter
     }
 
     private fun initEventObserve() {
@@ -92,5 +94,9 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
 
     override fun onClickTag(url: String) {
         clickTag(url)
+    }
+
+    override fun onClickLike(item: Review) {
+        parentViewModel.onLikeClick(item)
     }
 }

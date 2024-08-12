@@ -27,5 +27,6 @@ data class Review(
     val imageUrl: List<String>,
     val likeNumber: Int,
     val commentNumber: Int,
-    val date: String
+    val date: String,
+    val isLiked: Boolean = false
 ) : Serializable
