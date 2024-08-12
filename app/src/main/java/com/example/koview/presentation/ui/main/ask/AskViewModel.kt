@@ -291,7 +291,12 @@ class AskViewModel @Inject constructor() : ViewModel() {
 
     fun onAskClick(item: AskData) {
         viewModelScope.launch {
-            val updatedItem = item.copy(isAsk = !item.isAsk)
+
+            val updatedItem = item.copy(
+                isAsk = !item.isAsk,
+                askCount = item.askCount + if (item.isAsk) -1 else 1
+            )
+
 
             _askList.update { list ->
                 list.map {
