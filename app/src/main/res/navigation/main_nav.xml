@@ -190,6 +190,18 @@
             app:destination="@id/ask_fragment"
             app:popUpTo="@id/ask_fragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_ask_detail_fragment_to_ask_answer_fragment"
+            app:destination="@id/ask_answer_fragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ask_answer_fragment"
+        android:name="com.example.koview.presentation.ui.main.ask.askanswer.AskAnswerFragment"
+        android:label="AskAnswerFragment">
+
     </fragment>
 
 </navigation>
