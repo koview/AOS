@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="model"
             type="com.example.koview.presentation.ui.main.ask.model.AskData" />
@@ -64,12 +66,28 @@
                     android:text="@{String.valueOf(model.answerCount)}"
                     android:textColor="@color/kv_gray6" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_ask_off"
+                <LinearLayout
+                    android:id="@+id/layout_ask_icon"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_ask_off" />
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_ask_off"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/ic_ask_off"
+                        android:visibility="@{model.isAsk? View.GONE : View.VISIBLE}" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_ask_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/ic_ask_on"
+                        android:visibility="@{model.isAsk? View.VISIBLE : View.GONE}" />
+
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_askCount"

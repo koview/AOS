@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,6 +52,7 @@ class AskViewModel @Inject constructor() : ViewModel() {
                 askImage = "https://ifh.cc/g/f9WcP4.jpg",
                 nickname = "멜",
                 createdAt = "2024-08-05",
+                isAsk = false,
                 shopList = listOf(
                     TagShop(
                         title = "xpadfnejnnddf",
@@ -120,7 +122,7 @@ class AskViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ), AskData(
-                title = "이 목걸이 안전한가요?",
+                title = "이 장난감 안전한가요?",
                 contents = "dfdfd",
                 viewCount = 12,
                 answerCount = 23,
@@ -128,6 +130,7 @@ class AskViewModel @Inject constructor() : ViewModel() {
                 askImage = "https://ifh.cc/g/f9WcP4.jpg",
                 nickname = "멜",
                 createdAt = "2024-08-05",
+                isAsk = true,
                 shopList = listOf(
                     TagShop(
                         title = "xpadfnejnnddf",
@@ -197,7 +200,7 @@ class AskViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             ), AskData(
-                title = "이 목걸이 안전한가요?",
+                title = "이 튜브 안전한가요?",
                 contents = "dfdfd",
                 viewCount = 12,
                 answerCount = 23,
@@ -205,6 +208,7 @@ class AskViewModel @Inject constructor() : ViewModel() {
                 askImage = "https://ifh.cc/g/f9WcP4.jpg",
                 nickname = "멜",
                 createdAt = "2024-08-05",
+                isAsk = false,
                 shopList = listOf(
                     TagShop(
                         title = "xpadfnejnnddf",
@@ -282,6 +286,18 @@ class AskViewModel @Inject constructor() : ViewModel() {
         _askDetail.value = askDetail
         viewModelScope.launch {
             _event.emit(AskEvent.NavigateToAskDetail(askDetail))
+        }
+    }
+
+    fun onAskClick(item: AskData) {
+        viewModelScope.launch {
+            val updatedItem = item.copy(isAsk = !item.isAsk)
+
+            _askList.update { list ->
+                list.map {
+                    if (it == item) updatedItem else it
+                }
+            }
         }
     }
 }

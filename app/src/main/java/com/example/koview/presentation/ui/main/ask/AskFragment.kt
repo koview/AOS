@@ -66,4 +66,8 @@ class AskFragment : BaseFragment<FragmentAskBinding>(R.layout.fragment_ask), Ask
     override fun onAskClick(askDetail: AskData) {
         viewModel.navigateToAskDetail(askDetail)
     }
+
+    override fun onAskIconClick(item: AskData) {
+        viewModel.onAskClick(item)
+    }
 }

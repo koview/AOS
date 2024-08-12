@@ -45,6 +45,10 @@ class AskAdapter(listener: AskInterface) : RecyclerView.Adapter<AskAdapter.AskVi
             binding.layoutAsk.setOnClickListener {
                 mCallBack.onAskClick(ask)
             }
+
+            binding.layoutAskIcon.setOnClickListener {
+                mCallBack.onAskIconClick(ask)
+            }
         }
     }
 }
