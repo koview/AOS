@@ -40,6 +40,7 @@ class HarmfulProductFragment :
         initHarmfulProductRecyclerview()
         initHarmfulProductListObserver()
         initEventObserve()
+        initProductData()
     }
 
     private fun initHarmfulProductRecyclerview() {
@@ -86,6 +87,13 @@ class HarmfulProductFragment :
             viewModel.getProducts.collect { harmfulProductList ->
                 productAdapter.submitList(harmfulProductList)
             }
+        }
+    }
+
+    // 다른 화면으로 갔다가 돌아 왔을 때 초기화
+    private fun initProductData() {
+        repeatOnStarted {
+            viewModel.getProducts(category = parentViewModel.category.value)
         }
     }
 

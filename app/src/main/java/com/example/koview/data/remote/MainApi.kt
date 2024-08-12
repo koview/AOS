@@ -9,6 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductsResponse
+import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.Status
 import com.example.koview.presentation.ui.main.home.model.Category
 import retrofit2.Response
@@ -56,5 +57,10 @@ interface MainApi {
     @GET("home")
     suspend fun home(): Response<HomeResponse>
 
-
+    @GET("reviews/detail")
+    suspend fun getReviewDetails(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("clickedReviewId") clickedReviewId: Long
+    ): Response<ReviewDetailResponse>
 }

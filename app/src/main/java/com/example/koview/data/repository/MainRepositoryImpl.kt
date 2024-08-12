@@ -8,6 +8,7 @@ import com.example.koview.data.model.response.GetMyReviewDetailResponse
 import com.example.koview.data.model.response.GetMyReviewsResponse
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductsResponse
+import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.Status
 import com.example.koview.data.model.runRemote
 import com.example.koview.data.remote.MainApi
@@ -42,4 +43,11 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
         runRemote { api.getProducts(status, category, searchTerm, page, size) }
 
     override suspend fun home(): BaseState<HomeResponse> = runRemote { api.home() }
+    override suspend fun getReviewDetails(
+        page: Int,
+        size: Int,
+        clickedReviewId: Long
+    ): BaseState<ReviewDetailResponse> = runRemote {
+        api.getReviewDetails(page, size, clickedReviewId)
+    }
 }
