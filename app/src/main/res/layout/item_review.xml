@@ -5,13 +5,16 @@
     <data>
         <variable
             name="review"
-            type="com.example.koview.data.model.response.ReviewList" />
+            type="com.example.koview.data.model.response.MyReview" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lo_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="15dp">
+        android:paddingVertical="15dp"
+        android:paddingHorizontal="20dp"
+        android:background="@{review.selected ? @color/kv_main7 : @android:color/white}">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_nickname"

@@ -1,5 +1,6 @@
 package com.example.koview.data.remote
 
+import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
 import com.example.koview.data.model.response.GetMyReviewDetailResponse
@@ -12,6 +13,7 @@ import com.example.koview.data.model.response.Status
 import com.example.koview.presentation.ui.main.home.model.Category
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Query
 
 interface MainApi {
@@ -37,9 +39,9 @@ interface MainApi {
     ): Response<GetMyReviewDetailResponse>
 
     // 내 리뷰 리스트 삭제
-    @DELETE("mypage/myreviews/delete")
+    @HTTP(method = "DELETE", path = "mypage/myreviews/delete", hasBody = true)
     suspend fun deleteMyReviews(
-        @Body reviewIdList: List<Long>
+        @Body params: DeleteMyReviewRequest
     ): Response<DeleteMyReviewsResponse>
 
     @GET("products")

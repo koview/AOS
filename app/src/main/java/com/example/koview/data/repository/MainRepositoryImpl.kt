@@ -1,6 +1,7 @@
 package com.example.koview.data.repository
 
 import com.example.koview.data.model.BaseState
+import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
 import com.example.koview.data.model.response.GetMyReviewDetailResponse
@@ -28,8 +29,8 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
     ): BaseState<GetMyReviewDetailResponse> =
         runRemote { api.getMyReviewDetail(page, size, clickedReviewId) }
 
-    override suspend fun deleteMyReviews(reviewIdList: List<Long>): BaseState<DeleteMyReviewsResponse> =
-        runRemote { api.deleteMyReviews(reviewIdList) }
+    override suspend fun deleteMyReviews(params: DeleteMyReviewRequest): BaseState<DeleteMyReviewsResponse> =
+        runRemote { api.deleteMyReviews(params) }
   
     override suspend fun getProducts(
         status: Status,

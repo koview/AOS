@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="30dp"
+        android:minWidth="300dp"
+        android:background="@drawable/rect_whitefill_nostroke_25radius"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/TextRegularSemiBold"
+            tools:text="확인 타이틀" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/TextSmallMedium"
+            tools:text="확인 설명 메시지"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/noButton"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="35dp"
+                android:layout_weight="1"
+                android:text="취소"
+                android:background="@drawable/rect_gray1fill_nostroke_10radius"
+                style="@style/TextTinySemiBold"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/yesButton"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="확인"
+                style="@style/TextTinySemiBold"
+                android:background="@drawable/rect_main3fill_nostroke_10radius"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>
