@@ -1,6 +1,7 @@
 package com.example.koview.data.repository
 
 import com.example.koview.data.model.BaseState
+import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
 import com.example.koview.data.model.response.GetMyReviewDetailResponse
@@ -27,7 +28,7 @@ interface MainRepository {
     ): BaseState<GetMyReviewDetailResponse>
 
     suspend fun deleteMyReviews(
-        reviewIdList: List<Long>
+        params: DeleteMyReviewRequest
     ): BaseState<DeleteMyReviewsResponse>
   
     suspend fun getProducts(

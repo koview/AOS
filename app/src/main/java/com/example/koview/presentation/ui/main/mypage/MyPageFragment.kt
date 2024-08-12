@@ -1,6 +1,7 @@
 package com.example.koview.presentation.ui.main.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +20,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage) {
+class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage), ConfirmDialogInterface  {
 
     private val viewModel: MyPageFragmentViewModel by activityViewModels()
     private lateinit var reviewsAdapter: ReviewsAdapter
@@ -52,7 +53,33 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                 }
             }
         })
+        setMyReviewOnClick()
+
+        binding.btnDeleteReview.setOnClickListener { dialogDeleteReviews() }
+
     }
+
+    private fun setMyReviewOnClick(){
+        // 내 리뷰 클릭 리스너
+        reviewsAdapter.setMyItemClickListener(object: ReviewsAdapter.MyItemClickListener{
+            override fun onLongClick(reviewId: Long) {
+                // isChecking == false 일 때 리뷰 삭제 버튼 활성화
+                if (!viewModel.isChecking.value){
+                    viewModel.startChecking(reviewId)
+                }
+            }
+
+            override fun onItemClick(reviewId: Long) {
+                // 삭제 버튼 활성화 시 리뷰 삭제 목록 추가 else 리뷰 상세 화면 이동
+                if(viewModel.isChecking.value){
+                    viewModel.toggleReviewId(reviewId)
+                } else{
+                    // todo: 리뷰 상세화면 이동
+                }
+            }
+        })
+    }
+
 
     private fun observeViewModel(){
         // 닉네임 관찰
@@ -75,11 +102,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     }
 
     private fun observeRvViewModel() {
-
-
         // 새로운 리뷰 관찰
         viewModel.myReviews.onEach { reviews ->
             reviewsAdapter.updateReviews(reviews) // 새로운 리뷰로 어댑터 업데이트
+            viewModel.checkReviewsIsEmpty()
         }.launchIn(viewLifecycleOwner.lifecycleScope) // Flow를 관찰
     }
 
@@ -96,5 +122,18 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     private fun NavController.toSetting() {
         val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
         navigate(action)
+    }
+
+    fun dialogDeleteReviews(){
+        Log.d("MyPageFragment", "dialogDeleteReviews 호출")
+        val title = "해당 리뷰를 삭제하시겠어요?"
+        val dialog = ConfirmDialog(this@MyPageFragment, title, null, 0)
+        // 알림창이 띄워져있는 동안 배경 클릭 막기
+        dialog.isCancelable = false
+        activity?.let { dialog.show(it.supportFragmentManager, "ConfirmDialog") }
+    }
+
+    override fun onClickYesButton(id: Int) {
+        viewModel.deleteMyReviews()
     }
 }

@@ -13,6 +13,7 @@ import com.example.koview.databinding.ItemProductReviewImageBinding
 
 class ReviewsImageAdapter(private val reviewImageList: List<ImageDTO>) :
     RecyclerView.Adapter<ReviewsImageAdapter.ReviewsImageViewHolder>() {
+
     override fun onCreateViewHolder(
         viweGroup: ViewGroup,
         viewType: Int
