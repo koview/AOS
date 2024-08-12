@@ -78,8 +78,7 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                                     createdAt = review.createdAt,
                                     imageList = review.imageList.map { image -> image?.url },
                                     myProfileImage = profileImgUrl,
-                                    // todo : isLiked는 api 수정되면 반영
-                                    isLiked = false,
+                                    isLiked = review.isCurrentMemberLiked,
                                 )
                             }
                             _uiState.update { state ->

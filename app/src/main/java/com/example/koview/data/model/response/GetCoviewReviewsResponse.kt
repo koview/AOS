@@ -20,9 +20,10 @@ data class CoviewReviewList(
     val writer: String,
     val profileImage: CoviewImage?,
     val imageList: List<CoviewImage?>,
-    val purchaseLinkList: List<CoviewPurchaseLink>,
+    val purchaseLinkList: List<PurchaseLinkList>,
     val totalCommentCount: Long,
     val totalLikesCount: Long,
+    val isCurrentMemberLiked: Boolean,
     val createdAt: String,
     val updatedAt: String
 )
@@ -30,12 +31,4 @@ data class CoviewReviewList(
 data class CoviewImage(
     val imageId: Long,
     val url: String
-)
-
-data class CoviewPurchaseLink(
-    val purchaseLinkId: Long,
-    val productId: Long,
-    val purchaseUrl: String,
-    val shopName: String,
-    val verifiedType: VerifiedType
 )
