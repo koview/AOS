@@ -64,7 +64,7 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
     private fun initStateObserver() {
         repeatOnStarted {
             viewModel.uiState.collect {
-                adapter?.setList(it.reviewList)
+                adapter?.submitList(it.reviewList)
             }
         }
     }

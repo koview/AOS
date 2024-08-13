@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -22,9 +23,21 @@ interface CoviewClickListener {
 }
 
 class CoviewReviewAdapter(private val coviewClickListener: CoviewClickListener) :
-    RecyclerView.Adapter<CoviewReviewViewHolder>() {
+    ListAdapter<CoviewUiData, CoviewReviewViewHolder>(diffCallback) {
 
-    private var reviewList: List<CoviewUiData> = emptyList()
+    companion object {
+        val diffCallback = object : DiffUtil.ItemCallback<CoviewUiData>() {
+            override fun areItemsTheSame(oldItem: CoviewUiData, newItem: CoviewUiData): Boolean {
+                return oldItem.reviewId == newItem.reviewId
+            }
+
+            override fun areContentsTheSame(oldItem: CoviewUiData, newItem: CoviewUiData): Boolean {
+                return oldItem == newItem &&
+                        oldItem.currentPage == newItem.currentPage &&
+                        oldItem.isExpanded == newItem.isExpanded
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoviewReviewViewHolder =
         CoviewReviewViewHolder(
@@ -35,46 +48,14 @@ class CoviewReviewAdapter(private val coviewClickListener: CoviewClickListener) 
             ), coviewClickListener
         )
 
-    override fun getItemCount(): Int = reviewList.size
-
     override fun onBindViewHolder(holder: CoviewReviewViewHolder, position: Int) {
-        holder.bind(reviewList[position])
+        holder.bind(getItem(position))
 
-        if (reviewList[position].imageList.isEmpty()) {
+        if (getItem(position).imageList.isEmpty()) {
             holder.bindDefaultImage()
         } else {
-            holder.setupViewPager(reviewList[position])
+            holder.setupViewPager(getItem(position))
         }
-    }
-
-    fun setList(newList: List<CoviewUiData>) {
-        val diffCallback = CoviewDiffCallback(reviewList, newList)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        reviewList = newList
-        diffResult.dispatchUpdatesTo(this)
-        Log.d("코뷰", "리뷰 리스트 업데이트")
-    }
-}
-
-class CoviewDiffCallback(
-    private val oldList: List<CoviewUiData>,
-    private val newList: List<CoviewUiData>,
-) : DiffUtil.Callback() {
-
-    override fun getOldListSize(): Int = oldList.size
-
-    override fun getNewListSize(): Int = newList.size
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].reviewId == newList[newItemPosition].reviewId
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldItem = oldList[oldItemPosition]
-        val newItem = newList[newItemPosition]
-        return oldItem == newItem &&
-                oldItem.currentPage == newItem.currentPage &&
-                oldItem.isExpanded == newItem.isExpanded
     }
 }
 
@@ -114,7 +95,7 @@ class CoviewReviewViewHolder(
         setupShopLinks(item)
     }
 
-    private fun setupShopLinks(item: CoviewUiData){
+    private fun setupShopLinks(item: CoviewUiData) {
         // 상품 링크 연결
         val context = binding.root.context
         val layoutManager = FlexboxLayoutManager(context)
