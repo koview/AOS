@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="com.example.koview.data.model.response.CoviewCommentItem" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +19,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_my_profile"
+            profileImgUrl="@{item.profileImage.url}"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
@@ -25,8 +30,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginStart="16dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_my_profile"
             app:layout_constraintTop_toTopOf="parent">
@@ -36,7 +41,8 @@
                 style="@style/TextSmallMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="닉네임" />
+                android:text="@{item.writer}"
+                tools:text="닉네임" />
 
             <TextView
                 android:id="@+id/tv_comment"
@@ -44,8 +50,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:text="댓글 내용"
-                android:textColor="@color/kv_gray9" />
+                android:text="@{item.content}"
+                android:textColor="@color/kv_gray9"
+                tools:text="댓글 내용" />
 
             <TextView
                 android:id="@+id/tv_date"
@@ -53,8 +60,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:text="2024-08-07"
-                android:textColor="@color/kv_gray5" />
+                android:text="@{item.createdDate}"
+                android:textColor="@color/kv_gray5"
+                tools:text="2024-08-07" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

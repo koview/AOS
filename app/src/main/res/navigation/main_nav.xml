@@ -28,7 +28,27 @@
         android:name="com.example.koview.presentation.ui.main.coview.CoviewFragment"
         android:label="CoviewFragment">
 
+        <action
+            android:id="@+id/action_coview_fragment_to_coviewCommentBottomSheetFragment"
+            app:destination="@id/coviewCommentBottomSheetFragment" />
     </fragment>
+
+    <dialog
+        android:id="@+id/coviewCommentBottomSheetFragment"
+        android:name="com.example.koview.presentation.ui.main.coview.bottomsheet.CoviewCommentBottomSheetFragment"
+        android:label="CoviewCommentBottomSheetFragment" >
+        <argument
+            app:argType="long"
+            android:name="reviewId"/>
+
+        <argument
+            app:argType="string"
+            android:name="profileImg"/>
+
+        <argument
+            app:argType="boolean"
+            android:name="isFullView"/>
+    </dialog>
 
     <fragment
         android:id="@+id/ask_fragment"
@@ -153,6 +173,7 @@
             app:popUpToInclusive="true" />
 
     </fragment>
+
     <fragment
         android:id="@+id/myPageSettingFragment"
         android:name="com.example.koview.presentation.ui.main.mypage.setting.MyPageSettingFragment"
@@ -167,20 +188,24 @@
             android:id="@+id/action_myPageSettingFragment_to_settingOperatingFragment"
             app:destination="@id/settingOperatingFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/settingLoginInfoFragment"
         android:name="com.example.koview.presentation.ui.main.mypage.setting.logininfo.SettingLoginInfoFragment"
         android:label="SettingLoginInfoFragment" >
+
         <action
             android:id="@+id/action_settingLoginInfoFragment_to_home_fragment"
             app:destination="@id/home_fragment"
             app:popUpTo="@id/login_fragment"
             app:popUpToInclusive="true"/>
     </fragment>
+
     <fragment
         android:id="@+id/settingOperatingFragment"
         android:name="com.example.koview.presentation.ui.main.mypage.setting.operating.SettingOperatingFragment"
         android:label="SettingOperatingFragment" />
+
     <fragment
         android:id="@+id/settingPointFragment"
         android:name="com.example.koview.presentati on.ui.main.mypage.setting.point.SettingPointFragment"
