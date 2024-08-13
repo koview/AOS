@@ -100,20 +100,40 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
 
     fun onLikeClick(item: CoviewUiData) {
         viewModelScope.launch {
-            // todo: 좋아요 업데이트 api 호출
-            val updatedItem = item.copy(isLiked = !item.isLiked)
+            // 현재 좋아요 상태에 따라 API 호출
+            val result = if (item.isLiked) {
+                repository.deleteReviewLike(item.reviewId)
+            } else {
+                repository.addReviewLike(item.reviewId)
+            }
 
-            // 좋아요 누른 리뷰 _uiState 업데이트
-            _uiState.update { state ->
-                state.copy(
-                    reviewList = state.reviewList.map {
-                        if (it.reviewId == item.reviewId) {
-                            updatedItem
+            when (result) {
+                is BaseState.Success -> {
+                    // 좋아요 상태 업데이트
+                    val updatedItem = item.copy(
+                        isLiked = !item.isLiked,
+                        totalLikesCount = if (item.isLiked) {
+                            item.totalLikesCount - 1
                         } else {
-                            it
+                            item.totalLikesCount + 1
                         }
+                    )
+                    _uiState.update { state ->
+                        state.copy(
+                            reviewList = state.reviewList.map {
+                                if (it.reviewId == item.reviewId) {
+                                    updatedItem
+                                } else {
+                                    it
+                                }
+                            }
+                        )
                     }
-                )
+                }
+
+                is BaseState.Error -> {
+                    _event.emit(CoviewEvent.ShowToastMessage(result.msg))
+                }
             }
         }
     }

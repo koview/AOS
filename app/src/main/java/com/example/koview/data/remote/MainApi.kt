@@ -1,6 +1,7 @@
 package com.example.koview.data.remote
 
 import com.example.koview.data.model.requeset.CoviewCommentRequest
+import com.example.koview.data.model.response.ReviewLikeResponse
 import com.example.koview.data.model.response.AddCoviewCommentResponse
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetCoviewCommentsResponse
@@ -80,5 +81,17 @@ interface MainApi {
         @Query("reviewId") reviewId: Long,
         @Body params: CoviewCommentRequest
     ): Response<AddCoviewCommentResponse>
+
+    // 리뷰 좋아요 추가
+    @POST("likes/create")
+    suspend fun addReviewLike(
+        @Query("reviewId") reviewId: Long
+    ): Response<ReviewLikeResponse>
+
+    // 리뷰 좋아요 삭제
+    @DELETE("likes/delete")
+    suspend fun deleteReviewLike(
+        @Query("reviewId") reviewId: Long
+    ): Response<ReviewLikeResponse>
 
 }
