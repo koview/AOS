@@ -13,6 +13,7 @@ data class AskData(
     val askImage: String = "",
     val nickname: String = "",
     val createdAt: String = "",
+    val isAsk: Boolean = false,
     val shopList: List<TagShop>,
     val reviewList: List<Review>
 ) : Serializable

@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,6 +37,9 @@ class AskViewModel @Inject constructor() : ViewModel() {
     private var _askDetail = MutableLiveData<AskData>()
     val askDetail: LiveData<AskData> get() = _askDetail
 
+    private val _answerLike = MutableStateFlow<Boolean>(false)
+    val answerLike: StateFlow<Boolean> = _answerLike.asStateFlow()
+
     init {
         setAskListData()
     }
@@ -51,6 +55,7 @@ class AskViewModel @Inject constructor() : ViewModel() {
                 askImage = "https://ifh.cc/g/f9WcP4.jpg",
                 nickname = "멜",
                 createdAt = "2024-08-05",
+                isAsk = false,
                 shopList = listOf(
                     TagShop(
                         title = "xpadfnejnnddf",
@@ -86,7 +91,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     ),
                     Review(
                         nickname = "ddddd",
@@ -96,7 +102,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = true
                     ),
                     Review(
                         nickname = "2323",
@@ -106,7 +113,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     ),
                     Review(
                         nickname = "sssss",
@@ -116,11 +124,12 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     )
                 )
             ), AskData(
-                title = "이 목걸이 안전한가요?",
+                title = "이 장난감 안전한가요?",
                 contents = "dfdfd",
                 viewCount = 12,
                 answerCount = 23,
@@ -128,6 +137,7 @@ class AskViewModel @Inject constructor() : ViewModel() {
                 askImage = "https://ifh.cc/g/f9WcP4.jpg",
                 nickname = "멜",
                 createdAt = "2024-08-05",
+                isAsk = true,
                 shopList = listOf(
                     TagShop(
                         title = "xpadfnejnnddf",
@@ -163,7 +173,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     ),
                     Review(
                         nickname = "ddddd",
@@ -173,7 +184,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     ),
                     Review(
                         nickname = "2323",
@@ -183,7 +195,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     ),
                     Review(
                         nickname = "sssss",
@@ -193,11 +206,12 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     )
                 )
             ), AskData(
-                title = "이 목걸이 안전한가요?",
+                title = "이 튜브 안전한가요?",
                 contents = "dfdfd",
                 viewCount = 12,
                 answerCount = 23,
@@ -205,6 +219,7 @@ class AskViewModel @Inject constructor() : ViewModel() {
                 askImage = "https://ifh.cc/g/f9WcP4.jpg",
                 nickname = "멜",
                 createdAt = "2024-08-05",
+                isAsk = false,
                 shopList = listOf(
                     TagShop(
                         title = "xpadfnejnnddf",
@@ -240,7 +255,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     ),
                     Review(
                         nickname = "ddddd",
@@ -250,7 +266,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     ),
                     Review(
                         nickname = "2323",
@@ -260,7 +277,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     ),
                     Review(
                         nickname = "sssss",
@@ -270,7 +288,8 @@ class AskViewModel @Inject constructor() : ViewModel() {
                         ),
                         likeNumber = 10,
                         commentNumber = 20,
-                        date = "2024-07-13"
+                        date = "2024-07-13",
+                        isLiked = false
                     )
                 )
             )
@@ -284,4 +303,55 @@ class AskViewModel @Inject constructor() : ViewModel() {
             _event.emit(AskEvent.NavigateToAskDetail(askDetail))
         }
     }
+
+    fun onAskClick(item: AskData) {
+        viewModelScope.launch {
+
+            val updatedItem = item.copy(
+                isAsk = !item.isAsk,
+                askCount = item.askCount + if (item.isAsk) -1 else 1
+            )
+
+            _askDetail.value = updatedItem
+
+            _askList.update { list ->
+                list.map {
+                    if (it == item) updatedItem else it
+                }
+            }
+        }
+    }
+
+    fun onLikeClick(review: Review) {
+        viewModelScope.launch {
+            // Review의 isLiked 값을 업데이트
+            val updatedReview = review.copy(
+                isLiked = !review.isLiked,
+                likeNumber = if (review.isLiked) review.likeNumber - 1 else review.likeNumber + 1
+            )
+
+            // _askList 업데이트
+            _askList.update { askList ->
+                askList.map { askData ->
+                    if (askData == _askDetail.value) {
+                        val updatedReviewList = askData.reviewList.map {
+                            if (it == review) updatedReview else it
+                        }
+                        askData.copy(reviewList = updatedReviewList)
+                    } else {
+                        askData
+                    }
+                }
+            }
+
+            // _askDetail 업데이트
+            _askDetail.value = _askDetail.value?.copy(
+                reviewList = _askDetail.value?.reviewList?.map {
+                    if (it == review) updatedReview else it
+                } ?: emptyList()
+            )
+        }
+    }
+
+
 }

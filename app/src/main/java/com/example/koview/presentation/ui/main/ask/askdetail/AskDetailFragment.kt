@@ -15,6 +15,7 @@ import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.ask.AskViewModel
 import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskAnswerAdapter
 import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskShopTagAdapter
+import com.example.koview.presentation.ui.main.global.product.model.Review
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -24,14 +25,21 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
 
     private val viewModel: AskDetailViewModel by viewModels()
     private val parentViewModel: AskViewModel by activityViewModels()
+    private val askAnswerAdapter = AskAnswerAdapter(this)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.model = parentViewModel.askDetail.value
         binding.vm = viewModel
+
+        // 데이터 관찰
+        parentViewModel.askDetail.observe(viewLifecycleOwner) { askDetail ->
+            binding.model = askDetail
+            askDetail?.let { askAnswerAdapter.updateReviews(it.reviewList) }
+        }
 
         initRecyclerview()
         initEventObserve()
+        clickAsk()
     }
 
     private fun initRecyclerview() {
@@ -49,8 +57,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         // 답변 리사이클러뷰 연결
         binding.rvReview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvReview.adapter =
-            parentViewModel.askDetail.value?.let { AskAnswerAdapter(it.reviewList) }
+        binding.rvReview.adapter = askAnswerAdapter
     }
 
     private fun initEventObserve() {
@@ -79,7 +86,17 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
+    private fun clickAsk() {
+        binding.layoutAskIcon.setOnClickListener {
+            parentViewModel.askDetail.value?.let { parentViewModel.onAskClick(it) }
+        }
+    }
+
     override fun onClickTag(url: String) {
         clickTag(url)
+    }
+
+    override fun onClickLike(item: Review) {
+        parentViewModel.onLikeClick(item)
     }
 }
