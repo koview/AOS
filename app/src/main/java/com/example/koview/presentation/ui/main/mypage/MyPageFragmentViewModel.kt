@@ -22,6 +22,7 @@ import javax.inject.Inject
 
 sealed class MypageEvent {
     data object NavigateToSetting : MypageEvent()
+    data object NavigateToCreateReview : MypageEvent()
 }
 
 @HiltViewModel
@@ -182,6 +183,12 @@ class MyPageFragmentViewModel @Inject constructor(
     fun navigateToSetting() {
         viewModelScope.launch {
             _event.emit(MypageEvent.NavigateToSetting)
+        }
+    }
+
+    fun navigateToCreateReview() {
+        viewModelScope.launch {
+            _event.emit(MypageEvent.NavigateToCreateReview)
         }
     }
 }

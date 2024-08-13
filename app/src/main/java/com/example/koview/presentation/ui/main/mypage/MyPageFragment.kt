@@ -114,6 +114,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
             viewModel.event.collect {
                 when (it) {
                     is MypageEvent.NavigateToSetting -> findNavController().toSetting()
+                    is MypageEvent.NavigateToCreateReview -> findNavController().toCreateReview()
                 }
             }
         }
@@ -121,6 +122,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     private fun NavController.toSetting() {
         val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toCreateReview(){
+        val action = MyPageFragmentDirections.actionMypageFragmentToCreateReviewFragment()
         navigate(action)
     }
 

@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_mypage_fragment_to_myPageSettingFragment"
             app:destination="@id/myPageSettingFragment" />
+        <action
+            android:id="@+id/action_mypage_fragment_to_createReviewFragment"
+            app:destination="@id/createReviewFragment" />
     </fragment>
 
     <fragment
@@ -151,6 +154,9 @@
             app:destination="@id/search_fragment"
             app:popUpTo="@id/search_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_product_detail_fragment_to_createReviewFragment"
+            app:destination="@id/createReviewFragment" />
 
     </fragment>
     <fragment
@@ -209,5 +215,9 @@
         android:label="AskAnswerFragment">
 
     </fragment>
+    <fragment
+        android:id="@+id/createReviewFragment"
+        android:name="com.example.koview.presentation.ui.main.global.createreview.CreateReviewFragment"
+        android:label="CreateReviewFragment" />
 
 </navigation>

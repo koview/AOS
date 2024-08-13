@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:paddingBottom="8dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginVertical="8dp"
+            android:elevation="0dp">
+
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/img_product_ex"
+                android:scaleType="centerCrop"
+                android:elevation="0dp"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintEnd_toEndOf="@id/cd_image"
+            app:layout_constraintTop_toTopOf="@id/cd_image"
+            android:layout_marginEnd="-7dp"
+            android:layout_marginTop="-7dp"
+            android:elevation="2dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
