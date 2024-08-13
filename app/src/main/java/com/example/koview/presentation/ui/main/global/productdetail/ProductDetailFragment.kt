@@ -40,6 +40,13 @@ class ProductDetailFragment :
 
         binding.vm = viewModel
         binding.model = productViewModel.searchProduct.value
+        // productImageUrl이 없으면 빈 url
+        if (productViewModel.searchProduct.value?.productImageUrls.isNullOrEmpty()) {
+            binding.imageUrl = ""
+        } else { // 있으면 첫 번째에 해당하는 url
+            val imageUrl = productViewModel.searchProduct.value?.productImageUrls?.firstOrNull()?.url ?: ""
+            binding.imageUrl = imageUrl
+        }
 
         initRecyclerview()
         initEventObserve()
