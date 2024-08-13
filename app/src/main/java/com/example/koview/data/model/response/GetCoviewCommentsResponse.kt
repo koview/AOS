@@ -8,7 +8,7 @@ data class GetCoviewCommentsResponse(
 )
 
 data class CoviewCommentResult(
-    val commentList: List<CoviewCommentItem>,
+    val commentList: List<CoviewCommentItem>?,
     val getNumber: Int,
     val hasPrevious: Boolean,
     val hasNext: Boolean,

@@ -43,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:clipToPadding="false"
             android:paddingBottom="300dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,11 +52,12 @@
             tools:listitem="@layout/item_coview_comment" />
 
         <TextView
+            android:id="@+id/tv_no_comments"
             style="@style/TextRegularMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="등록된 댓글이 없습니다."
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
