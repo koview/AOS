@@ -18,6 +18,7 @@ import com.google.android.flexbox.JustifyContent
 interface CoviewClickListener {
     fun onLikeClick(item: CoviewUiData)
     fun onShopTagClick(url: String)
+    fun onCommentClick(reviewId: Long, isFullView: Boolean)
 }
 
 class CoviewReviewAdapter(private val coviewClickListener: CoviewClickListener) :
@@ -88,6 +89,16 @@ class CoviewReviewViewHolder(
         // 좋아요 업데이트
         binding.layoutLike.setOnClickListener {
             coviewClickListener.onLikeClick(item)
+        }
+
+        // 댓글 아이콘 클릭
+        binding.layoutCommentInfo.setOnClickListener {
+            coviewClickListener.onCommentClick(item.reviewId, false)
+        }
+
+        // 댓글 입력창 클릭
+        binding.layoutComment.setOnClickListener {
+            coviewClickListener.onCommentClick(item.reviewId, true)
         }
 
         // 리뷰 내용 클릭 리스너 추가

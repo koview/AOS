@@ -2,9 +2,12 @@ package com.example.koview.presentation.ui.main.coview
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.koview.R
 import com.example.koview.databinding.FragmentCoviewBinding
 import com.example.koview.presentation.base.BaseFragment
@@ -98,8 +101,24 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
         clickTag(url)
     }
 
+    // 댓글 아이콘 클릭 시 호출
+    override fun onCommentClick(reviewId: Long, isFullView: Boolean) {
+        findNavController().toComment(reviewId, viewModel.profileImgUrl ?: "", isFullView)
+    }
+
     private fun clickTag(url: String) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
+    }
+
+    private fun NavController.toComment(reviewId: Long, profileUrl: String, isFullView: Boolean) {
+        Log.d("코뷰", "리뷰 아이디: $reviewId")
+        val action =
+            CoviewFragmentDirections.actionCoviewFragmentToCoviewCommentBottomSheetFragment(
+                reviewId,
+                profileUrl,
+                isFullView
+            )
+        navigate(action)
     }
 }
