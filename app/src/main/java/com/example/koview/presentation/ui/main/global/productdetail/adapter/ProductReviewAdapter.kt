@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.data.model.response.ProductReviewDetail
 import com.example.koview.databinding.ItemProductReviewBinding
+import com.example.koview.presentation.ui.main.global.productdetail.ProductDetailInterface
 
-class ProductReviewAdapter() :
+class ProductReviewAdapter(listener: ProductDetailInterface) :
     RecyclerView.Adapter<ProductReviewAdapter.ProductReviewViewHolder>() {
 
+    private val mCallBack = listener
     private var reviewList: List<ProductReviewDetail> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -28,7 +30,7 @@ class ProductReviewAdapter() :
             viewGroup,
             false
         )
-        return ProductReviewViewHolder(binding)
+        return ProductReviewViewHolder(binding, mCallBack)
     }
 
     override fun onBindViewHolder(
@@ -41,13 +43,20 @@ class ProductReviewAdapter() :
 
     override fun getItemCount(): Int = reviewList.size
 
-    class ProductReviewViewHolder(private val binding: ItemProductReviewBinding) :
+    class ProductReviewViewHolder(
+        private val binding: ItemProductReviewBinding,
+        private val mCallBack: ProductDetailInterface
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(review: ProductReviewDetail) {
             val context = binding.root.context
 
             binding.model = review
+
+            binding.layoutLikeIcon.setOnClickListener {
+                mCallBack.onLikeClick(review)
+            }
 
             binding.rvImage.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

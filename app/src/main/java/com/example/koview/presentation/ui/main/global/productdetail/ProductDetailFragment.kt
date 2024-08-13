@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
+import com.example.koview.data.model.response.ProductReviewDetail
 import com.example.koview.data.model.response.SingleProduct
 import com.example.koview.databinding.FragmentProductDetailBinding
 import com.example.koview.presentation.base.BaseFragment
@@ -22,12 +23,12 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
 class ProductDetailFragment :
-    BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail), ProductInterface {
+    BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail), ProductInterface, ProductDetailInterface {
 
     private val parentViewModel: SearchViewModel by activityViewModels()
     private val viewModel: ProductDetailViewModel by activityViewModels()
     private val productViewModel: ProductViewModel by activityViewModels()
-    private val productReviewAdapter = ProductReviewAdapter()
+    private val productReviewAdapter = ProductReviewAdapter(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -107,6 +108,10 @@ class ProductDetailFragment :
 
     override fun onProductShopTagClick(url: String) {
         clickTag(url)
+    }
+
+    override fun onLikeClick(item: ProductReviewDetail) {
+        viewModel.onLikeClick(item)
     }
 
 }
