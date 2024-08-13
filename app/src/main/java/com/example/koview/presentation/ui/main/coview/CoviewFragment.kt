@@ -22,12 +22,13 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
 
     private var bottomScrollState = true
 
+    // 사용자가 링크를 통해 나갔다가 돌아왔는지 여부
+    private var isReturningFromExternal = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-
-        viewModel.getUserInfo()
 
         initEventObserver()
         initStateObserver()
@@ -35,10 +36,13 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
         addOnScrollListener()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onResume() {
+        super.onResume()
 
-        viewModel.getUserInfo()
+        if (!isReturningFromExternal) {
+            viewModel.getUserInfo()
+        }
+        isReturningFromExternal = false
     }
 
     private fun initEventObserver() {
@@ -90,6 +94,7 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
 
     // 상품 링크 클릭 시 호출
     override fun onShopTagClick(url: String) {
+        isReturningFromExternal = true
         clickTag(url)
     }
 

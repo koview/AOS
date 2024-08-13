@@ -1,9 +1,10 @@
 package com.example.koview.presentation.ui.main.coview.adapter
 
-import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -45,10 +46,34 @@ class CoviewReviewAdapter(private val coviewClickListener: CoviewClickListener) 
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(data: List<CoviewUiData>) {
-        reviewList = data
-        notifyDataSetChanged()
+    fun setList(newList: List<CoviewUiData>) {
+        val diffCallback = CoviewDiffCallback(reviewList, newList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        reviewList = newList
+        diffResult.dispatchUpdatesTo(this)
+        Log.d("코뷰", "리뷰 리스트 업데이트")
+    }
+}
+
+class CoviewDiffCallback(
+    private val oldList: List<CoviewUiData>,
+    private val newList: List<CoviewUiData>,
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].reviewId == newList[newItemPosition].reviewId
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        return oldItem == newItem &&
+                oldItem.currentPage == newItem.currentPage &&
+                oldItem.isExpanded == newItem.isExpanded
     }
 }
 
@@ -87,6 +112,7 @@ class CoviewReviewViewHolder(
     }
 
     fun setupViewPager(item: CoviewUiData) {
+        Log.d("코뷰", "뷰페이저 이미지 설정 -> ${item.imageList}")
 
         // 리뷰 이미지 ViewPager adapter 설정
         val adapter = CoviewImageVPAdapter(item.imageList)
@@ -115,6 +141,8 @@ class CoviewReviewViewHolder(
 
     fun bindDefaultImage() {
         // 리뷰 이미지 리스트 null 일 때 기본 이미지 설정
+        Log.d("코뷰", "뷰페이저 기본 이미지 설정")
+
         binding.vpImages.visibility = View.GONE
         binding.cvReview.visibility = View.VISIBLE
 

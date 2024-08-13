@@ -11,10 +11,6 @@
             name="item"
             type="com.example.koview.presentation.ui.main.coview.model.CoviewUiData" />
 
-        <variable
-            name="vm"
-            type="com.example.koview.presentation.ui.main.coview.CoviewViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

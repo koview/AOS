@@ -54,6 +54,14 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
             }
         }
 
+        _uiState.update { state ->
+            state.copy(
+                page = 1,
+                hasNext = true,
+                reviewList = emptyList()
+            )
+        }
+
         getReviews()
     }
 
