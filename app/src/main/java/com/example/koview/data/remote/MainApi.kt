@@ -3,6 +3,7 @@ package com.example.koview.data.remote
 import com.example.koview.data.model.requeset.CoviewCommentRequest
 import com.example.koview.data.model.response.ReviewLikeResponse
 import com.example.koview.data.model.response.AddCoviewCommentResponse
+import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetCoviewCommentsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
@@ -12,11 +13,13 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductsResponse
+import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.GetCoviewReviewsResponse
 import com.example.koview.data.model.response.Status
 import com.example.koview.presentation.ui.main.home.model.Category
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -42,9 +45,9 @@ interface MainApi {
     ): Response<GetMyReviewDetailResponse>
 
     // 내 리뷰 리스트 삭제
-    @DELETE("mypage/myreviews/delete")
+    @HTTP(method = "DELETE", path = "mypage/myreviews/delete", hasBody = true)
     suspend fun deleteMyReviews(
-        @Body reviewIdList: List<Long>
+        @Body params: DeleteMyReviewRequest
     ): Response<DeleteMyReviewsResponse>
 
     @GET("products")
@@ -94,4 +97,10 @@ interface MainApi {
         @Query("reviewId") reviewId: Long
     ): Response<ReviewLikeResponse>
 
+    @GET("reviews/detail")
+    suspend fun getReviewDetails(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("clickedReviewId") clickedReviewId: Long
+    ): Response<ReviewDetailResponse>
 }

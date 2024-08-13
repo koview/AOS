@@ -14,6 +14,7 @@ import javax.inject.Inject
 
 sealed class LoginInfoEvent {
     data object NavigateToBack : LoginInfoEvent()
+    data object NavigateToLogin : LoginInfoEvent()
 }
 
 class SettingLoginInfoFragmentViewModel @Inject constructor() : ViewModel() {
@@ -28,6 +29,12 @@ class SettingLoginInfoFragmentViewModel @Inject constructor() : ViewModel() {
     fun navigateToBack() {
         viewModelScope.launch {
             _event.emit(LoginInfoEvent.NavigateToBack)
+        }
+    }
+
+    fun navigateToLogin() {
+        viewModelScope.launch {
+            _event.emit(LoginInfoEvent.NavigateToLogin)
         }
     }
 }

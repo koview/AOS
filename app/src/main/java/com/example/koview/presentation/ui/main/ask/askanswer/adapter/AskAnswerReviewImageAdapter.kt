@@ -1,4 +1,4 @@
-package com.example.koview.presentation.ui.main.global.productdetail.adapter
+package com.example.koview.presentation.ui.main.ask.askanswer.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,36 +8,32 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.example.koview.data.model.response.ReviewDetailImage
-import com.example.koview.databinding.ItemProductReviewImageBinding
+import com.example.koview.databinding.ItemAskAnswerImageBinding
 
-class ProductReviewImageAdapter(private val reviewImageList: List<ReviewDetailImage>) :
-    RecyclerView.Adapter<ProductReviewImageAdapter.ProductReviewImageViewHolder>() {
+class AskAnswerReviewImageAdapter(private val reviewImageList: List<String>) : RecyclerView.Adapter<AskAnswerReviewImageAdapter.AskAnswerReviewImageViewHolder>() {
     override fun onCreateViewHolder(
-        viweGroup: ViewGroup,
+        viewGroup: ViewGroup,
         viewType: Int
-    ): ProductReviewImageViewHolder {
-        val binding: ItemProductReviewImageBinding = ItemProductReviewImageBinding.inflate(
-            LayoutInflater.from(viweGroup.context),
-            viweGroup, false
+    ): AskAnswerReviewImageAdapter.AskAnswerReviewImageViewHolder {
+        val binding: ItemAskAnswerImageBinding = ItemAskAnswerImageBinding.inflate(
+            LayoutInflater.from(viewGroup.context),
+            viewGroup,
+            false
         )
-        return ProductReviewImageViewHolder(binding)
+        return AskAnswerReviewImageViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: ProductReviewImageViewHolder,
+        holder: AskAnswerReviewImageAdapter.AskAnswerReviewImageViewHolder,
         position: Int
     ) {
-        val reviewImage = reviewImageList[position]
-        holder.bind(reviewImage.url)
+        holder.bind(reviewImageList[position])
     }
 
     override fun getItemCount(): Int = reviewImageList.size
 
-    class ProductReviewImageViewHolder(private val binding: ItemProductReviewImageBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(reviewImage: String) {
-            // ImageView의 크기가 결정된 후에 Glide로 이미지 로드
-            // ImageView의 크기를 얻음
+    class AskAnswerReviewImageViewHolder(private val binding: ItemAskAnswerImageBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(reviewImageUrl: String) {
             binding.ivReview.viewTreeObserver.addOnPreDrawListener(
                 object : ViewTreeObserver.OnPreDrawListener {
                     override fun onPreDraw(): Boolean {
@@ -49,7 +45,7 @@ class ProductReviewImageAdapter(private val reviewImageList: List<ReviewDetailIm
                             RequestOptions().transform(CenterCrop(), RoundedCorners(16))
 
                         Glide.with(itemView)
-                            .load(reviewImage)
+                            .load(reviewImageUrl)
                             .apply(requestOptions)
                             .override(width, height)
                             .into(binding.ivReview)
