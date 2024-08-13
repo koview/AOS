@@ -5,7 +5,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.koview.data.model.response.ReviewDetailList" />
+            type="com.example.koview.data.model.response.ProductReviewDetail" />
 
         <variable
             name="vm"
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextSmall"
-                android:text="@{String.valueOf(model.totalLikesCount)}"
+                android:text="@{String.valueOf(model.totalLikeCount)}"
                 android:textColor="@color/kv_main3"
                 android:layout_marginStart="5dp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextSmall"
-                android:text="@{String.valueOf(model.totalCommentCount)}"
+                android:text="@{String.valueOf(model.commentCount)}"
                 android:layout_marginStart="5dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

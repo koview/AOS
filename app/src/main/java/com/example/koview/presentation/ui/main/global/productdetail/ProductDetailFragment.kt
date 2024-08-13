@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,15 +14,12 @@ import com.example.koview.databinding.FragmentProductDetailBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.global.product.ProductInterface
 import com.example.koview.presentation.ui.main.global.product.ProductViewModel
-import com.example.koview.presentation.ui.main.global.product.adapter.ProductAdapter
 import com.example.koview.presentation.ui.main.global.product.adapter.ProductShopTagAdapter
-import com.example.koview.presentation.ui.main.global.product.model.Product
 import com.example.koview.presentation.ui.main.global.productdetail.adapter.ProductReviewAdapter
 import com.example.koview.presentation.ui.main.home.search.SearchViewModel
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import kotlinx.coroutines.launch
 
 class ProductDetailFragment :
     BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail), ProductInterface {
@@ -44,7 +38,8 @@ class ProductDetailFragment :
         if (productViewModel.searchProduct.value?.productImageUrls.isNullOrEmpty()) {
             binding.imageUrl = ""
         } else { // 있으면 첫 번째에 해당하는 url
-            val imageUrl = productViewModel.searchProduct.value?.productImageUrls?.firstOrNull()?.url ?: ""
+            val imageUrl =
+                productViewModel.searchProduct.value?.productImageUrls?.firstOrNull()?.url ?: ""
             binding.imageUrl = imageUrl
         }
 
@@ -56,8 +51,8 @@ class ProductDetailFragment :
     // ProductDetailViewModel Review data
     private fun initProductListObserver() {
         repeatOnStarted {
-            viewModel.getReviews.collect { reviewList ->
-                productReviewAdapter.submitList(reviewList)
+            viewModel.getReviews.collect {
+                productReviewAdapter.submitList(it)
             }
         }
         productViewModel.searchProduct.value?.let { viewModel.getReviewDetails(it.productId) }

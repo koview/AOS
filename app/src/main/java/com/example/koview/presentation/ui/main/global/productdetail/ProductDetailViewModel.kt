@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
+import com.example.koview.data.model.response.ProductReviewDetail
 import com.example.koview.data.model.response.ReviewDetailList
 import com.example.koview.data.model.response.SingleProduct
 import com.example.koview.data.repository.MainRepository
@@ -29,8 +30,8 @@ class ProductDetailViewModel @Inject constructor(private val repository: MainRep
     private val _event = MutableSharedFlow<ProductDetailEvent>()
     val event: SharedFlow<ProductDetailEvent> = _event.asSharedFlow()
 
-    private val _getReviews= MutableStateFlow<List<ReviewDetailList>>(emptyList())
-    val getReviews: StateFlow<List<ReviewDetailList>> = _getReviews.asStateFlow()
+    private val _getReviews= MutableStateFlow<List<ProductReviewDetail>>(emptyList())
+    val getReviews: StateFlow<List<ProductReviewDetail>> = _getReviews.asStateFlow()
 
     fun navigateToSearch() {
         viewModelScope.launch {
@@ -38,12 +39,10 @@ class ProductDetailViewModel @Inject constructor(private val repository: MainRep
         }
     }
 
-    fun getReviewDetails(reviewId: Long) {
+    fun getReviewDetails(productId: Long) {
         viewModelScope.launch {
-            repository.getReviewDetails(
-                page = 1,
-                size = 20,
-                clickedReviewId = reviewId
+            repository.getProductReview(
+                productId = productId
             ).let {
                 when (it) {
                     is BaseState.Error -> {
@@ -51,8 +50,7 @@ class ProductDetailViewModel @Inject constructor(private val repository: MainRep
                         Log.d("ProductDetailFragment", it.code + ", " + it.msg)
                     }
                     is BaseState.Success -> {
-                        _getReviews.value = it.body.result.reviewList
-                        Log.d("ProductDetailFragment", it.body.result.reviewList.toString())
+                        _getReviews.value = it.body.result.reviewPaging.reviewList
                     }
                 }
             }
