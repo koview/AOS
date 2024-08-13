@@ -125,7 +125,7 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
         initEventObserver()
         initStateObserver()
         setProfileImage()
-        editTextListener()
+        initClickListener()
 
         Log.d("코뷰", "리뷰 id : $reviewId")
     }
@@ -151,6 +151,17 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
 
             }
         }
+
+        repeatOnStarted {
+            viewModel.comment.collect {
+                if (it.isNotBlank()) {
+                    binding.btnSend.isEnabled = true
+                } else {
+                    binding.btnSend.isEnabled = false
+                }
+            }
+        }
+
     }
 
     // 댓글 입력 필드 프로필 이미지 설정
@@ -167,7 +178,12 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun editTextListener() {
+    private fun initClickListener() {
+
+        binding.btnSend.setOnClickListener {
+            viewModel.addComment(reviewId)
+        }
+
         binding.etComment.setOnClickListener {
             if (!isFullView) {
                 // EditText 클릭 시 BottomSheet 높이를 전체 화면으로 변경

@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
+import com.example.koview.data.model.requeset.CoviewCommentRequest
 import com.example.koview.data.model.response.CoviewCommentItem
+import com.example.koview.data.model.response.CoviewCommentResult
 import com.example.koview.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -41,6 +43,9 @@ class CoviewCommentBottomSheetViewModel @Inject constructor(
     private val _event = MutableSharedFlow<CoviewCommentEvent>()
     val event: SharedFlow<CoviewCommentEvent> = _event.asSharedFlow()
 
+    val comment = MutableStateFlow("")
+
+    // 댓글 가져오기
     fun getComment(reviewId: Long) {
         viewModelScope.launch {
             if (uiState.value.hasNext) {
@@ -75,4 +80,37 @@ class CoviewCommentBottomSheetViewModel @Inject constructor(
         }
     }
 
+    // 댓글 작성
+    fun addComment(reviewId: Long) {
+        viewModelScope.launch {
+            val request = CoviewCommentRequest(comment.value)
+            // 로딩 띄우기
+            _event.emit(CoviewCommentEvent.ShowLoading)
+
+            repository.addCoviewComment(reviewId, request).let {
+                when (it) {
+                    is BaseState.Success -> {
+
+                        _uiState.update { state ->
+                            state.copy(
+                                page = 1,
+                                hasNext = true,
+                                commentList = emptyList(),
+                                isCommentListEmpty = false
+                            )
+                        }
+
+                        // 댓글 다시 불러오기
+                        getComment(reviewId)
+                    }
+
+                    is BaseState.Error -> {
+                        _event.emit(CoviewCommentEvent.ShowToastMessage(it.msg))
+                    }
+                }
+            }
+            comment.emit("")
+            _event.emit(CoviewCommentEvent.DismissLoading)
+        }
+    }
 }
