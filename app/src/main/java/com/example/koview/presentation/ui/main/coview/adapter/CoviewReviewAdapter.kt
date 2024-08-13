@@ -83,6 +83,8 @@ class CoviewReviewViewHolder(
     private val coviewClickListener: CoviewClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    private var pageChangeCallback: ViewPager2.OnPageChangeCallback? = null
+
     fun bind(item: CoviewUiData) {
         binding.item = item
 
@@ -109,10 +111,12 @@ class CoviewReviewViewHolder(
             binding.rvShop.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
         }
 
+        setupShopLinks(item)
+    }
+
+    private fun setupShopLinks(item: CoviewUiData){
         // 상품 링크 연결
         val context = binding.root.context
-
-        // FlexboxLayoutManager 설정
         val layoutManager = FlexboxLayoutManager(context)
         layoutManager.flexDirection = FlexDirection.ROW
         layoutManager.flexWrap = com.google.android.flexbox.FlexWrap.WRAP
@@ -128,6 +132,9 @@ class CoviewReviewViewHolder(
         // 리뷰 이미지 ViewPager adapter 설정
         val adapter = CoviewImageVPAdapter(item.imageList)
         binding.vpImages.adapter = adapter
+
+        // 이전에 등록된 콜백 제거
+        pageChangeCallback?.let { binding.vpImages.unregisterOnPageChangeCallback(it) }
 
         // 현재 페이지 설정
         binding.vpImages.setCurrentItem(item.currentPage, false)

@@ -74,19 +74,9 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                 repository.getCoviewReviews(uiState.value.page, 15).let {
                     when (it) {
                         is BaseState.Success -> {
-                            val reviews = it.body.result.reviewList.map { review ->
-                                CoviewUiData(
-                                    reviewId = review.reviewId,
-                                    writer = review.writer,
-                                    profileImage = review.profileImage?.url,
-                                    purchaseLinkList = review.purchaseLinkList,
-                                    totalCommentCount = review.totalCommentCount,
-                                    totalLikesCount = review.totalLikesCount,
-                                    content = review.content,
-                                    createdAt = review.createdAt,
-                                    imageList = review.imageList.map { image -> image?.url },
-                                    myProfileImage = profileImgUrl,
-                                    isLiked = review.isCurrentMemberLiked,
+                            val reviews = it.body.result.reviewList.map { data ->
+                                data.toCoviewUiData(
+                                    myProfileImgUrl = profileImgUrl
                                 )
                             }
                             _uiState.update { state ->
