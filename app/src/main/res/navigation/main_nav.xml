@@ -170,14 +170,20 @@
     <fragment
         android:id="@+id/settingLoginInfoFragment"
         android:name="com.example.koview.presentation.ui.main.mypage.setting.logininfo.SettingLoginInfoFragment"
-        android:label="SettingLoginInfoFragment" />
+        android:label="SettingLoginInfoFragment" >
+        <action
+            android:id="@+id/action_settingLoginInfoFragment_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:popUpTo="@id/login_fragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/settingOperatingFragment"
         android:name="com.example.koview.presentation.ui.main.mypage.setting.operating.SettingOperatingFragment"
         android:label="SettingOperatingFragment" />
     <fragment
         android:id="@+id/settingPointFragment"
-        android:name="com.example.koview.presentation.ui.main.mypage.setting.point.SettingPointFragment"
+        android:name="com.example.koview.presentati on.ui.main.mypage.setting.point.SettingPointFragment"
         android:label="SettingPointFragment" />
 
     <fragment
