@@ -90,6 +90,7 @@
                         android:id="@+id/btn_add_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{()->vm.goToGallery()}"
                         android:background="@drawable/ic_gallery" />
 
                     <androidx.recyclerview.widget.RecyclerView
