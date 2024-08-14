@@ -63,62 +63,74 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/view_line"
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/kv_gray3"
-            app:layout_constraintBottom_toTopOf="@id/layout_comment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <!--    댓글 입력    -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="10dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_my_profile"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/img_profile_ex" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_comment"
-                style="@style/TextSmall"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
                 android:layout_marginHorizontal="16dp"
-                android:background="@color/transparent"
-                android:hint="댓글 추가하기"
-                android:text="@={vm.comment}"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textColorHint="@color/kv_gray5"
-                app:layout_constraintBottom_toBottomOf="@id/iv_my_profile"
-                app:layout_constraintEnd_toStartOf="@id/iv_send"
-                app:layout_constraintStart_toEndOf="@id/iv_my_profile"
-                app:layout_constraintTop_toTopOf="@id/iv_my_profile" />
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/btn_send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_send"
-                app:layout_constraintBottom_toBottomOf="@id/iv_my_profile"
+                android:layout_marginBottom="10dp"
+                android:background="@color/kv_gray3"
+                app:layout_constraintBottom_toTopOf="@id/layout_comment"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iv_my_profile" />
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!--    댓글 입력    -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_my_profile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/img_profile_ex" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_comment"
+                    style="@style/TextSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="@color/transparent"
+                    android:hint="댓글 추가하기"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={vm.comment}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/kv_gray5"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_my_profile"
+                    app:layout_constraintEnd_toStartOf="@id/btn_send"
+                    app:layout_constraintStart_toEndOf="@id/iv_my_profile"
+                    app:layout_constraintTop_toTopOf="@id/iv_my_profile" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_send"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_my_profile"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iv_my_profile" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
