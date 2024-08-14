@@ -21,7 +21,6 @@ sealed class HomeEvent {
     data object NavigateToHarmfulProduct : HomeEvent()
     data object NavigateToPopularProduct : HomeEvent()
     data object NavigateToSearch : HomeEvent()
-    data object NavigateToAsk : HomeEvent()
     data class ShowToastMessage(val msg: String) : HomeEvent()
 }
 
@@ -111,12 +110,6 @@ class HomeViewModel @Inject constructor(
     fun navigateToSearch() {
         viewModelScope.launch {
             _event.emit(HomeEvent.NavigateToSearch)
-        }
-    }
-
-    fun navigateToAsk() {
-        viewModelScope.launch {
-            _event.emit(HomeEvent.NavigateToAsk)
         }
     }
 }

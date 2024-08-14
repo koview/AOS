@@ -405,27 +405,20 @@
                 android:background="@color/kv_gray3"
                 app:layout_constraintTop_toBottomOf="@id/tv_ask_title" />
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ask_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:onClick="@{()->vm.navigateToAsk()}"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="90dp"
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
+                android:paddingTop="7dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_2">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_ask_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="90dp"
-                    android:nestedScrollingEnabled="false"
-                    android:orientation="vertical"
-                    android:paddingTop="7dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="4"
-                    tools:listitem="@layout/item_home_ask" />
-
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/view_2"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_home_ask" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

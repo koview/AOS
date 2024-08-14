@@ -10,11 +10,13 @@ import com.example.koview.R
 import com.example.koview.databinding.FragmentHomeBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.home.adapter.HomeAskAdapter
+import com.example.koview.presentation.ui.main.home.adapter.HomeClickListener
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
+    HomeClickListener {
 
     private val viewModel: HomeViewModel by activityViewModels()
-    private val askAdapter = HomeAskAdapter()
+    private val askAdapter = HomeAskAdapter(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,7 +49,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     HomeEvent.NavigateToHarmfulProduct -> findNavController().toHarmfulProduct()
                     HomeEvent.NavigateToPopularProduct -> findNavController().toPopularProduct()
                     HomeEvent.NavigateToSearch -> findNavController().toSearch()
-                    HomeEvent.NavigateToAsk -> findNavController().toAsk()
                     is HomeEvent.ShowToastMessage -> showToastMessage(it.msg)
 
                 }
@@ -78,5 +79,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private fun NavController.toAsk() {
         val action = HomeFragmentDirections.actionHomeFragmentToAskFragment()
         navigate(action)
+    }
+
+    override fun navigateToAsk() {
+        findNavController().toAsk()
     }
 }

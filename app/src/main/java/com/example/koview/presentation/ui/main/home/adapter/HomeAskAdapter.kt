@@ -7,7 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemHomeAskBinding
 import com.example.koview.presentation.ui.main.home.model.AskUiData
 
-class HomeAskAdapter() : RecyclerView.Adapter<AskViewHolder>() {
+interface HomeClickListener {
+    fun navigateToAsk()
+}
+
+class HomeAskAdapter(private val homeClickListener: HomeClickListener) :
+    RecyclerView.Adapter<AskViewHolder>() {
     // todo : 질문 게시글 화면으로 연결
 
     private var askList: List<AskUiData> = emptyList()
@@ -18,11 +23,14 @@ class HomeAskAdapter() : RecyclerView.Adapter<AskViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AskViewHolder {
-        val binding: ItemHomeAskBinding =
-            ItemHomeAskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AskViewHolder(binding)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AskViewHolder =
+        AskViewHolder(
+            ItemHomeAskBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ), homeClickListener
+        )
 
     override fun onBindViewHolder(holder: AskViewHolder, position: Int) {
         holder.bind(askList[position])
@@ -31,8 +39,16 @@ class HomeAskAdapter() : RecyclerView.Adapter<AskViewHolder>() {
     override fun getItemCount(): Int = askList.size
 }
 
-class AskViewHolder(val binding: ItemHomeAskBinding) : RecyclerView.ViewHolder(binding.root) {
+class AskViewHolder(
+    val binding: ItemHomeAskBinding,
+    private val homeClickListener: HomeClickListener,
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(askList: AskUiData) {
         binding.item = askList
+
+        // 질문하기 화면으로 이동
+        binding.root.setOnClickListener() {
+            homeClickListener.navigateToAsk()
+        }
     }
 }
