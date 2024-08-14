@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.koview.data.model.response.QueryAnswerList
 import com.example.koview.databinding.ItemAskAnswerBinding
 import com.example.koview.presentation.ui.main.ask.askdetail.AskDetailInterface
 import com.example.koview.presentation.ui.main.ask.model.AskData
@@ -13,10 +14,10 @@ import com.example.koview.presentation.ui.main.global.product.model.Review
 class AskAnswerAdapter(listener: AskDetailInterface) :
     RecyclerView.Adapter<AskAnswerAdapter.AskAnswerViewHolder>() {
 
-    private var answerList: List<Review> = emptyList()
+    private var answerList: List<QueryAnswerList> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateReviews(newReviews: List<Review>) {
+    fun updateReviews(newReviews: List<QueryAnswerList>) {
         answerList = newReviews
         notifyDataSetChanged()
     }
@@ -44,7 +45,7 @@ class AskAnswerAdapter(listener: AskDetailInterface) :
     class AskAnswerViewHolder(private val binding: ItemAskAnswerBinding, private val mCallBack: AskDetailInterface) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(review: Review) {
+        fun bind(review: QueryAnswerList) {
             val context = binding.root.context
 
             binding.model = review
@@ -55,7 +56,7 @@ class AskAnswerAdapter(listener: AskDetailInterface) :
 
             binding.rvImage.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            binding.rvImage.adapter = AskAnswerImageAdapter(review.imageUrl)
+            binding.rvImage.adapter = AskAnswerImageAdapter(review.imageList)
         }
 
     }

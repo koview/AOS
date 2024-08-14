@@ -4,6 +4,7 @@ import com.example.koview.data.model.requeset.CoviewCommentRequest
 import com.example.koview.data.model.response.ReviewLikeResponse
 import com.example.koview.data.model.response.AddCoviewCommentResponse
 import com.example.koview.data.model.requeset.DeleteMyReviewRequest
+import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetCoviewCommentsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
@@ -14,6 +15,9 @@ import retrofit2.http.DELETE
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductReviewResponse
 import com.example.koview.data.model.response.ProductsResponse
+import com.example.koview.data.model.response.QueryAnswerPostResponse
+import com.example.koview.data.model.response.QueryAnswerResponse
+import com.example.koview.data.model.response.QueryResponse
 import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.GetCoviewReviewsResponse
 import com.example.koview.data.model.response.Status
@@ -21,6 +25,7 @@ import com.example.koview.presentation.ui.main.home.model.Category
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.HTTP
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -112,4 +117,23 @@ interface MainApi {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Response<ProductReviewResponse>
+
+    @GET("queries")
+    suspend fun getQueries(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Response<QueryResponse>
+
+    @GET("queries/{queryId}/answers")
+    suspend fun getQueryAnswers(
+        @Path("queryId") queryId: Long,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Response<QueryAnswerResponse>
+
+    @POST("queries/{queryId}/answer")
+    suspend fun postQueryAnswer(
+        @Path("queryId") queryId: Long,
+        @Body params: QueryAnswerRequest
+    ): Response<QueryAnswerPostResponse>
 }

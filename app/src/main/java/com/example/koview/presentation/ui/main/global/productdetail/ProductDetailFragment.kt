@@ -7,6 +7,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.data.model.response.ProductReviewDetail
@@ -23,12 +24,15 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 
 class ProductDetailFragment :
-    BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail), ProductInterface, ProductDetailInterface {
+    BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail), ProductInterface,
+    ProductDetailInterface {
 
     private val parentViewModel: SearchViewModel by activityViewModels()
     private val viewModel: ProductDetailViewModel by activityViewModels()
     private val productViewModel: ProductViewModel by activityViewModels()
     private val productReviewAdapter = ProductReviewAdapter(this)
+
+    private var sourceFragmentId: Int? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +47,11 @@ class ProductDetailFragment :
                 productViewModel.searchProduct.value?.productImageUrls?.firstOrNull()?.url ?: ""
             binding.imageUrl = imageUrl
         }
+
+        val args: ProductDetailFragmentArgs by navArgs()
+        sourceFragmentId = args.sourceFragmentId
+
+        handleBackNavigation()
 
         initRecyclerview()
         initEventObserve()
@@ -88,6 +97,30 @@ class ProductDetailFragment :
                 when (it) {
                     ProductDetailEvent.NavigateToSearch -> findNavController().toSearch()
                 }
+            }
+        }
+    }
+
+    // 뒤로가기 버튼 동작 처리
+    private fun handleBackNavigation() {
+        binding.btnBack.setOnClickListener {
+            when (sourceFragmentId) {
+                R.id.search_fragment -> findNavController().popBackStack(
+                    R.id.search_fragment,
+                    false
+                )
+
+                R.id.harmful_product_fragment -> findNavController().popBackStack(
+                    R.id.harmful_product_fragment,
+                    false
+                )
+
+                R.id.popular_product_fragment -> findNavController().popBackStack(
+                    R.id.popular_product_fragment,
+                    false
+                )
+
+                else -> findNavController().popBackStack()
             }
         }
     }

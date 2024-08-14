@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.example.koview.presentation.ui.main.global.product.model.TagShop" />
+            type="com.example.koview.data.model.response.QueryPurchaseLinkList" />
 
     </data>
 
@@ -27,7 +27,7 @@
             style="@style/TagText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.title}"
+            android:text="@{model.shopName}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

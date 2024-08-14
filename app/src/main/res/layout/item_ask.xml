@@ -8,7 +8,7 @@
 
         <variable
             name="model"
-            type="com.example.koview.presentation.ui.main.ask.model.AskData" />
+            type="com.example.koview.data.model.response.QueryResultList" />
 
     </data>
 
@@ -20,20 +20,22 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_info"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/iv_ask"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_ask">
+            app:layout_constraintTop_toTopOf="@id/iv_ask"
+            app:layout_constraintEnd_toStartOf="@id/iv_ask">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_title"
                 style="TextRegularSemiBold"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{model.title}"
+                android:text="@{model.content}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -47,7 +49,7 @@
                     style="TextSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{"조회수 " + model.viewCount }'
+                    android:text='@{"조회수 " + model.totalViewCount }'
                     android:textColor="@color/kv_gray6" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -63,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="@{String.valueOf(model.answerCount)}"
+                    android:text="@{String.valueOf(model.totalAnswerCount)}"
                     android:textColor="@color/kv_gray6" />
 
                 <LinearLayout
@@ -77,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:src="@drawable/ic_ask_off"
-                        android:visibility="@{model.isAsk? View.GONE : View.VISIBLE}" />
+                        android:visibility="@{model.isWithQuery? View.GONE : View.VISIBLE}" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_ask_on"
@@ -85,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:src="@drawable/ic_ask_on"
-                        android:visibility="@{model.isAsk? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{model.isWithQuery? View.VISIBLE : View.GONE}" />
 
                 </LinearLayout>
 
@@ -95,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="@{String.valueOf(model.askCount)}"
+                    android:text="@{String.valueOf(model.totalWithQueryCount)}"
                     android:textColor="@color/kv_gray6" />
 
             </LinearLayout>
@@ -105,7 +107,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_ask"
-            searchProductImgUrl="@{model.askImage}"
+            searchProductImgUrl="@{model.imageList[0].url}"
             android:layout_width="80dp"
             android:layout_height="64dp"
             android:background="@drawable/rect_gray1fill_nostroke_12radius"
