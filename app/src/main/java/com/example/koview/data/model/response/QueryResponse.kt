@@ -44,6 +44,7 @@ data class QueryPurchaseLinkList(
     val verifiedType: VerifiedType
 ): Serializable
 
+// 질문 답변 응답
 data class QueryAnswerResponse(
     val isSuccess: Boolean,
     val code: String,
@@ -73,3 +74,22 @@ data class QueryAnswerList(
     val createdAt: String,
     val updatedAt: String
 ): Serializable
+
+data class QueryAnswerPostResponse (
+    val isSuccess: Boolean,
+    val code: String,
+    val message: String,
+    val result: QueryAnswerPostResult
+)
+
+data class QueryAnswerPostResult (
+    val answerId: Long,
+    val content: String,
+    val writer: String,
+    val imageList: List<QueryImage>,
+    val totalLikeCount: Long,
+    val isLiked: Boolean,
+    val commentCount: Long,
+    val createdAt: String,
+    val updatedAt: String
+)

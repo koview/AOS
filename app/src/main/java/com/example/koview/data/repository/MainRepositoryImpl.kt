@@ -2,6 +2,7 @@ package com.example.koview.data.repository
 
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.DeleteMyReviewRequest
+import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
 import com.example.koview.data.model.response.GetMyReviewDetailResponse
@@ -9,6 +10,7 @@ import com.example.koview.data.model.response.GetMyReviewsResponse
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductReviewResponse
 import com.example.koview.data.model.response.ProductsResponse
+import com.example.koview.data.model.response.QueryAnswerPostResponse
 import com.example.koview.data.model.response.QueryAnswerResponse
 import com.example.koview.data.model.response.QueryResponse
 import com.example.koview.data.model.response.ReviewDetailResponse
@@ -72,5 +74,12 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
         size: Int
     ): BaseState<QueryAnswerResponse> = runRemote {
         api.getQueryAnswers(queryId, page, size)
+    }
+
+    override suspend fun postQueryAnswer(
+        queryId: Long,
+        params: QueryAnswerRequest
+    ): BaseState<QueryAnswerPostResponse> = runRemote {
+        api.postQueryAnswer(queryId, params)
     }
 }
