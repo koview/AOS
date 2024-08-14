@@ -2,6 +2,7 @@ package com.example.koview.presentation.ui.main.global.createreview
 
 import androidx.lifecycle.ViewModel
 import com.example.koview.data.model.requeset.PurchaseLinkDTO
+import com.example.koview.presentation.ui.main.MainViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,11 +21,23 @@ class CreateReviewFragmentViewModel @Inject constructor() : ViewModel(){
     private val _purchaseLinkList = MutableStateFlow<List<PurchaseLinkDTO>>(emptyList())
     val purchaseLinkList: StateFlow<List<PurchaseLinkDTO>> = _purchaseLinkList.asStateFlow()
 
-    fun deleteLink(link: PurchaseLinkDTO) {
-        // 현재 리스트에서 link를 제외한 새로운 리스트 생성
-        val updatedList = _purchaseLinkList.value.filter { it != link }
+    private val _imageLinkList = MutableStateFlow<List<String>>(emptyList())
+    val imageLinkList: StateFlow<List<String>> = _imageLinkList.asStateFlow()
 
-        _purchaseLinkList.value = updatedList
+    fun inputImage(newImages: List<String>){
+        // 기존 목록에서 새 이미지 중복 체크 후 추가
+        val existingImages = _imageLinkList.value
+        val filteredImages = newImages.filterNot { existingImages.contains(it) }
+
+        // 중복이 없는 새 이미지를 기존 목록에 추가
+        _imageLinkList.value = existingImages + filteredImages
+    }
+
+    fun deleteImage(url: String){
+        // 현재 리스트에서 url를 제외한 새로운 리스트 생성
+        val updatedList = _imageLinkList.value.filter { it != url }
+
+        _imageLinkList.value = updatedList
     }
 
     fun inputLink(){
@@ -34,6 +47,13 @@ class CreateReviewFragmentViewModel @Inject constructor() : ViewModel(){
         // 기존 목록에 새 링크 추가
         _purchaseLinkList.value = _purchaseLinkList.value + newLink
         link.value = ""
+    }
+
+    fun deleteLink(link: PurchaseLinkDTO) {
+        // 현재 리스트에서 link를 제외한 새로운 리스트 생성
+        val updatedList = _purchaseLinkList.value.filter { it != link }
+
+        _purchaseLinkList.value = updatedList
     }
 
     // URL로부터 도메인 이름 추출하는 함수

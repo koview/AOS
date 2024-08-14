@@ -1,5 +1,6 @@
 package com.example.koview.presentation.ui.main.global.createreview.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -8,10 +9,19 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.koview.data.model.requeset.PurchaseLinkDTO
 import com.example.koview.databinding.ItemGalleryBinding
 
-class GalleryAdapter(private val imageList: List<String>) :
+class GalleryAdapter(private var imageList: List<String>) :
     RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>(){
+
+    interface MyItemClickListener{
+        fun onDeleteClick(imageUrl: String)
+    }
+    private lateinit var mItemClickListener: MyItemClickListener //아래 받은 것을 내부에서 사용하기 위해 선언
+    fun setMyItemClickListener(itemClickListener: MyItemClickListener) { //외부에서의 itemClickListner를 받기 위한 함수
+        mItemClickListener = itemClickListener
+    }
 
     inner class GalleryViewHolder(private val binding: ItemGalleryBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(image: String){
@@ -32,16 +42,18 @@ class GalleryAdapter(private val imageList: List<String>) :
                             .apply(requestOptions)
                             .override(width, height)
                             .into(binding.ivImage)
-                        // 이 부분은 피그마에서 추가적으로 디자인되면 하면 좋을 듯
-                        // placeholder: 이미지 로딩을 시작하기 전에 보여줄 이미지 설정
-                        // error: 리소스를 불러오다가 에러가 발생했을 때 보여줄 이미지 설정
-//                            .placeholder(R.drawable.placeholder_image)
-//                            .error(R.drawable.error_image)
-
                         return true
                     }
                 }
             )
+
+            // delete 버튼 설정
+            binding.ivDelete.setOnClickListener {
+                // 클릭 시 mItemClickListener의 onDeleteClick 호출
+                if (::mItemClickListener.isInitialized) {
+                    mItemClickListener.onDeleteClick(image)
+                }
+            }
         }
 
     }
@@ -58,5 +70,10 @@ class GalleryAdapter(private val imageList: List<String>) :
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
         val image = imageList[position]
         holder.bind(image)
+    }
+
+    fun updateImages(newLinks: List<String>) {
+        imageList = newLinks
+        notifyDataSetChanged() // 데이터 변경 알리기
     }
 }

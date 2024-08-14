@@ -115,6 +115,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                 when (it) {
                     is MypageEvent.NavigateToSetting -> findNavController().toSetting()
                     is MypageEvent.NavigateToCreateReview -> findNavController().toCreateReview()
+                    else -> {}
                 }
             }
         }
