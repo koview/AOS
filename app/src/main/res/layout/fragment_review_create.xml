@@ -44,6 +44,7 @@
 
         <EditText
             android:id="@+id/et_content"
+            android:text="@={vm.content}"
             android:gravity="top"
             android:layout_width="match_parent"
             android:layout_height="240dp"
@@ -123,6 +124,7 @@
 
             <EditText
                 android:id="@+id/et_link"
+                android:text="@={vm.link}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -148,7 +150,8 @@
                 android:text="입력"
                 style="@style/CategoryText"
                 android:textColor="@color/white"
-                android:background="@drawable/rect_blackfill_nostroke_100radius"/>
+                android:background="@drawable/rect_blackfill_nostroke_100radius"
+                android:onClick="@{()->vm.inputLink()}"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
