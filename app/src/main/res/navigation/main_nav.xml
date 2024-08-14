@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_home_fragment_to_search_fragment"
             app:destination="@id/search_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_ask_fragment"
+            app:destination="@id/ask_fragment" />
     </fragment>
 
     <fragment
@@ -208,7 +211,7 @@
 
     <fragment
         android:id="@+id/settingPointFragment"
-        android:name="com.example.koview.presentati on.ui.main.mypage.setting.point.SettingPointFragment"
+        android:name="com.example.koview.presentation.ui.main.mypage.setting.point.SettingPointFragment"
         android:label="SettingPointFragment" />
 
     <fragment
