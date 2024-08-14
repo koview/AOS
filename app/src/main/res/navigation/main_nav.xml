@@ -64,6 +64,16 @@
                 app:nullable="true" />
         </action>
 
+        <action
+            android:id="@+id/action_ask_fragment_to_ask_post_fragment"
+            app:destination="@id/ask_post_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ask_post_fragment"
+        android:name="com.example.koview.presentation.ui.main.ask.post.AskPostFragment"
+        android:label="AskPostFragment">
+
     </fragment>
 
     <fragment
@@ -208,7 +218,7 @@
 
     <fragment
         android:id="@+id/settingPointFragment"
-        android:name="com.example.koview.presentati on.ui.main.mypage.setting.point.SettingPointFragment"
+        android:name="com.example.koview.presentation.ui.main.mypage.setting.point.SettingPointFragment"
         android:label="SettingPointFragment" />
 
     <fragment

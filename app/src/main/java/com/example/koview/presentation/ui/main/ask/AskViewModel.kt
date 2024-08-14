@@ -1,13 +1,10 @@
 package com.example.koview.presentation.ui.main.ask
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.presentation.ui.main.ask.model.AskData
-import com.example.koview.presentation.ui.main.global.product.ProductEvent
-import com.example.koview.presentation.ui.main.global.product.model.Product
 import com.example.koview.presentation.ui.main.global.product.model.Review
 import com.example.koview.presentation.ui.main.global.product.model.TagShop
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +20,7 @@ import javax.inject.Inject
 
 sealed class AskEvent {
     data class NavigateToAskDetail(val askDetail: AskData) : AskEvent()
+    data object NavigateToPost : AskEvent()
 }
 
 @HiltViewModel
@@ -297,13 +295,6 @@ class AskViewModel @Inject constructor() : ViewModel() {
         _askList.value = fetchedData
     }
 
-    fun navigateToAskDetail(askDetail: AskData) {
-        _askDetail.value = askDetail
-        viewModelScope.launch {
-            _event.emit(AskEvent.NavigateToAskDetail(askDetail))
-        }
-    }
-
     fun onAskClick(item: AskData) {
         viewModelScope.launch {
 
@@ -353,5 +344,16 @@ class AskViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun navigateToAskDetail(askDetail: AskData) {
+        _askDetail.value = askDetail
+        viewModelScope.launch {
+            _event.emit(AskEvent.NavigateToAskDetail(askDetail))
+        }
+    }
 
+    fun navigateToPost() {
+        viewModelScope.launch {
+            _event.emit(AskEvent.NavigateToPost)
+        }
+    }
 }
