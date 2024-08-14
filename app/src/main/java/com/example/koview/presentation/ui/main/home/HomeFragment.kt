@@ -33,7 +33,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun initAskListObserver() {
         repeatOnStarted {
-            viewModel.askList.collect { askList ->
+            viewModel.queryList.collect { askList ->
                 askAdapter.submitList(askList)
             }
         }
@@ -47,7 +47,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     HomeEvent.NavigateToHarmfulProduct -> findNavController().toHarmfulProduct()
                     HomeEvent.NavigateToPopularProduct -> findNavController().toPopularProduct()
                     HomeEvent.NavigateToSearch -> findNavController().toSearch()
+                    HomeEvent.NavigateToAsk -> findNavController().toAsk()
                     is HomeEvent.ShowToastMessage -> showToastMessage(it.msg)
+
                 }
             }
         }
@@ -70,6 +72,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun NavController.toSearch() {
         val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toAsk() {
+        val action = HomeFragmentDirections.actionHomeFragmentToAskFragment()
         navigate(action)
     }
 }

@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_home_fragment_to_search_fragment"
             app:destination="@id/search_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_ask_fragment"
+            app:destination="@id/ask_fragment" />
     </fragment>
 
     <fragment
