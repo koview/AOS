@@ -7,15 +7,25 @@ import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.ReviewList
 import com.example.koview.data.repository.MainRepository
+import com.example.koview.presentation.ui.main.ask.askdetail.AskDetailEvent
 import com.example.koview.presentation.ui.main.global.product.model.Review
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+sealed class AskAnswerEvent {
+    data object NavigateToAskDetail : AskAnswerEvent()
+}
 @HiltViewModel
 class AskAnswerViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
+
+    private val _event = MutableSharedFlow<AskAnswerEvent>()
+    val event: SharedFlow<AskAnswerEvent> = _event.asSharedFlow()
 
     private val _reviewList = MutableStateFlow<List<ReviewList>>(emptyList())
     val reviewList: StateFlow<List<ReviewList>> = _reviewList
@@ -23,52 +33,6 @@ class AskAnswerViewModel @Inject constructor(private val repository: MainReposit
     init {
         getMyReviews()
     }
-
-//    private fun setMyReviewListData() {
-//        val fetchedData = listOf(
-//            Review(
-//                nickname = "네로",
-//                content = "설명입니당",
-//                imageUrl = listOf(
-//                    "https://ifh.cc/g/f9WcP4.jpg"
-//                ),
-//                likeNumber = 10,
-//                commentNumber = 20,
-//                date = "2024-07-13"
-//            ),
-//            Review(
-//                nickname = "ddddd",
-//                content = "설명입니당",
-//                imageUrl = listOf(
-//                    "https://ifh.cc/g/f9WcP4.jpg"
-//                ),
-//                likeNumber = 10,
-//                commentNumber = 20,
-//                date = "2024-07-13"
-//            ),
-//            Review(
-//                nickname = "2323",
-//                content = "설명입니당",
-//                imageUrl = listOf(
-//                    "https://ifh.cc/g/f9WcP4.jpg"
-//                ),
-//                likeNumber = 10,
-//                commentNumber = 20,
-//                date = "2024-07-13"
-//            ),
-//            Review(
-//                nickname = "sssss",
-//                content = "설명입니당",
-//                imageUrl = listOf(
-//                    "https://ifh.cc/g/f9WcP4.jpg"
-//                ),
-//                likeNumber = 10,
-//                commentNumber = 20,
-//                date = "2024-07-13"
-//            )
-//        )
-//        _reviewList.value = fetchedData
-//    }
 
     fun postQueryAnswer(queryId: Long, params: QueryAnswerRequest) {
         viewModelScope.launch {
@@ -103,6 +67,12 @@ class AskAnswerViewModel @Inject constructor(private val repository: MainReposit
                     }
                 }
             }
+        }
+    }
+
+    fun navigateToAskDetail() {
+        viewModelScope.launch {
+            _event.emit(AskAnswerEvent.NavigateToAskDetail)
         }
     }
 }

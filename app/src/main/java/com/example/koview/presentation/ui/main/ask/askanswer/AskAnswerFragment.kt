@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
 import com.example.koview.data.model.requeset.QueryAnswerRequest
@@ -15,7 +17,8 @@ import com.example.koview.presentation.ui.main.ask.AskViewModel
 import com.example.koview.presentation.ui.main.ask.askanswer.adapter.AskAnswerReviewAdapter
 import com.example.koview.presentation.ui.main.ask.askdetail.AskDetailViewModel
 
-class AskAnswerFragment : BaseFragment<FragmentAskAnswerBinding>(R.layout.fragment_ask_answer), AskAnswerInterface {
+class AskAnswerFragment : BaseFragment<FragmentAskAnswerBinding>(R.layout.fragment_ask_answer),
+    AskAnswerInterface {
 
     private val viewModel: AskAnswerViewModel by activityViewModels()
     private val parentViewModel: AskViewModel by activityViewModels()
@@ -31,19 +34,31 @@ class AskAnswerFragment : BaseFragment<FragmentAskAnswerBinding>(R.layout.fragme
         initReviewListObserver()
         initAskAnswerReviewRecyclerview()
         setupAnswerTextWatcher()
+        initEventObserve()
     }
 
     // 리뷰 데이터
     private fun initReviewListObserver() {
         repeatOnStarted {
-            viewModel.reviewList.collect {reviewList ->
+            viewModel.reviewList.collect { reviewList ->
                 askAnswerReviewAdapter.submitList(reviewList)
             }
         }
     }
 
+    private fun initEventObserve() {
+        repeatOnStarted {
+            viewModel.event.collect {
+                when (it) {
+                    AskAnswerEvent.NavigateToAskDetail -> findNavController().toAskDetail()
+                }
+            }
+        }
+    }
+
     private fun initAskAnswerReviewRecyclerview() {
-        binding.rvReview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvReview.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvReview.adapter = askAnswerReviewAdapter
     }
 
@@ -59,22 +74,34 @@ class AskAnswerFragment : BaseFragment<FragmentAskAnswerBinding>(R.layout.fragme
 
         if (isAnswerNotEmpty && isReviewSelected) {
             binding.btnReview.isEnabled = true
-            binding.btnReview.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#024FCF"))
+            binding.btnReview.backgroundTintList =
+                ColorStateList.valueOf(Color.parseColor("#024FCF"))
             binding.btnReview.setOnClickListener {
                 postAskAnswer()
             }
         } else {
             binding.btnReview.isEnabled = false
-            binding.btnReview.backgroundTintList = ColorStateList.valueOf(Color.BLACK) // 비활성화된 상태에서의 색상
+            binding.btnReview.backgroundTintList =
+                ColorStateList.valueOf(Color.BLACK) // 비활성화된 상태에서의 색상
         }
     }
 
     private fun postAskAnswer() {
-        parentViewModel.askDetail.value?.let { viewModel.postQueryAnswer(it.queryId, QueryAnswerRequest(binding.etAnswer.text.toString(), longClickReviewId)) }
+        parentViewModel.askDetail.value?.let {
+            viewModel.postQueryAnswer(
+                it.queryId,
+                QueryAnswerRequest(binding.etAnswer.text.toString(), longClickReviewId)
+            )
+        }
     }
 
     override fun onReviewLongClick(reviewId: Long) {
         longClickReviewId = reviewId
         updateSubmitButtonState()
+    }
+
+    private fun NavController.toAskDetail() {
+        val action = AskAnswerFragmentDirections.actionAskAnswerFragmentToAskDetailFragment()
+        navigate(action)
     }
 }
