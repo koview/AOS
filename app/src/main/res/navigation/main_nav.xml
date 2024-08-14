@@ -40,7 +40,7 @@
             app:destination="@id/ask_detail_fragment">
             <argument
                 android:name="askData"
-                app:argType="com.example.koview.presentation.ui.main.ask.model.AskData"
+                app:argType="com.example.koview.data.model.response.QueryResultList"
                 app:nullable="true" />
         </action>
 

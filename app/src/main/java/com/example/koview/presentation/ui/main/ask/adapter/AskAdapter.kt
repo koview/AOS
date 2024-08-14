@@ -1,23 +1,21 @@
 package com.example.koview.presentation.ui.main.ask.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.koview.data.model.response.QueryResultList
 import com.example.koview.databinding.ItemAskBinding
-import com.example.koview.presentation.bindingadapters.bindAskImg
 import com.example.koview.presentation.ui.main.ask.AskInterface
 import com.example.koview.presentation.ui.main.ask.model.AskData
-import com.example.koview.presentation.ui.main.global.product.model.Product
 
 class AskAdapter(listener: AskInterface) : RecyclerView.Adapter<AskAdapter.AskViewHolder>() {
 
     private val mCallBack = listener
-    private var askList: List<AskData> = emptyList()
+    private var askList: List<QueryResultList> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(newItems: List<AskData>) {
+    fun submitList(newItems: List<QueryResultList>) {
         askList = newItems
         notifyDataSetChanged()
     }
@@ -39,7 +37,7 @@ class AskAdapter(listener: AskInterface) : RecyclerView.Adapter<AskAdapter.AskVi
 
     class AskViewHolder(private val binding: ItemAskBinding, private val mCallBack: AskInterface) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(ask: AskData) {
+        fun bind(ask: QueryResultList) {
             binding.model = ask
 
             binding.layoutAsk.setOnClickListener {

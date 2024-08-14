@@ -34,7 +34,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         // 데이터 관찰
         parentViewModel.askDetail.observe(viewLifecycleOwner) { askDetail ->
             binding.model = askDetail
-            askDetail?.let { askAnswerAdapter.updateReviews(it.reviewList) }
+//            askDetail?.let { askAnswerAdapter.updateReviews(it.reviewList) }
         }
 
         initRecyclerview()
@@ -52,7 +52,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
 
         binding.rvShop.layoutManager = layoutManager
         binding.rvShop.adapter =
-            parentViewModel.askDetail.value?.let { AskShopTagAdapter(this, it.shopList) }
+            parentViewModel.askDetail.value?.let { AskShopTagAdapter(this, it.purchaseLinkList) }
 
         // 답변 리사이클러뷰 연결
         binding.rvReview.layoutManager =
@@ -88,7 +88,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
 
     private fun clickAsk() {
         binding.layoutAskIcon.setOnClickListener {
-            parentViewModel.askDetail.value?.let { parentViewModel.onAskClick(it) }
+//            parentViewModel.askDetail.value?.let { parentViewModel.onAskClick(it) }
         }
     }
 
@@ -97,6 +97,6 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
     }
 
     override fun onClickLike(item: Review) {
-        parentViewModel.onLikeClick(item)
+//        parentViewModel.onLikeClick(item)
     }
 }

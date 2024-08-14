@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
+import com.example.koview.data.model.response.QueryResultList
 import com.example.koview.databinding.FragmentAskBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.ask.adapter.AskAdapter
@@ -38,8 +39,8 @@ class AskFragment : BaseFragment<FragmentAskBinding>(R.layout.fragment_ask), Ask
     // AskViewModel data
     private fun initProductListObserver() {
         repeatOnStarted {
-            viewModel.askList.collect { searchProductList ->
-                askAdapter.submitList(searchProductList)
+            viewModel.getQueries.collect { getQueries ->
+                askAdapter.submitList(getQueries)
             }
         }
     }
@@ -58,16 +59,16 @@ class AskFragment : BaseFragment<FragmentAskBinding>(R.layout.fragment_ask), Ask
         }
     }
 
-    private fun NavController.toAskDetail(askDetail: AskData) {
+    private fun NavController.toAskDetail(askDetail: QueryResultList) {
         val action = AskFragmentDirections.actionAskFragmentToAskDetailFragment(askDetail)
         navigate(action)
     }
 
-    override fun onAskClick(askDetail: AskData) {
+    override fun onAskClick(askDetail: QueryResultList) {
         viewModel.navigateToAskDetail(askDetail)
     }
 
-    override fun onAskIconClick(item: AskData) {
-        viewModel.onAskClick(item)
+    override fun onAskIconClick(item: QueryResultList) {
+//        viewModel.onAskClick(item)
     }
 }

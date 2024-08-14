@@ -9,6 +9,7 @@ import com.example.koview.data.model.response.GetMyReviewsResponse
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductReviewResponse
 import com.example.koview.data.model.response.ProductsResponse
+import com.example.koview.data.model.response.QueryResponse
 import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.Status
 import com.example.koview.presentation.ui.main.home.model.Category
@@ -53,5 +54,10 @@ interface MainRepository {
         page: Int = 1,
         size: Int = 20
     ): BaseState<ProductReviewResponse>
+
+    suspend fun getQueries(
+        page: Int = 1,
+        size: Int = 20
+    ): BaseState<QueryResponse>
   
 }
