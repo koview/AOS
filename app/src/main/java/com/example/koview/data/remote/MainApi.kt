@@ -10,6 +10,7 @@ import retrofit2.http.DELETE
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductReviewResponse
 import com.example.koview.data.model.response.ProductsResponse
+import com.example.koview.data.model.response.QueryAnswerResponse
 import com.example.koview.data.model.response.QueryResponse
 import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.Status
@@ -79,4 +80,11 @@ interface MainApi {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Response<QueryResponse>
+
+    @GET("queries/{queryId}/answers")
+    suspend fun getQueryAnswers(
+        @Path("queryId") queryId: Long,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Response<QueryAnswerResponse>
 }

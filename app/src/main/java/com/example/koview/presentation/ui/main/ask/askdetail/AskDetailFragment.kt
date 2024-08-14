@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.koview.R
+import com.example.koview.data.model.response.QueryAnswerList
 import com.example.koview.databinding.FragmentAskDetailBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.ask.AskViewModel
@@ -23,7 +24,7 @@ import com.google.android.flexbox.JustifyContent
 class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragment_ask_detail),
     AskDetailInterface {
 
-    private val viewModel: AskDetailViewModel by viewModels()
+    private val viewModel: AskDetailViewModel by activityViewModels()
     private val parentViewModel: AskViewModel by activityViewModels()
     private val askAnswerAdapter = AskAnswerAdapter(this)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,11 +35,11 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         // 데이터 관찰
         parentViewModel.askDetail.observe(viewLifecycleOwner) { askDetail ->
             binding.model = askDetail
-//            askDetail?.let { askAnswerAdapter.updateReviews(it.reviewList) }
         }
 
         initRecyclerview()
         initEventObserve()
+        initAnswerListObserver()
         clickAsk()
     }
 
@@ -71,6 +72,15 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         }
     }
 
+    private fun initAnswerListObserver() {
+        repeatOnStarted {
+            viewModel.getAnswers.collect {
+                askAnswerAdapter.updateReviews(it)
+            }
+        }
+        parentViewModel.askDetail.value?.let { viewModel.getQueryAnswers(it.queryId) }
+    }
+
     private fun NavController.toAsk() {
         val action = AskDetailFragmentDirections.actionAskDetailFragmentToAskFragment()
         navigate(action)
@@ -96,7 +106,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         clickTag(url)
     }
 
-    override fun onClickLike(item: Review) {
+    override fun onClickLike(item: QueryAnswerList) {
 //        parentViewModel.onLikeClick(item)
     }
 }

@@ -43,3 +43,33 @@ data class QueryPurchaseLinkList(
     val shopName: String,
     val verifiedType: VerifiedType
 ): Serializable
+
+data class QueryAnswerResponse(
+    val isSuccess: Boolean,
+    val code: String,
+    val message: String,
+    val result: QueryAnswerResult
+): Serializable
+
+data class QueryAnswerResult(
+    val answerList: List<QueryAnswerList>,
+    val getNumber: Long,
+    val hasPrevious: Boolean,
+    val hasNext: Boolean,
+    val getTotalPages: Long,
+    val getTotalElements: Long,
+    val isFirst: Boolean,
+    val isLast: Boolean
+): Serializable
+
+data class QueryAnswerList(
+    val answerId: Long,
+    val content: String,
+    val writer: String,
+    val imageList: List<QueryImage>,
+    val totalLikeCount: Long,
+    val isLiked: Boolean,
+    val commentCount: Long,
+    val createdAt: String,
+    val updatedAt: String
+): Serializable
