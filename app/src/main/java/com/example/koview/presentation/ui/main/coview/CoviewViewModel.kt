@@ -112,10 +112,10 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                     // 좋아요 상태 업데이트
                     val updatedItem = item.copy(
                         isLiked = !item.isLiked,
-                        totalLikesCount = if (item.isLiked) {
-                            item.totalLikesCount - 1
+                        totalLikeCount = if (item.isLiked) {
+                            item.totalLikeCount - 1
                         } else {
-                            item.totalLikesCount + 1
+                            item.totalLikeCount + 1
                         }
                     )
                     _uiState.update { state ->
@@ -134,6 +134,25 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                 is BaseState.Error -> {
                     _event.emit(CoviewEvent.ShowToastMessage(result.msg))
                 }
+            }
+        }
+    }
+
+    fun addCommentCount(reviewId: Long) {
+        viewModelScope.launch {
+            // 댓글 개수 증가
+            _uiState.update { state ->
+                // reviewId와 일치하는 리뷰를 찾기
+                val updatedReviewList = state.reviewList.map { review ->
+                    if (review.reviewId == reviewId) {
+                        review.copy(totalCommentCount = review.totalCommentCount + 1)
+                    } else {
+                        review
+                    }
+                }
+
+                // 업데이트된 리스트로 상태를 갱신
+                state.copy(reviewList = updatedReviewList)
             }
         }
     }

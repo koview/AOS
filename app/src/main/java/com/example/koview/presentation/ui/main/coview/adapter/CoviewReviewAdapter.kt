@@ -34,7 +34,9 @@ class CoviewReviewAdapter(private val coviewClickListener: CoviewClickListener) 
             override fun areContentsTheSame(oldItem: CoviewUiData, newItem: CoviewUiData): Boolean {
                 return oldItem == newItem &&
                         oldItem.currentPage == newItem.currentPage &&
-                        oldItem.isExpanded == newItem.isExpanded
+                        oldItem.isExpanded == newItem.isExpanded &&
+                        oldItem.isLiked == newItem.isLiked &&
+                        oldItem.totalCommentCount == newItem.totalCommentCount
             }
         }
     }

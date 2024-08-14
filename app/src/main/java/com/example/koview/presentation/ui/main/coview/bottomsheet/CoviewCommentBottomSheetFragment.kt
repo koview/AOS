@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.example.koview.R
 import com.example.koview.databinding.FragmentCoviewCommentBottomSheetBinding
 import com.example.koview.presentation.customview.LoadingDialog
+import com.example.koview.presentation.ui.main.coview.CoviewViewModel
 import com.example.koview.presentation.ui.main.coview.adapter.CoviewCommentAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -43,6 +45,7 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var behavior: BottomSheetBehavior<View>
     private val viewModel: CoviewCommentBottomSheetViewModel by viewModels()
+    private val parentViewModel: CoviewViewModel by activityViewModels()
 
     private var adapter: CoviewCommentAdapter? = null
 
@@ -137,6 +140,7 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
                     is CoviewCommentEvent.ShowToastMessage -> showToastMessage(it.msg)
                     CoviewCommentEvent.DismissLoading -> dismissLoading()
                     CoviewCommentEvent.ShowLoading -> showLoading(requireContext())
+                    is CoviewCommentEvent.AddCommentCount -> addCommentCount(it.reviewId)
                 }
             }
         }
@@ -192,9 +196,13 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
                     binding.root.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
                     binding.root.requestLayout()
                 }
-                Log.d("코뷰 댓글", "전체 화면으로 전환")
             }
         }
+    }
+
+    // 댓글 개수 증가
+    private fun addCommentCount(reviewId: Long) {
+        parentViewModel.addCommentCount(reviewId)
     }
 
 }

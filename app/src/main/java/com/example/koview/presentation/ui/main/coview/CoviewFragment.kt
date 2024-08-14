@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.koview.R
@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_coview),
     CoviewClickListener {
 
-    private val viewModel: CoviewViewModel by viewModels()
+    private val viewModel: CoviewViewModel by activityViewModels()
     private var adapter: CoviewReviewAdapter? = null
 
     private var bottomScrollState = true
