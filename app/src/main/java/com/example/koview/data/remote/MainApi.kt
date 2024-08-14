@@ -72,6 +72,14 @@ interface MainApi {
         @Query("size") size: Int
     ): Response<GetCoviewReviewsResponse>
 
+    // 코뷰 리뷰 검색
+    @GET("review/search")
+    suspend fun searchCoviewReviews(
+        @Query("keyword") keyword: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Response<GetCoviewReviewsResponse>
+
     // 코뷰 특정 리뷰 댓글 조회
     @GET("comments")
     suspend fun getCoviewComments(
