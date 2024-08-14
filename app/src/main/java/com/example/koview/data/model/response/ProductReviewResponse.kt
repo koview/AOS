@@ -10,30 +10,27 @@ data class ProductReviewResponse(
 ): Serializable
 
 data class ProductReviewResult (
-    val detail: ProductReviewDetail,
-    val reviewPaging: ProductReviewPaging
-)
-
-data class ProductReviewDetail (
-    val answerId: Long,
-    val content: String,
-    val writer: String,
-    val imageList: List<ProductReviewDetailImageList>,
-    val totalLikeCount: Long,
-    val isLiked: Boolean,
-    val commentCount: Long,
-    val createdAt: String,
-    val updatedAt: String
-)
-data class ProductReviewPaging (
     val reviewList: List<ProductReviewDetail>,
     val getNumber: Long,
     val hasPrevious: Boolean,
     val hasNext: Boolean,
     val getTotalPages: Long,
     val getTotalElements: Long,
-    val first: Boolean,
-    val last: Boolean
+    val isFirst: Boolean,
+    val isLast: Boolean
+)
+
+data class ProductReviewDetail (
+    val reviewId: Long,
+    val content: String,
+    val writer: String,
+    val profileImage: String?,
+    val imageList: List<ProductReviewDetailImageList>,
+    val totalCommentCount: Long,
+    val totalLikesCount: Long,
+    val isLiked: Boolean,
+    val createdAt: String,
+    val updatedAt: String
 )
 
 data class ProductReviewDetailImageList (

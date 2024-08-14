@@ -38,6 +38,7 @@ class ProductDetailViewModel @Inject constructor(private val repository: MainRep
     }
 
     fun getReviewDetails(productId: Long) {
+        Log.d("productId", productId.toString())
         viewModelScope.launch {
             repository.getProductReview(
                 productId = productId
@@ -49,7 +50,7 @@ class ProductDetailViewModel @Inject constructor(private val repository: MainRep
                     }
 
                     is BaseState.Success -> {
-                        _getReviews.value = it.body.result.reviewPaging.reviewList
+                        _getReviews.value = it.body.result.reviewList
                     }
                 }
             }
@@ -60,7 +61,7 @@ class ProductDetailViewModel @Inject constructor(private val repository: MainRep
         viewModelScope.launch {
             val updatedItem = item.copy(
                 isLiked = !item.isLiked,
-                totalLikeCount = item.totalLikeCount + if (item.isLiked) -1 else 1
+                totalLikesCount = item.totalLikesCount + if (item.isLiked) -1 else 1
             )
 
             _getReviews.update { list ->

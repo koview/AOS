@@ -66,7 +66,7 @@ interface MainApi {
         @Query("clickedReviewId") clickedReviewId: Long
     ): Response<ReviewDetailResponse>
 
-    @GET("products/{productId}")
+    @GET("products/{productId}/reviews")
     suspend fun getProductReview(
         @Path("productId") productId: Long,
         @Query("page") page: Int,
