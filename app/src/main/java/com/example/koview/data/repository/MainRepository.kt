@@ -56,6 +56,12 @@ interface MainRepository {
         size: Int
     ): BaseState<GetCoviewReviewsResponse>
 
+    suspend fun searchCoviewReviews(
+        keyword: String,
+        page: Int,
+        size: Int
+    ): BaseState<GetCoviewReviewsResponse>
+
     suspend fun getCoviewComments(
         reviewId: Long,
         page: Int,

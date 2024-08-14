@@ -22,8 +22,8 @@ data class CoviewReviewList(
     val imageList: List<CoviewImage?>,
     val purchaseLinkList: List<PurchaseLinkList>,
     val totalCommentCount: Long,
-    val totalLikesCount: Long,
-    val isCurrentMemberLiked: Boolean,
+    val totalLikeCount: Long,
+    val isLiked: Boolean,
     val createdAt: String,
     val updatedAt: String
 )

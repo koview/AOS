@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.CoviewCommentRequest
 import com.example.koview.data.model.response.CoviewCommentItem
-import com.example.koview.data.model.response.CoviewCommentResult
 import com.example.koview.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,6 +29,7 @@ sealed class CoviewCommentEvent {
     data class ShowToastMessage(val msg: String) : CoviewCommentEvent()
     data object ShowLoading : CoviewCommentEvent()
     data object DismissLoading : CoviewCommentEvent()
+    data class AddCommentCount(val reviewId: Long) : CoviewCommentEvent()
 }
 
 @HiltViewModel
@@ -102,6 +102,9 @@ class CoviewCommentBottomSheetViewModel @Inject constructor(
 
                         // 댓글 다시 불러오기
                         getComment(reviewId)
+
+                        // 댓글 개수 증가
+                        _event.emit(CoviewCommentEvent.AddCommentCount(reviewId))
                     }
 
                     is BaseState.Error -> {

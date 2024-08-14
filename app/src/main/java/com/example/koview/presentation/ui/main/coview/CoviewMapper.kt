@@ -11,10 +11,10 @@ fun CoviewReviewList.toCoviewUiData(
     profileImage = profileImage?.url,
     purchaseLinkList = purchaseLinkList,
     totalCommentCount = totalCommentCount,
-    totalLikesCount = totalLikesCount,
+    totalLikeCount = totalLikeCount,
     content = content,
     createdAt = createdAt,
     imageList = imageList.map { image -> image?.url },
     myProfileImage = myProfileImgUrl,
-    isLiked = isCurrentMemberLiked,
+    isLiked = isLiked,
 )

@@ -59,6 +59,12 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
         size: Int,
     ): BaseState<GetCoviewReviewsResponse> = runRemote { api.getCoviewReviews(page, size) }
 
+    override suspend fun searchCoviewReviews(
+        keyword: String,
+        page: Int,
+        size: Int,
+    ): BaseState<GetCoviewReviewsResponse> = runRemote { api.searchCoviewReviews(keyword, page, size) }
+
     override suspend fun getCoviewComments(
         reviewId: Long,
         page: Int,

@@ -1,5 +1,6 @@
 package com.example.koview.presentation.ui.main.coview
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
@@ -38,6 +39,11 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
     val event: SharedFlow<CoviewEvent> = _event.asSharedFlow()
 
     var profileImgUrl: String? = ""
+    val keyword = MutableStateFlow("")
+
+    private val _isSearchMode = MutableStateFlow(false)
+    val isSearchMode: StateFlow<Boolean> = _isSearchMode.asStateFlow()
+
 
     // 댓글 입력 창에 보여줄 프로필 사진
     fun getUserInfo() {
@@ -98,6 +104,65 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
         }
     }
 
+    // 코뷰 리뷰 검색 세팅
+    fun initSearchReviews() {
+        viewModelScope.launch {
+            // 초기화
+            _uiState.update { state ->
+                state.copy(
+                    page = 1,
+                    hasNext = true,
+                    reviewList = emptyList()
+                )
+            }
+            _isSearchMode.value = true
+
+            searchReviews()
+        }
+    }
+
+    // 코뷰 리뷰 검색
+    fun searchReviews() {
+        viewModelScope.launch {
+            if (isSearchMode.value && uiState.value.hasNext) {
+                repository.searchCoviewReviews(keyword.value, uiState.value.page, 15).let {
+                    when (it) {
+                        is BaseState.Success -> {
+                            val reviews = it.body.result.reviewList.map { data ->
+                                data.toCoviewUiData(
+                                    myProfileImgUrl = profileImgUrl
+                                )
+                            }
+                            _uiState.update { state ->
+                                state.copy(
+                                    page = state.page + 1,
+                                    hasNext = it.body.result.hasNext,
+                                    reviewList = state.reviewList + reviews // 기존 리스트에 새로운 리뷰 추가
+                                )
+                            }
+                        }
+
+                        is BaseState.Error -> {
+                            _event.emit(CoviewEvent.ShowToastMessage(it.msg))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 다음 페이지가 없으면 리뷰 전체 호출 모드로 변경
+    fun checkSearchMode() {
+        if (!uiState.value.hasNext) {
+            _isSearchMode.value = false
+        }
+        //Log.d("코뷰", "[상태 확인] 리뷰 검색 hasNext ${uiState.value.hasNext} -> 검색 모드 ${isSearchMode.value}")
+    }
+
+    fun resetKeyword() {
+        keyword.value = ""
+    }
+
     fun onLikeClick(item: CoviewUiData) {
         viewModelScope.launch {
             // 현재 좋아요 상태에 따라 API 호출
@@ -112,10 +177,10 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                     // 좋아요 상태 업데이트
                     val updatedItem = item.copy(
                         isLiked = !item.isLiked,
-                        totalLikesCount = if (item.isLiked) {
-                            item.totalLikesCount - 1
+                        totalLikeCount = if (item.isLiked) {
+                            item.totalLikeCount - 1
                         } else {
-                            item.totalLikesCount + 1
+                            item.totalLikeCount + 1
                         }
                     )
                     _uiState.update { state ->
@@ -134,6 +199,25 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                 is BaseState.Error -> {
                     _event.emit(CoviewEvent.ShowToastMessage(result.msg))
                 }
+            }
+        }
+    }
+
+    fun addCommentCount(reviewId: Long) {
+        viewModelScope.launch {
+            // 댓글 개수 증가
+            _uiState.update { state ->
+                // reviewId와 일치하는 리뷰를 찾기
+                val updatedReviewList = state.reviewList.map { review ->
+                    if (review.reviewId == reviewId) {
+                        review.copy(totalCommentCount = review.totalCommentCount + 1)
+                    } else {
+                        review
+                    }
+                }
+
+                // 업데이트된 리스트로 상태를 갱신
+                state.copy(reviewList = updatedReviewList)
             }
         }
     }
