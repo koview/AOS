@@ -1,16 +1,21 @@
 package com.example.koview.presentation.ui.main.mypage.setting.logininfo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.koview.R
-import com.example.koview.databinding.FragmentMypageSettingBinding
+import com.example.koview.app.App.Companion.sharedPreferences
 import com.example.koview.databinding.FragmentSettingLoginInfoBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.intro.IntroActivity
+import com.example.koview.presentation.ui.intro.signup.complete.SignUpCompleteFragmentDirections
 import com.example.koview.presentation.ui.main.mypage.ConfirmDialog
 import com.example.koview.presentation.ui.main.mypage.ConfirmDialogInterface
-import com.example.koview.presentation.ui.main.mypage.setting.MypageSettingEvent
+import com.example.koview.presentation.utils.Constants.ACCESS_TOKEN
+import com.example.koview.presentation.utils.Constants.REFRESH_TOKEN
 
 
 class SettingLoginInfoFragment : BaseFragment<FragmentSettingLoginInfoBinding>(R.layout.fragment_setting_login_info),
@@ -69,6 +74,7 @@ class SettingLoginInfoFragment : BaseFragment<FragmentSettingLoginInfoBinding>(R
             viewModel.event.collect {
                 when (it) {
                     LoginInfoEvent.NavigateToBack -> findNavController().navigateUp()
+                    LoginInfoEvent.NavigateToLogin -> findNavController().toComplete()
                 }
             }
         }
@@ -76,8 +82,23 @@ class SettingLoginInfoFragment : BaseFragment<FragmentSettingLoginInfoBinding>(R
 
     override fun onClickYesButton(id: Int) {
         if (id == 1) { // 로그아웃
+            // token 삭제
+            sharedPreferences.edit()
+                .remove(ACCESS_TOKEN)
+                .remove(REFRESH_TOKEN)
+                .apply()
+
+            val intent = Intent(requireContext(), IntroActivity::class.java)
+            startActivity(intent)
+
+            viewModel.navigateToLogin()
         }
         else if (id == 2) { // 회원탈퇴
         }
+    }
+
+    private fun NavController.toComplete() {
+        val action = SettingLoginInfoFragmentDirections.actionSettingLoginInfoFragmentToHomeFragment()
+        navigate(action)
     }
 }

@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.example.koview.presentation.ui.main.coview.bottomsheet.CoviewCommentBottomSheetViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,14 +43,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:paddingBottom="40dp"
+            android:clipToPadding="false"
+            android:paddingBottom="300dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
-            tools:listitem="@layout/item_coview_comment"
-            tools:itemCount="4"/>
+            tools:itemCount="4"
+            tools:listitem="@layout/item_coview_comment" />
 
         <TextView
+            android:id="@+id/tv_no_comments"
             style="@style/TextRegularMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,11 +68,11 @@
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/kv_gray3"
+            app:layout_constraintBottom_toTopOf="@id/layout_comment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_comment" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!--    댓글 입력    -->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,8 +83,7 @@
             android:layout_marginVertical="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_line">
+            app:layout_constraintStart_toStartOf="parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_my_profile"
@@ -89,13 +94,14 @@
                 tools:src="@drawable/img_profile_ex" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/tv_comment"
+                android:id="@+id/et_comment"
                 style="@style/TextSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:background="@color/transparent"
                 android:hint="댓글 추가하기"
+                android:text="@={vm.comment}"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/black"
@@ -105,11 +111,11 @@
                 app:layout_constraintStart_toEndOf="@id/iv_my_profile"
                 app:layout_constraintTop_toTopOf="@id/iv_my_profile" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_send"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_send"
+                android:background="@drawable/ic_send"
                 app:layout_constraintBottom_toBottomOf="@id/iv_my_profile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/iv_my_profile" />

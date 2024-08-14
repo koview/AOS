@@ -13,6 +13,11 @@ fun TextView.bindTextFromInt(value: Int) {
     text = value.toString()
 }
 
+@BindingAdapter("textFromLong")
+fun TextView.bindTextFromLong(value: Long) {
+    text = value.toString()
+}
+
 
 @BindingAdapter("targetCategory", "curCategory", requireAll = true)
 fun setCategoryColor(view: TextView, targetCategory: Category, curCategory: Category) {
