@@ -78,6 +78,7 @@ class AskAnswerFragment : BaseFragment<FragmentAskAnswerBinding>(R.layout.fragme
                 ColorStateList.valueOf(Color.parseColor("#024FCF"))
             binding.btnReview.setOnClickListener {
                 postAskAnswer()
+                viewModel.navigateToAskDetail()
             }
         } else {
             binding.btnReview.isEnabled = false
