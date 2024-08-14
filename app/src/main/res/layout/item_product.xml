@@ -22,18 +22,27 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:paddingBottom="20dp">
+        android:paddingTop="20dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_product"
-
-            android:layout_width="350dp"
-            android:layout_height="220dp"
-            android:background="@drawable/rect_whitefill_nostroke_16radius"
-            android:scaleType="centerCrop"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_product"
+                productImgUrl="@{imageUrl}"
+                android:layout_width="350dp"
+                android:layout_height="220dp"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/default_product_image"/>
+
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/layout_info"
@@ -43,7 +52,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_product">
+            app:layout_constraintTop_toBottomOf="@+id/cv_product">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
