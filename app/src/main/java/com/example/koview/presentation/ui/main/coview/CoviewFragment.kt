@@ -48,6 +48,12 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
         isReturningFromExternal = false
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        viewModel.resetKeyword()
+    }
+
     private fun initEventObserver() {
         repeatOnStarted {
             viewModel.event.collect {
@@ -82,12 +88,25 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
                 // 화면 하단에 도달
                 if (bottomScrollState) {
                     bottomScrollState = false
-                    viewModel.getReviews()
+
+                    // 검색 모드에 따라 다른 함수 호출
+                    if (viewModel.isSearchMode.value) {
+                        viewModel.searchReviews()
+                        checkMode()
+                        Log.d("코뷰", "리뷰 검색")
+                    } else {
+                        viewModel.getReviews()
+                        Log.d("코뷰", "리뷰 전체")
+                    }
                 }
             } else {
                 bottomScrollState = true
             }
         }
+    }
+
+    private fun checkMode() {
+        viewModel.checkSearchMode()
     }
 
     // 리뷰 아이템 좋아요 클릭 시 호출

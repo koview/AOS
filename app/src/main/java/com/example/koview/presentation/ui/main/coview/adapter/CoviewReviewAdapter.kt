@@ -52,12 +52,6 @@ class CoviewReviewAdapter(private val coviewClickListener: CoviewClickListener) 
 
     override fun onBindViewHolder(holder: CoviewReviewViewHolder, position: Int) {
         holder.bind(getItem(position))
-
-        if (getItem(position).imageList.isEmpty()) {
-            holder.bindDefaultImage()
-        } else {
-            holder.setupViewPager(getItem(position))
-        }
     }
 }
 
@@ -70,6 +64,12 @@ class CoviewReviewViewHolder(
 
     fun bind(item: CoviewUiData) {
         binding.item = item
+
+        if (item.imageList.isNullOrEmpty()) {
+            bindDefaultImage()
+        } else {
+            setupViewPager(item)
+        }
 
         // 좋아요 업데이트
         binding.layoutLike.setOnClickListener {
@@ -109,15 +109,18 @@ class CoviewReviewViewHolder(
         binding.rvShop.adapter = CoviewShopTagAdapter(coviewClickListener, item.purchaseLinkList)
     }
 
-    fun setupViewPager(item: CoviewUiData) {
-        Log.d("코뷰", "뷰페이저 이미지 설정 -> ${item.imageList}")
+    private fun setupViewPager(item: CoviewUiData) {
+        // 기존 어댑터와 콜백 해제
+        binding.vpImages.adapter?.let {
+            binding.vpImages.adapter = null // 기존 어댑터 해제
+        }
+
+        // 이전에 등록된 콜백 제거
+        pageChangeCallback?.let { binding.vpImages.unregisterOnPageChangeCallback(it) }
 
         // 리뷰 이미지 ViewPager adapter 설정
         val adapter = CoviewImageVPAdapter(item.imageList)
         binding.vpImages.adapter = adapter
-
-        // 이전에 등록된 콜백 제거
-        pageChangeCallback?.let { binding.vpImages.unregisterOnPageChangeCallback(it) }
 
         // 현재 페이지 설정
         binding.vpImages.setCurrentItem(item.currentPage, false)
@@ -130,20 +133,19 @@ class CoviewReviewViewHolder(
             binding.tvIndicator.text = "${item.currentPage + 1} / ${item.imageList.size}"
         }
 
-        // 페이지 변경 콜백 설정
-        binding.vpImages.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        // 새 페이지 변경 콜백 등록
+        pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 binding.tvIndicator.text = "${position + 1} / ${item.imageList.size}"
                 item.currentPage = position // 현재 페이지 인덱스 업데이트
             }
-        })
+        }
+        binding.vpImages.registerOnPageChangeCallback(pageChangeCallback!!)
     }
 
-    fun bindDefaultImage() {
+    private fun bindDefaultImage() {
         // 리뷰 이미지 리스트 null 일 때 기본 이미지 설정
-        Log.d("코뷰", "뷰페이저 기본 이미지 설정")
-
         binding.vpImages.visibility = View.GONE
         binding.cvReview.visibility = View.VISIBLE
 
