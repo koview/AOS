@@ -14,6 +14,7 @@ import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.coview.adapter.CoviewClickListener
 import com.example.koview.presentation.ui.main.coview.adapter.CoviewReviewAdapter
 import com.example.koview.presentation.ui.main.coview.model.CoviewUiData
+import com.example.koview.presentation.ui.main.global.model.ReviewType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -136,7 +137,8 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
             CoviewFragmentDirections.actionCoviewFragmentToCoviewCommentBottomSheetFragment(
                 reviewId,
                 profileUrl,
-                isFullView
+                isFullView,
+                ReviewType.COVIEW.toString()
             )
         navigate(action)
     }
