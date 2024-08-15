@@ -4,7 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.koview.presentation.ui.main.ask.model.AskShopUiData
+import com.example.koview.data.model.requeset.PurchaseLinkDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,11 +18,16 @@ import javax.inject.Inject
 
 sealed class AskPostEvent() {
     data object GoToGallery : AskPostEvent()
+    data class ShowToastMessage(val msg: String) : AskPostEvent()
+    data object NavigateToBack : AskPostEvent()
 }
 
-data class AskPostUiState(
+data class AskPostImageUiState(
     val imageList: List<Uri> = emptyList(),
-    val shopLinkList: List<AskShopUiData> = emptyList()
+)
+
+data class AskPostLinkUiState(
+    val shopLinkList: List<PurchaseLinkDTO> = emptyList(),
 )
 
 @HiltViewModel
@@ -31,10 +36,15 @@ class AskPostViewModel @Inject constructor() : ViewModel() {
     private val _event = MutableSharedFlow<AskPostEvent>()
     val event: SharedFlow<AskPostEvent> = _event.asSharedFlow()
 
-    private val _uiState = MutableStateFlow(AskPostUiState())
-    val uiState: StateFlow<AskPostUiState> = _uiState.asStateFlow()
+    private val _imageUiState = MutableStateFlow(AskPostImageUiState())
+    val imageUiState: StateFlow<AskPostImageUiState> = _imageUiState.asStateFlow()
+
+    private val _linkUiState = MutableStateFlow(AskPostLinkUiState())
+    val linkUiState: StateFlow<AskPostLinkUiState> = _linkUiState.asStateFlow()
+
 
     val content = MutableStateFlow("")
+    var link = MutableStateFlow("")
 
     fun goToGallery() {
         viewModelScope.launch {
@@ -45,7 +55,7 @@ class AskPostViewModel @Inject constructor() : ViewModel() {
     // 이미지 추가
     fun addImage(uris: List<Uri>) {
         viewModelScope.launch {
-            _uiState.update { state ->
+            _imageUiState.update { state ->
                 state.copy(
                     imageList = state.imageList + uris // 이미지 추가
                 )
@@ -57,7 +67,7 @@ class AskPostViewModel @Inject constructor() : ViewModel() {
     // 이미지 삭제
     fun deleteImage(uri: Uri) {
         viewModelScope.launch {
-            _uiState.update { state ->
+            _imageUiState.update { state ->
                 state.copy(
                     imageList = state.imageList.filterNot { it == uri } // 해당 uri와 일치하는 이미지를 제거
                 )
@@ -66,25 +76,54 @@ class AskPostViewModel @Inject constructor() : ViewModel() {
     }
 
     // 링크 추가
-    fun addLink(link: AskShopUiData) {
+    fun addLink() {
         viewModelScope.launch {
-            _uiState.update { state ->
-                state.copy(
-                    shopLinkList = state.shopLinkList + link // 링크 추가
-                )
+            val tag = extractTag(link.value)
+            val newLink = PurchaseLinkDTO(link.value, tag)
+
+            if (tag == "") {
+                _event.emit(AskPostEvent.ShowToastMessage("유효하지 않은 링크입니다."))
+            } else {
+                _linkUiState.update { state ->
+                    state.copy(
+                        shopLinkList = state.shopLinkList + newLink // 링크 추가
+                    )
+                }
             }
-            Log.d("질문", "링크 추가 완료")
+            link.value = ""
         }
     }
 
     // 링크 삭제
-    fun deleteLink(link: AskShopUiData) {
+    fun deleteLink(link: PurchaseLinkDTO) {
         viewModelScope.launch {
-            _uiState.update { state ->
+            _linkUiState.update { state ->
                 state.copy(
                     shopLinkList = state.shopLinkList.filterNot { it.purchaseLink == link.purchaseLink } // 해당 링크와 일치하는 요소 제거
                 )
             }
+        }
+    }
+
+    // URL로부터 도메인 이름 추출
+    private fun extractTag(link: String): String {
+
+        // 정규 표현식을 사용하여 www.과 .com 사이의 문자열을 검색
+        val regex = """https?://(www\.)?([^/]+)\.com(/.*)?""".toRegex()
+        val matchResult = regex.find(link)
+
+        return if (matchResult != null) {
+            // 그룹 2에서 도메인 이름 반환
+            matchResult.groups[2]?.value ?: ""
+        } else {
+            // 매치되지 않는 경우 빈 문자열 반환
+            ""
+        }
+    }
+
+    fun navigateToBack() {
+        viewModelScope.launch {
+            _event.emit(AskPostEvent.NavigateToBack)
         }
     }
 }

@@ -5,24 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.koview.databinding.ItemLinkBinding
-import com.example.koview.presentation.ui.main.ask.model.AskShopUiData
+import com.example.koview.data.model.requeset.PurchaseLinkDTO
+import com.example.koview.databinding.ItemShopLinkBinding
 
 class AskShopTagAdapter(private val clickListener: AskPostClickListener) :
-    ListAdapter<AskShopUiData, AskShopTagViewHolder>(diffCallback) {
+    ListAdapter<PurchaseLinkDTO, AskShopTagViewHolder>(diffCallback) {
 
     companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<AskShopUiData>() {
+        val diffCallback = object : DiffUtil.ItemCallback<PurchaseLinkDTO>() {
             override fun areItemsTheSame(
-                oldItem: AskShopUiData,
-                newItem: AskShopUiData,
+                oldItem: PurchaseLinkDTO,
+                newItem: PurchaseLinkDTO,
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: AskShopUiData,
-                newItem: AskShopUiData,
+                oldItem: PurchaseLinkDTO,
+                newItem: PurchaseLinkDTO,
             ): Boolean {
                 return oldItem == newItem
             }
@@ -31,7 +31,7 @@ class AskShopTagAdapter(private val clickListener: AskPostClickListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AskShopTagViewHolder =
         AskShopTagViewHolder(
-            ItemLinkBinding.inflate(
+            ItemShopLinkBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -45,11 +45,11 @@ class AskShopTagAdapter(private val clickListener: AskPostClickListener) :
 }
 
 class AskShopTagViewHolder(
-    private val binding: ItemLinkBinding,
+    private val binding: ItemShopLinkBinding,
     private val clickListener: AskPostClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(tag: AskShopUiData) {
+    fun bind(tag: PurchaseLinkDTO) {
         binding.item = tag
 
         binding.root.setOnClickListener {

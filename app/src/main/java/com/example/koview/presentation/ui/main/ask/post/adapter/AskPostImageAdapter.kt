@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.koview.data.model.requeset.PurchaseLinkDTO
 import com.example.koview.databinding.ItemPostImageBinding
-import com.example.koview.presentation.ui.main.ask.model.AskShopUiData
 
 interface AskPostClickListener {
     fun onImageClick(uri: Uri)
-    fun onShopTagClick(item: AskShopUiData)
+    fun onShopTagClick(item: PurchaseLinkDTO)
 }
 
 class AskPostImageAdapter(private val clickListener: AskPostClickListener) :

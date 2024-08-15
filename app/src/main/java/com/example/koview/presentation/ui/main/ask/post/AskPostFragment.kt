@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.koview.R
+import com.example.koview.data.model.requeset.PurchaseLinkDTO
 import com.example.koview.databinding.FragmentAskPostBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.MainViewModel
-import com.example.koview.presentation.ui.main.ask.model.AskShopUiData
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskPostClickListener
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskPostImageAdapter
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskShopTagAdapter
@@ -23,7 +24,7 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
     private val viewModel: AskPostViewModel by viewModels()
 
     private var imageAdapter: AskPostImageAdapter? = null
-    private var shopAdapter: AskShopTagAdapter? = null
+    private var linkAdapter: AskShopTagAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,8 +39,14 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
 
     private fun initStateObserver() {
         repeatOnStarted {
-            viewModel.uiState.collect {
+            viewModel.imageUiState.collect {
                 imageAdapter?.submitList(it.imageList)
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.linkUiState.collect {
+                linkAdapter?.submitList(it.shopLinkList)
             }
         }
     }
@@ -47,7 +54,11 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
     private fun initEventObserver() {
         repeatOnStarted {
             viewModel.event.collect {
-                parentViewModel.goToSetProfileImage()
+                when(it){
+                    AskPostEvent.GoToGallery -> parentViewModel.goToSetProfileImage()
+                    is AskPostEvent.ShowToastMessage -> showToastMessage(it.msg)
+                    AskPostEvent.NavigateToBack -> findNavController().navigateUp()
+                }
             }
         }
     }
@@ -65,8 +76,8 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
         imageAdapter = AskPostImageAdapter(this)
         binding.rvImage.adapter = imageAdapter
 
-        shopAdapter = AskShopTagAdapter(this)
-        binding.rvShop.adapter = shopAdapter
+        linkAdapter = AskShopTagAdapter(this)
+        binding.rvShop.adapter = linkAdapter
     }
 
     // 사진 삭제
@@ -75,7 +86,7 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
     }
 
     // 상품 링크 삭제
-    override fun onShopTagClick(item: AskShopUiData) {
+    override fun onShopTagClick(item: PurchaseLinkDTO) {
         viewModel.deleteLink(item)
     }
 }

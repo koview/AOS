@@ -29,6 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
+                    android:onClick="@{()->vm.navigateToBack()}"
                     android:background="@drawable/ic_back"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -59,14 +60,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="20dp"
                     android:background="@color/transparent"
                     android:gravity="top"
                     android:hint="@string/ask_guide"
-                    android:inputType="textMultiLine"
-                    android:overScrollMode="always"
-                    android:paddingHorizontal="20dp"
                     android:scrollbars="vertical"
-                    android:text="@{vm.content}"
+                    android:text="@={vm.content}"
                     android:textColor="@color/kv_gray10"
                     android:textColorHint="@color/kv_gray5"
                     app:layout_constraintBottom_toTopOf="@id/guide"
@@ -74,35 +73,42 @@
 
 
                 <!--    이미지 추가    -->
-                <LinearLayout
-                    android:id="@+id/layout_image"
+                <HorizontalScrollView
+                    android:id="@+id/sv_gallery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:scrollbars="none"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/et_content">
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/btn_add_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_gallery"
-                        android:onClick="@{()->vm.goToGallery()}" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_image"
+                    <LinearLayout
+                        android:id="@+id/layout_image"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_post_image" />
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/btn_add_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_gallery"
+                            android:onClick="@{()->vm.goToGallery()}" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_post_image" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
 
                 <View
                     android:id="@+id/view_divider"
@@ -113,7 +119,7 @@
                     android:background="@color/kv_gray3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_image" />
+                    app:layout_constraintTop_toBottomOf="@+id/sv_gallery" />
 
                 <!--    링크 추가    -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -148,6 +154,7 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:paddingHorizontal="5dp"
+                        android:text="@={vm.link}"
                         android:textColor="@color/kv_gray9"
                         android:textColorHint="@color/kv_gray6"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -161,6 +168,7 @@
                         android:layout_width="40dp"
                         android:layout_height="20dp"
                         android:background="@drawable/rect_blackfill_nostroke_100radius"
+                        android:onClick="@{()->vm.addLink()}"
                         android:text="입력"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -175,12 +183,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="15dp"
+                    android:paddingBottom="60dp"
                     android:orientation="horizontal"
-                    android:visibility="gone"
                     app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_link"
-                    tools:listitem="@layout/item_link"
+                    tools:listitem="@layout/item_shop_link"
                     tools:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
