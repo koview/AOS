@@ -30,12 +30,6 @@ interface MainRepository {
         size: Int
     ): BaseState<GetMyReviewsResponse>
 
-    suspend fun getMyReviewDetail(
-        page: Int,
-        size: Int,
-        clickedReviewId: Long
-    ): BaseState<ReviewDetailResponse>
-
     suspend fun deleteMyReviews(
         params: DeleteMyReviewRequest
     ): BaseState<DeleteMyReviewsResponse>

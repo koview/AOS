@@ -41,14 +41,6 @@ interface MainApi {
         @Query("size") size: Int
     ): Response<GetMyReviewsResponse>
 
-    // 내 리뷰 상세 조회
-    @GET("mypage/myreviews/detail")
-    suspend fun getMyReviewDetail(
-        @Query("page") page: Int,
-        @Query("size") size: Int,
-        @Query("clickedReviewId") clickedReviewId: Long
-    ): Response<ReviewDetailResponse>
-
     // 내 리뷰 리스트 삭제
     @HTTP(method = "DELETE", path = "mypage/myreviews/delete", hasBody = true)
     suspend fun deleteMyReviews(

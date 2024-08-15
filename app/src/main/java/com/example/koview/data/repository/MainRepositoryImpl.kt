@@ -32,13 +32,6 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
     override suspend fun getMyReviews(page: Int, size: Int): BaseState<GetMyReviewsResponse> =
         runRemote { api.getMyReviews(page, size) }
 
-    override suspend fun getMyReviewDetail(
-        page: Int,
-        size: Int,
-        clickedReviewId: Long,
-    ): BaseState<ReviewDetailResponse> =
-        runRemote { api.getMyReviewDetail(page, size, clickedReviewId) }
-
     override suspend fun deleteMyReviews(params: DeleteMyReviewRequest): BaseState<DeleteMyReviewsResponse> =
         runRemote { api.deleteMyReviews(params) }
 
