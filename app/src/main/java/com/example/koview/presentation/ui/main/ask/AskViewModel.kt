@@ -42,7 +42,7 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
         getQueries()
     }
 
-    private fun getQueries() {
+    fun getQueries() {
         viewModelScope.launch {
             repository.getQueries().let {
                 when (it) {
