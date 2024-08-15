@@ -5,4 +5,6 @@ object Constants {
     const val TAG = "debugging"
     const val ACCESS_TOKEN = "ACCESS_TOKEN"
     const val REFRESH_TOKEN = "REFRESH_TOKEN"
+
+    const val STORAGE_PERMISSION_IMAGE = 1000
 }

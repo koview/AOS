@@ -84,6 +84,9 @@
         <action
             android:id="@+id/action_mypage_fragment_to_mypage_review_detail_fragment"
             app:destination="@id/mypage_review_detail_fragment" />
+        <action
+            android:id="@+id/action_mypage_fragment_to_createReviewFragment"
+            app:destination="@id/createReviewFragment" />
     </fragment>
 
     <fragment
@@ -189,6 +192,9 @@
         <action
             android:id="@+id/action_product_detail_fragment_to_user_review_detail_fragment"
             app:destination="@id/user_review_detail_fragment" />
+        <action
+            android:id="@+id/action_product_detail_fragment_to_createReviewFragment"
+            app:destination="@id/createReviewFragment" />
 
     </fragment>
 
@@ -288,5 +294,9 @@
             android:id="@+id/action_mypage_review_detail_fragment_to_coviewCommentBottomSheetFragment"
             app:destination="@id/coviewCommentBottomSheetFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/createReviewFragment"
+        android:name="com.example.koview.presentation.ui.main.global.createreview.CreateReviewFragment"
+        android:label="CreateReviewFragment" />
 
 </navigation>

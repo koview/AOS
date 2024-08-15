@@ -44,13 +44,12 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         observeRvViewModel()
-        viewModel.getMyReviews() // 초기 리뷰 가져오기
 
         // 스크롤 리스너 설정 (페이징)
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) { // 스크롤이 끝에 도달했을 때
+                if (!recyclerView.canScrollVertically(1) && viewModel.hasNext) { // 다음 페이지가 존재할 때만 호출
                     viewModel.getMyReviews() // 다음 페이지 리뷰 가져오기
                 }
             }
@@ -61,7 +60,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     }
 
-    private fun setMyReviewOnClick() {
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMyReviews(true) // 초기 리뷰 가져오기
+    }
+    private fun setMyReviewOnClick(){
         // 내 리뷰 클릭 리스너
         reviewsAdapter.setMyItemClickListener(object : MyItemClickListener {
             override fun onLongClick(reviewId: Long) {
@@ -83,7 +86,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     }
 
 
-    private fun observeViewModel() {
+    private fun observeViewModel(){
         // 닉네임 관찰
         lifecycleScope.launch {
             viewModel.nickname.collect { nickname ->
@@ -116,6 +119,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
             viewModel.event.collect {
                 when (it) {
                     is MypageEvent.NavigateToSetting -> findNavController().toSetting()
+                    is MypageEvent.NavigateToCreateReview -> findNavController().toCreateReview()
+                    else -> {}
                 }
             }
         }
@@ -123,6 +128,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     private fun NavController.toSetting() {
         val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
+        navigate(action)
+    }
+
+    private fun NavController.toCreateReview(){
+        val action = MyPageFragmentDirections.actionMypageFragmentToCreateReviewFragment()
         navigate(action)
     }
 

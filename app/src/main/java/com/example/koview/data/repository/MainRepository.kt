@@ -1,14 +1,17 @@
 package com.example.koview.data.repository
 
 import com.example.koview.data.model.BaseState
+import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.CoviewCommentRequest
 import com.example.koview.data.model.requeset.DeleteMyReviewRequest
+import com.example.koview.data.model.response.CreateReviewResponse
 import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.AddCoviewCommentResponse
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetCoviewCommentsResponse
 import com.example.koview.data.model.response.GetCoviewReviewsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
+import com.example.koview.data.model.response.GetMyReviewDetailResponse
 import com.example.koview.data.model.response.GetMyReviewsResponse
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductReviewResponse
@@ -17,9 +20,11 @@ import com.example.koview.data.model.response.QueryAnswerPostResponse
 import com.example.koview.data.model.response.QueryAnswerResponse
 import com.example.koview.data.model.response.QueryResponse
 import com.example.koview.data.model.response.ReviewDetailResponse
+import com.example.koview.data.model.response.ReviewImageResponse
 import com.example.koview.data.model.response.ReviewLikeResponse
 import com.example.koview.data.model.response.Status
 import com.example.koview.presentation.ui.main.home.model.Category
+import okhttp3.MultipartBody
 
 interface MainRepository {
 
@@ -33,6 +38,14 @@ interface MainRepository {
     suspend fun deleteMyReviews(
         params: DeleteMyReviewRequest
     ): BaseState<DeleteMyReviewsResponse>
+
+    suspend fun postReviewImage(
+        images: List<MultipartBody.Part>
+    ): BaseState<ReviewImageResponse>
+
+    suspend fun createReview(
+        params: CreateReviewRequest
+    ): BaseState<CreateReviewResponse>
 
     suspend fun getProducts(
         status: Status,
