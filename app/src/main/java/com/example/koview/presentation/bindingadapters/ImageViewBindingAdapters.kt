@@ -1,6 +1,5 @@
 package com.example.koview.presentation.bindingadapters
 
-import android.util.Log
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
@@ -8,14 +7,13 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.example.koview.R
 import com.example.koview.presentation.ui.main.home.model.Category
 
 @BindingAdapter("profileImgUrl")
 fun bindProfileImg(imageView: ImageView, url: String?) {
     Glide.with(imageView.context)
-        .load(url)
+        .load(url ?: R.drawable.img_profile_ex)
         .error(R.drawable.img_profile_ex)
         .into(imageView)
 }
@@ -24,15 +22,15 @@ fun bindProfileImg(imageView: ImageView, url: String?) {
 fun bindAskImg(imageView: ImageView, url: String?) {
     Glide.with(imageView.context)
         .load(url)
-        .error(R.drawable.img_product_ex)
+        .error(R.drawable.img_review_ex)
         .into(imageView)
 }
 
 @BindingAdapter("productImgUrl")
 fun bindProductImage(imageView: ImageView, url: String?) {
     Glide.with(imageView.context)
-        .load(url)
-        .error(R.drawable.img_product_ex_2)
+        .load(url ?: R.drawable.default_product_image)
+        .error(R.drawable.default_product_image)
         .into(imageView)
 }
 

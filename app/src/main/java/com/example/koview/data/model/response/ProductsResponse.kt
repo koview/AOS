@@ -47,6 +47,6 @@ enum class Status() {
 }
 
 enum class VerifiedType() {
-    UNVERIFIED, VERIFIED
+    UNVERIFIED, DISCONTINUED, VERIFIED
 }
 

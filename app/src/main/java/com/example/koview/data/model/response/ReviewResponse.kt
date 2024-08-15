@@ -22,7 +22,8 @@ data class ReviewDetailList(
     val imageList: List<ReviewDetailImage>,
     val purchaseLinkList: List<PurchaseLinkList>,
     val totalCommentCount: Long,
-    val totalLikesCount: Long,
+    val totalLikeCount: Long,
+    val isLiked: Boolean,
     val createdAt: String,
     val updatedAt: String
 )

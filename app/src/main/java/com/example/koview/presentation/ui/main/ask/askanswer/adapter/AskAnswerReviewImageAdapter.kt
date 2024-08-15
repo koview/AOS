@@ -8,9 +8,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.koview.data.model.response.ImageDTO
 import com.example.koview.databinding.ItemAskAnswerImageBinding
 
-class AskAnswerReviewImageAdapter(private val reviewImageList: List<String>) : RecyclerView.Adapter<AskAnswerReviewImageAdapter.AskAnswerReviewImageViewHolder>() {
+class AskAnswerReviewImageAdapter(private val reviewImageList: List<ImageDTO>) : RecyclerView.Adapter<AskAnswerReviewImageAdapter.AskAnswerReviewImageViewHolder>() {
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -27,7 +28,7 @@ class AskAnswerReviewImageAdapter(private val reviewImageList: List<String>) : R
         holder: AskAnswerReviewImageAdapter.AskAnswerReviewImageViewHolder,
         position: Int
     ) {
-        holder.bind(reviewImageList[position])
+        holder.bind(reviewImageList[position].url)
     }
 
     override fun getItemCount(): Int = reviewImageList.size

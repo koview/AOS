@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="@{item.nickname}"
+            android:text="@{item.writer}"
             android:textColor="@color/kv_gray9"
             app:layout_constraintBottom_toBottomOf="@id/iv_profile"
             app:layout_constraintStart_toEndOf="@id/iv_profile"
@@ -50,12 +50,31 @@
             app:layout_constraintStart_toEndOf="@id/iv_profile"
             app:layout_constraintTop_toBottomOf="@id/iv_profile">
 
+            <!--    리뷰 이미지 있을 때    -->
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp_images"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <!--    리뷰 이미지 없을 때    -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_review"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="360dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_review_ex"
+                    app:layout_constraintDimensionRatio="350:360" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/tv_indicator"
@@ -107,7 +126,7 @@
         <TextView
             android:id="@+id/tv_like_count"
             style="@style/TextSmall"
-            textFromInt="@{item.likeCount}"
+            textFromLong="@{item.totalLikeCount}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -137,7 +156,7 @@
             <TextView
                 android:id="@+id/tv_comment_count"
                 style="@style/TextSmall"
-                textFromInt="@{item.commentCount}"
+                textFromLong="@{item.totalCommentCount}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -162,7 +181,7 @@
                 android:layout_marginTop="6dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{item.contents}"
+                android:text="@{item.content}"
                 android:textColor="@color/kv_gray9"
                 tools:text="리뷰 내용이 보이는 영역입니다.\n최대 두줄 까지 보이고 그 이상이면 내용이 잘려질 예정입니다. 잘려졌나?" />
 
@@ -172,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
-                tools:listitem="@layout/item_search_shop"
+                tools:listitem="@layout/item_product_shop_tag"
                 tools:visibility="visible" />
 
         </LinearLayout>
@@ -183,7 +202,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="@{item.date}"
+            android:text="@{item.createdAt}"
             android:textColor="@color/kv_gray5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_review"
@@ -202,12 +221,11 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_my_profile"
-                profileImgUrl="@{item.profileImage}"
+                profileImgUrl="@{item.myProfileImage}"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/img_profile_ex" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_comment"
