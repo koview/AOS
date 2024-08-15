@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -16,16 +15,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.koview.R
 import com.example.koview.databinding.ActivityMainBinding
 import com.example.koview.presentation.base.BaseActivity
-import com.example.koview.presentation.ui.main.mypage.MypageEvent
 import com.example.koview.presentation.utils.Constants.STORAGE_PERMISSION_IMAGE
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -46,6 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
         }
+
     private lateinit var neededPermissionList: MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +75,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
         }
     }
+
     private fun initEventObserve() {
         repeatOnStarted {
             viewModel.event.collect {
@@ -88,6 +86,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
         }
     }
+
     private val imageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -111,6 +110,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 }
             }
         }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -130,9 +130,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
         }
     }
+
+
     // 사진 권한 확인
     private fun onCheckImagePermissions() {
         neededPermissionList = mutableListOf()
+
         storagePermissionList.forEach { permission ->
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -140,6 +143,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 ) != PackageManager.PERMISSION_GRANTED
             ) neededPermissionList.add(permission)
         }
+
         if (neededPermissionList.isNotEmpty()) {
             ActivityCompat.requestPermissions(
                 this,
@@ -150,6 +154,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             openGalleryForImage()
         }
     }
+
     // 이미지 가져오기
     private fun openGalleryForImage() {
         val galleryIntent =

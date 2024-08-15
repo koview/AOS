@@ -17,6 +17,7 @@ sealed class MainEvent {
     data object GoToGetImage : MainEvent()
     data class ShowToastMessage(val msg: String) : MainEvent()
 }
+
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {
 
@@ -45,4 +46,5 @@ class MainViewModel @Inject constructor() : ViewModel() {
             // todo: 이미지 업로드 api 연결
         }
     }
+
 }

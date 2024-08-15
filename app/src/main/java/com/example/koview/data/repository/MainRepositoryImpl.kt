@@ -3,10 +3,13 @@ package com.example.koview.data.repository
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.CoviewCommentRequest
+import com.example.koview.data.model.requeset.CreateQueryRequest
 import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.response.CreateReviewResponse
 import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.AddCoviewCommentResponse
+import com.example.koview.data.model.response.AddQueryImageResponse
+import com.example.koview.data.model.response.CreateQueryResponse
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetCoviewCommentsResponse
 import com.example.koview.data.model.response.GetCoviewReviewsResponse
@@ -39,7 +42,6 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
 
     override suspend fun deleteMyReviews(params: DeleteMyReviewRequest): BaseState<DeleteMyReviewsResponse> =
         runRemote { api.deleteMyReviews(params) }
-
 
     override suspend fun postReviewImage(images: List<MultipartBody.Part>): BaseState<ReviewImageResponse> =
         runRemote { api.postReviewImages(images)}
@@ -131,4 +133,10 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
     override suspend fun deleteWithQuery(queryId: Long): BaseState<WithQueryResponse> = runRemote {
         api.deleteWithQuery(queryId)
     }
+
+    override suspend fun postQuery(params: CreateQueryRequest): BaseState<CreateQueryResponse> =
+        runRemote { api.postQuery(params) }
+
+    override suspend fun postQueryImages(images: List<MultipartBody.Part>): BaseState<AddQueryImageResponse> =
+        runRemote { api.postQueryImages(images) }
 }

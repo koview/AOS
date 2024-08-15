@@ -21,6 +21,7 @@ import javax.inject.Inject
 
 sealed class AskEvent {
     data class NavigateToAskDetail(val askDetail: QueryResultList) : AskEvent()
+    data object NavigateToPost : AskEvent()
 }
 
 @HiltViewModel
@@ -137,4 +138,9 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
     }
 
 
+    fun navigateToPost() {
+        viewModelScope.launch {
+            _event.emit(AskEvent.NavigateToPost)
+        }
+    }
 }

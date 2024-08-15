@@ -2,10 +2,13 @@ package com.example.koview.data.remote
 
 import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.CoviewCommentRequest
+import com.example.koview.data.model.requeset.CreateQueryRequest
 import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.response.CreateReviewResponse
 import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.AddCoviewCommentResponse
+import com.example.koview.data.model.response.AddQueryImageResponse
+import com.example.koview.data.model.response.CreateQueryResponse
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetCoviewCommentsResponse
 import com.example.koview.data.model.response.GetCoviewReviewsResponse
@@ -153,6 +156,18 @@ interface MainApi {
         @Path("queryId") queryId: Long,
         @Body params: QueryAnswerRequest
     ): Response<QueryAnswerPostResponse>
+
+    // 질문 작성
+    @POST("query/create")
+    suspend fun postQuery(
+        @Body params: CreateQueryRequest
+    ): Response<CreateQueryResponse>
+
+    @Multipart
+    @POST("image/queries")
+    suspend fun postQueryImages(
+        @Part images: List<MultipartBody.Part>
+    ): Response<AddQueryImageResponse>
 
     @POST("withquery/create")
     suspend fun postWithQuery(

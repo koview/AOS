@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Koview</string>
+
+    <string name="ask_guide">좋은 질문 작성하기. \n\n1. 제품 이미지, 제품명, 금액이 잘 보이게 사진 올리기 \n2. 구매하려는 쇼핑몰 링크 올리기</string>
 </resources>

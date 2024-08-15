@@ -1,17 +1,19 @@
 package com.example.koview.data.repository
 
 import com.example.koview.data.model.BaseState
-import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.CoviewCommentRequest
+import com.example.koview.data.model.requeset.CreateQueryRequest
+import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.DeleteMyReviewRequest
-import com.example.koview.data.model.response.CreateReviewResponse
 import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.AddCoviewCommentResponse
+import com.example.koview.data.model.response.AddQueryImageResponse
+import com.example.koview.data.model.response.CreateQueryResponse
+import com.example.koview.data.model.response.CreateReviewResponse
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetCoviewCommentsResponse
 import com.example.koview.data.model.response.GetCoviewReviewsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
-import com.example.koview.data.model.response.GetMyReviewDetailResponse
 import com.example.koview.data.model.response.GetMyReviewsResponse
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductReviewResponse
@@ -115,6 +117,14 @@ interface MainRepository {
         queryId: Long,
         params: QueryAnswerRequest
     ): BaseState<QueryAnswerPostResponse>
+
+    suspend fun postQuery(
+        params: CreateQueryRequest
+    ): BaseState<CreateQueryResponse>
+
+    suspend fun postQueryImages(
+        images: List<MultipartBody.Part>
+    ): BaseState<AddQueryImageResponse>
 
     suspend fun postWithQuery(
         queryId: Long
