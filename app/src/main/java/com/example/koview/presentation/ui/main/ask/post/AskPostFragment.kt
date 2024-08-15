@@ -14,6 +14,7 @@ import com.example.koview.presentation.ui.main.MainViewModel
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskPostClickListener
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskPostImageAdapter
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskShopTagAdapter
+import com.example.koview.presentation.ui.main.global.createreview.adapter.GalleryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +41,7 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
     private fun initStateObserver() {
         repeatOnStarted {
             viewModel.imageUiState.collect {
-                imageAdapter?.submitList(it.imageList)
+                imageAdapter?.updateImages(it.imageList)
             }
         }
 
@@ -85,7 +86,7 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
     }
 
     private fun initAdapter() {
-        imageAdapter = AskPostImageAdapter(this)
+        imageAdapter = AskPostImageAdapter(this, emptyList())
         binding.rvImage.adapter = imageAdapter
 
         linkAdapter = AskShopTagAdapter(this)
