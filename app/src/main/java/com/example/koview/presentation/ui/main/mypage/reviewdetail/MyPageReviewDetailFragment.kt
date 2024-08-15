@@ -1,33 +1,39 @@
-package com.example.koview.presentation.ui.main.coview
+package com.example.koview.presentation.ui.main.mypage.reviewdetail
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.koview.R
-import com.example.koview.databinding.FragmentCoviewBinding
+import com.example.koview.databinding.FragmentMypageReviewDetailBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.coview.adapter.CoviewClickListener
 import com.example.koview.presentation.ui.main.coview.adapter.CoviewReviewAdapter
 import com.example.koview.presentation.ui.main.coview.model.CoviewUiData
 import com.example.koview.presentation.ui.main.global.model.ReviewType
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.koview.presentation.ui.main.global.reviewdetail.UserReviewDetailEvent
+import com.example.koview.presentation.ui.main.global.reviewdetail.UserReviewDetailViewModel
 
-@AndroidEntryPoint
-class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_coview),
+class MyPageReviewDetailFragment :
+    BaseFragment<FragmentMypageReviewDetailBinding>(R.layout.fragment_mypage_review_detail),
     CoviewClickListener {
 
-    private val viewModel: CoviewViewModel by activityViewModels()
-    private var adapter: CoviewReviewAdapter? = null
+    private val parentViewModel: UserReviewDetailViewModel by activityViewModels()
+    val viewModel: MyPageReviewDetailViewModel by activityViewModels()
 
-    private var bottomScrollState = true
+    private val args: MyPageReviewDetailFragmentArgs by navArgs()
+    private val reviewId by lazy { args.reviewId }
+
+
+    private var adapter: CoviewReviewAdapter? = null
 
     // 사용자가 링크를 통해 나갔다가 돌아왔는지 여부
     private var isReturningFromExternal = false
+    private var bottomScrollState = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,8 +41,8 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
         binding.vm = viewModel
 
         initEventObserver()
-        initStateObserver()
         initAdapter()
+        initStateObserver()
         addOnScrollListener()
     }
 
@@ -44,33 +50,37 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
         super.onResume()
 
         if (!isReturningFromExternal) {
-            viewModel.getUserInfo()
+            parentViewModel.getUserInfo(reviewId)
         }
         isReturningFromExternal = false
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        viewModel.resetKeyword()
-    }
-
     private fun initEventObserver() {
+        repeatOnStarted {
+            parentViewModel.event.collect {
+                when (it) {
+                    UserReviewDetailEvent.DismissLoading -> dismissLoading()
+                    UserReviewDetailEvent.ShowLoading -> showLoading(requireContext())
+                    is UserReviewDetailEvent.ShowToastMessage -> showToastMessage(it.msg)
+                    else -> {}
+                }
+            }
+        }
+
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is CoviewEvent.ShowToastMessage -> showToastMessage(it.msg)
-                    CoviewEvent.ShowLoading -> showLoading(requireContext())
-                    CoviewEvent.DismissLoading -> dismissLoading()
+                    MyPageDetailEvent.NavigateToBack -> findNavController().toBack()
                 }
             }
         }
     }
 
+
     // 리뷰 데이터 설정
     private fun initStateObserver() {
         repeatOnStarted {
-            viewModel.uiState.collect {
+            parentViewModel.uiState.collect {
                 adapter?.submitList(it.reviewList)
             }
         }
@@ -78,27 +88,18 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
 
     private fun initAdapter() {
         adapter = CoviewReviewAdapter(this)
-        binding.rvCoviewList.adapter = adapter
+        binding.rvReviewList.adapter = adapter
     }
 
     // 무한 스크롤
     private fun addOnScrollListener() {
         binding.layoutScroll.setOnScrollChangeListener { v, _, scrollY, _, _ ->
-
             if (scrollY > binding.layoutScroll.getChildAt(0).measuredHeight - v.measuredHeight) {
                 // 화면 하단에 도달
                 if (bottomScrollState) {
                     bottomScrollState = false
 
-                    // 검색 모드에 따라 다른 함수 호출
-                    if (viewModel.isSearchMode.value) {
-                        viewModel.searchReviews()
-                        checkMode()
-                        Log.d("코뷰", "리뷰 검색")
-                    } else {
-                        viewModel.getReviews()
-                        Log.d("코뷰", "리뷰 전체")
-                    }
+                    parentViewModel.getReviews(reviewId)
                 }
             } else {
                 bottomScrollState = true
@@ -106,13 +107,9 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
         }
     }
 
-    private fun checkMode() {
-        viewModel.checkSearchMode()
-    }
-
     // 리뷰 아이템 좋아요 클릭 시 호출
     override fun onLikeClick(item: CoviewUiData) {
-        viewModel.onLikeClick(item)
+        parentViewModel.onLikeClick(item)
     }
 
     // 상품 링크 클릭 시 호출
@@ -123,7 +120,7 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
 
     // 댓글 아이콘 클릭 시 호출
     override fun onCommentClick(reviewId: Long, isFullView: Boolean) {
-        findNavController().toComment(reviewId, viewModel.profileImgUrl ?: "", isFullView)
+        findNavController().toComment(reviewId, parentViewModel.profileImgUrl ?: "", isFullView)
     }
 
     private fun clickTag(url: String) {
@@ -132,14 +129,17 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
     }
 
     private fun NavController.toComment(reviewId: Long, profileUrl: String, isFullView: Boolean) {
-        Log.d("코뷰", "리뷰 아이디: $reviewId")
         val action =
-            CoviewFragmentDirections.actionCoviewFragmentToCoviewCommentBottomSheetFragment(
+            MyPageReviewDetailFragmentDirections.actionMypageReviewDetailFragmentToCoviewCommentBottomSheetFragment(
                 reviewId,
                 profileUrl,
                 isFullView,
-                ReviewType.COVIEW.toString()
+                ReviewType.MYPAGE.toString()
             )
         navigate(action)
+    }
+
+    private fun NavController.toBack() {
+        findNavController().navigateUp()
     }
 }

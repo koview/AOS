@@ -1,6 +1,7 @@
-package com.example.koview.presentation.ui.main.coview
+package com.example.koview.presentation.ui.main.global.reviewdetail
 
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
@@ -18,36 +19,42 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class CoviewUiState(
+data class UserReviewDetailUiState(
     val page: Int = 1,
     val hasNext: Boolean = true,
     val reviewList: List<CoviewUiData> = emptyList(),
 )
 
-sealed class CoviewEvent {
-    data class ShowToastMessage(val msg: String) : CoviewEvent()
-    data object ShowLoading : CoviewEvent()
-    data object DismissLoading : CoviewEvent()
+sealed class UserReviewDetailEvent {
+    data class ShowToastMessage(val msg: String) : UserReviewDetailEvent()
+    data object ShowLoading : UserReviewDetailEvent()
+    data object DismissLoading : UserReviewDetailEvent()
+    data object NavigateToBack : UserReviewDetailEvent()
 }
 
 @HiltViewModel
-class CoviewViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
+class UserReviewDetailViewModel @Inject constructor(
+    private val repository: MainRepository,
+) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(CoviewUiState())
-    val uiState: StateFlow<CoviewUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(UserReviewDetailUiState())
+    val uiState: StateFlow<UserReviewDetailUiState> = _uiState.asStateFlow()
 
-    private val _event = MutableSharedFlow<CoviewEvent>()
-    val event: SharedFlow<CoviewEvent> = _event.asSharedFlow()
+    private val _event = MutableSharedFlow<UserReviewDetailEvent>()
+    val event: SharedFlow<UserReviewDetailEvent> = _event.asSharedFlow()
+
+    private val _nickname = MutableLiveData<String>()
+    val nickname: LiveData<String> = _nickname
 
     var profileImgUrl: String? = ""
-    val keyword = MutableStateFlow("")
 
-    private val _isSearchMode = MutableStateFlow(false)
-    val isSearchMode: StateFlow<Boolean> = _isSearchMode.asStateFlow()
-
+    // 상단 이름 설정
+    fun setNickname(name: String) {
+        _nickname.value = "${name}의 리뷰"
+    }
 
     // 댓글 입력 창에 보여줄 프로필 사진
-    fun getUserInfo() {
+    fun getUserInfo(reviewId: Long) {
         viewModelScope.launch {
             repository.getMyDetail().let {
                 when (it) {
@@ -69,16 +76,16 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
             )
         }
 
-        getReviews()
+        getReviews(reviewId)
     }
 
-    fun getReviews() {
+    fun getReviews(reviewId: Long) {
         viewModelScope.launch {
             if (uiState.value.hasNext) {
                 // 로딩 띄우기
-                _event.emit(CoviewEvent.ShowLoading)
+                _event.emit(UserReviewDetailEvent.ShowLoading)
 
-                repository.getCoviewReviews(uiState.value.page, 15).let {
+                repository.getReviewDetails(uiState.value.page, 15, reviewId).let {
                     when (it) {
                         is BaseState.Success -> {
                             val reviews = it.body.result.reviewList.map { data ->
@@ -96,72 +103,13 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                         }
 
                         is BaseState.Error -> {
-                            _event.emit(CoviewEvent.ShowToastMessage(it.msg))
+                            _event.emit(UserReviewDetailEvent.ShowToastMessage(it.msg))
                         }
                     }
-                    _event.emit(CoviewEvent.DismissLoading)
+                    _event.emit(UserReviewDetailEvent.DismissLoading)
                 }
             }
         }
-    }
-
-    // 코뷰 리뷰 검색 세팅
-    fun initSearchReviews() {
-        viewModelScope.launch {
-            // 초기화
-            _uiState.update { state ->
-                state.copy(
-                    page = 1,
-                    hasNext = true,
-                    reviewList = emptyList()
-                )
-            }
-            _isSearchMode.value = true
-
-            searchReviews()
-        }
-    }
-
-    // 코뷰 리뷰 검색
-    fun searchReviews() {
-        viewModelScope.launch {
-            if (isSearchMode.value && uiState.value.hasNext) {
-                repository.searchCoviewReviews(keyword.value, uiState.value.page, 15).let {
-                    when (it) {
-                        is BaseState.Success -> {
-                            val reviews = it.body.result.reviewList.map { data ->
-                                data.toCoviewUiData(
-                                    myProfileImgUrl = profileImgUrl
-                                )
-                            }
-                            _uiState.update { state ->
-                                state.copy(
-                                    page = state.page + 1,
-                                    hasNext = it.body.result.hasNext,
-                                    reviewList = state.reviewList + reviews // 기존 리스트에 새로운 리뷰 추가
-                                )
-                            }
-                        }
-
-                        is BaseState.Error -> {
-                            _event.emit(CoviewEvent.ShowToastMessage(it.msg))
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // 다음 페이지가 없으면 리뷰 전체 호출 모드로 변경
-    fun checkSearchMode() {
-        if (!uiState.value.hasNext) {
-            _isSearchMode.value = false
-        }
-        //Log.d("코뷰", "[상태 확인] 리뷰 검색 hasNext ${uiState.value.hasNext} -> 검색 모드 ${isSearchMode.value}")
-    }
-
-    fun resetKeyword() {
-        keyword.value = ""
     }
 
     fun onLikeClick(item: CoviewUiData) {
@@ -198,7 +146,7 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                 }
 
                 is BaseState.Error -> {
-                    _event.emit(CoviewEvent.ShowToastMessage(result.msg))
+                    _event.emit(UserReviewDetailEvent.ShowToastMessage(result.msg))
                 }
             }
         }
@@ -220,6 +168,12 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
                 // 업데이트된 리스트로 상태를 갱신
                 state.copy(reviewList = updatedReviewList)
             }
+        }
+    }
+
+    fun navigateToBack() {
+        viewModelScope.launch {
+            _event.emit(UserReviewDetailEvent.NavigateToBack)
         }
     }
 }

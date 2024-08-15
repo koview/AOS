@@ -61,6 +61,10 @@ class ProductReviewAdapter(listener: ProductDetailInterface) :
             binding.rvImage.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.rvImage.adapter = ProductReviewImageAdapter(review.imageList)
+
+            binding.tvContent.setOnClickListener {
+                mCallBack.onContentClick(review.reviewId, review.writer)
+            }
         }
 
     }
