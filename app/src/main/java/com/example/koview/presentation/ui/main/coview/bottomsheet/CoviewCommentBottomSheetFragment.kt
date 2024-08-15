@@ -44,10 +44,12 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
     private val reviewId by lazy { args.reviewId }
     private val profileImgUrl by lazy { args.profileImg }
     private val isFullView by lazy { args.isFullView }
+
     // isFrom을 ReviewType으로 변환
     private val isFrom by lazy { ReviewType.valueOf(args.isFrom) }
 
     private lateinit var behavior: BottomSheetBehavior<View>
+
     private val viewModel: CoviewCommentBottomSheetViewModel by viewModels()
     private val coviewViewModel: CoviewViewModel by activityViewModels()
     private val reviewDetailViewModel: UserReviewDetailViewModel by activityViewModels()
@@ -207,12 +209,10 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
 
     // 댓글 개수 증가
     private fun addCommentCount(reviewId: Long) {
-        when(this.isFrom) {
+        when (this.isFrom) {
             ReviewType.COVIEW -> coviewViewModel.addCommentCount(reviewId)
             ReviewType.REVIEW_DETAIL -> reviewDetailViewModel.addCommentCount(reviewId)
-            ReviewType.MYPAGE -> {
-                // todo: mypage와 연결
-            }
+            ReviewType.MYPAGE -> reviewDetailViewModel.addCommentCount(reviewId)
         }
     }
 
