@@ -2,10 +2,12 @@ package com.example.koview.data.repository
 
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.CoviewCommentRequest
+import com.example.koview.data.model.requeset.CreateQueryRequest
 import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.AddCoviewCommentResponse
+import com.example.koview.data.model.response.CreateQueryResponse
 import com.example.koview.data.model.response.CreateReviewResponse
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetCoviewCommentsResponse
@@ -113,4 +115,8 @@ interface MainRepository {
         queryId: Long,
         params: QueryAnswerRequest
     ): BaseState<QueryAnswerPostResponse>
+
+    suspend fun postQuery(
+        params: CreateQueryRequest
+    ): BaseState<CreateQueryResponse>
 }
