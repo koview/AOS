@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +34,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:scaleType="centerCrop"
+                    productImgUrl="@{item}"
                     tools:src="@drawable/default_product_image" />
 
             </androidx.cardview.widget.CardView>

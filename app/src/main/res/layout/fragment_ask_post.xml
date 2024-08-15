@@ -90,8 +90,8 @@
                         android:id="@+id/btn_add_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="@{()->vm.goToGallery()}"
-                        android:background="@drawable/ic_gallery" />
+                        android:background="@drawable/ic_gallery"
+                        android:onClick="@{()->vm.goToGallery()}" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_image"
@@ -99,10 +99,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
                         android:orientation="horizontal"
-                        android:visibility="invisible"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_post_image"
-                        tools:visibility="visible" />
+                        tools:listitem="@layout/item_post_image" />
 
                 </LinearLayout>
 
