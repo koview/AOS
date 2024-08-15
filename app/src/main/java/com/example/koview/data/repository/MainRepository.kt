@@ -23,6 +23,7 @@ import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.ReviewImageResponse
 import com.example.koview.data.model.response.ReviewLikeResponse
 import com.example.koview.data.model.response.Status
+import com.example.koview.data.model.response.WithQueryResponse
 import com.example.koview.presentation.ui.main.home.model.Category
 import okhttp3.MultipartBody
 
@@ -114,4 +115,12 @@ interface MainRepository {
         queryId: Long,
         params: QueryAnswerRequest
     ): BaseState<QueryAnswerPostResponse>
+
+    suspend fun postWithQuery(
+        queryId: Long
+    ): BaseState<WithQueryResponse>
+
+    suspend fun deleteWithQuery(
+        queryId: Long
+    ): BaseState<WithQueryResponse>
 }

@@ -22,6 +22,7 @@ import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.ReviewImageResponse
 import com.example.koview.data.model.response.ReviewLikeResponse
 import com.example.koview.data.model.response.Status
+import com.example.koview.data.model.response.WithQueryResponse
 import com.example.koview.data.model.runRemote
 import com.example.koview.data.remote.MainApi
 import com.example.koview.presentation.ui.main.home.model.Category
@@ -66,7 +67,8 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
         keyword: String,
         page: Int,
         size: Int,
-    ): BaseState<GetCoviewReviewsResponse> = runRemote { api.searchCoviewReviews(keyword, page, size) }
+    ): BaseState<GetCoviewReviewsResponse> =
+        runRemote { api.searchCoviewReviews(keyword, page, size) }
 
     override suspend fun getCoviewComments(
         reviewId: Long,
@@ -100,7 +102,7 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
         page: Int,
         size: Int
     ): BaseState<ProductReviewResponse> = runRemote {
-        api.getProductReview(productId,page, size)
+        api.getProductReview(productId, page, size)
     }
 
     override suspend fun getQueries(page: Int, size: Int): BaseState<QueryResponse> = runRemote {
@@ -120,5 +122,13 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
         params: QueryAnswerRequest
     ): BaseState<QueryAnswerPostResponse> = runRemote {
         api.postQueryAnswer(queryId, params)
+    }
+
+    override suspend fun postWithQuery(queryId: Long): BaseState<WithQueryResponse> = runRemote {
+        api.postWithQuery(queryId)
+    }
+
+    override suspend fun deleteWithQuery(queryId: Long): BaseState<WithQueryResponse> = runRemote {
+        api.deleteWithQuery(queryId)
     }
 }

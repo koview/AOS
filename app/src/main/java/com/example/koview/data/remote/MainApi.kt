@@ -23,6 +23,7 @@ import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.ReviewImageResponse
 import com.example.koview.data.model.response.ReviewLikeResponse
 import com.example.koview.data.model.response.Status
+import com.example.koview.data.model.response.WithQueryResponse
 import com.example.koview.presentation.ui.main.home.model.Category
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -152,4 +153,14 @@ interface MainApi {
         @Path("queryId") queryId: Long,
         @Body params: QueryAnswerRequest
     ): Response<QueryAnswerPostResponse>
+
+    @POST("withquery/create")
+    suspend fun postWithQuery(
+        @Query("queryId") queryId: Long
+    ): Response<WithQueryResponse>
+
+    @DELETE("withquery/delete")
+    suspend fun deleteWithQuery(
+        @Query("queryId") queryId: Long
+    ): Response<WithQueryResponse>
 }
