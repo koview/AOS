@@ -86,7 +86,7 @@
             app:destination="@id/mypage_review_detail_fragment" />
         <action
             android:id="@+id/action_mypage_fragment_to_createReviewFragment"
-            app:destination="@id/createReviewFragment" />
+            app:destination="@id/review_create_fragment" />
     </fragment>
 
     <fragment
@@ -194,7 +194,7 @@
             app:destination="@id/user_review_detail_fragment" />
         <action
             android:id="@+id/action_product_detail_fragment_to_createReviewFragment"
-            app:destination="@id/createReviewFragment" />
+            app:destination="@id/review_create_fragment" />
 
     </fragment>
 
@@ -295,8 +295,9 @@
             app:destination="@id/coviewCommentBottomSheetFragment" />
     </fragment>
     <fragment
-        android:id="@+id/createReviewFragment"
+        android:id="@+id/review_create_fragment"
         android:name="com.example.koview.presentation.ui.main.global.createreview.CreateReviewFragment"
-        android:label="CreateReviewFragment" />
+        android:label="ReviewCreateFragment">
+    </fragment>
 
 </navigation>

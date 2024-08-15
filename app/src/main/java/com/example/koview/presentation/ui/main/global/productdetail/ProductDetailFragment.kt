@@ -96,6 +96,7 @@ class ProductDetailFragment :
             viewModel.event.collect {
                 when (it) {
                     ProductDetailEvent.NavigateToSearch -> findNavController().toSearch()
+                    ProductDetailEvent.NavigateToReviewCreate -> findNavController().toReviewCreate()
                 }
             }
         }
@@ -132,6 +133,11 @@ class ProductDetailFragment :
 
     private fun NavController.toReviewDetail(reviewId: Long, nickname: String) {
         val action = ProductDetailFragmentDirections.actionProductDetailFragmentToUserReviewDetailFragment(reviewId, nickname)
+        navigate(action)
+    }
+
+    private fun NavController.toReviewCreate() {
+        val action = ProductDetailFragmentDirections.actionProductDetailFragmentToCreateReviewFragment()
         navigate(action)
     }
 
