@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.repository.MainRepository
 import com.example.koview.presentation.ui.main.coview.model.CoviewUiData
+import com.example.koview.presentation.ui.main.global.toCoviewUiData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
