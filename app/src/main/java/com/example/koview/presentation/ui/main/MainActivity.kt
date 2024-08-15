@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -89,9 +90,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private val imageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val uri = result.data?.data
-                uri?.let {
-                    viewModel.setImageUri(it)
+                val clipData = result.data?.clipData // 여러 장의 이미지
+                val uriList = mutableListOf<Uri>()
+
+                // 다중 선택된 경우
+                if (clipData != null) {
+                    for (i in 0 until clipData.itemCount) {
+                        uriList.add(clipData.getItemAt(i).uri)
+                    }
+                } else {
+                    // 단일 선택된 경우
+                    result.data?.data?.let { uri ->
+                        uriList.add(uri)
+                    }
+                }
+
+                if (uriList.isNotEmpty()) {
+                    viewModel.setImageUri(uriList)
                 }
             }
         }

@@ -23,8 +23,8 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _event = MutableSharedFlow<MainEvent>()
     val event: SharedFlow<MainEvent> = _event.asSharedFlow()
 
-    private val _imageUri = MutableSharedFlow<Uri>()
-    val imageUri: SharedFlow<Uri> = _imageUri.asSharedFlow()
+    private val _imageList = MutableSharedFlow<List<Uri>>()
+    val imageList: SharedFlow<List<Uri>> = _imageList.asSharedFlow()
 
     // 이미지 권한 확인 및 갤러리 열기
     fun goToSetProfileImage() {
@@ -33,9 +33,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun setImageUri(uri: Uri) {
+    fun setImageUri(uris: List<Uri>) {
         viewModelScope.launch {
-            _imageUri.emit(uri)
+            _imageList.emit(uris)
         }
     }
 
