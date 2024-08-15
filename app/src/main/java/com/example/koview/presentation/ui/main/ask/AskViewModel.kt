@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -66,24 +67,6 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
         }
     }
 
-//    fun onAskClick(item: AskData) {
-//        viewModelScope.launch {
-//
-//            val updatedItem = item.copy(
-//                isAsk = !item.isAsk,
-//                askCount = item.askCount + if (item.isAsk) -1 else 1
-//            )
-//
-//            _askDetail.value = updatedItem
-//
-//            _askList.update { list ->
-//                list.map {
-//                    if (it == item) updatedItem else it
-//                }
-//            }
-//        }
-//    }
-//
 //    fun onLikeClick(review: Review) {
 //        viewModelScope.launch {
 //            // Review의 isLiked 값을 업데이트
@@ -114,6 +97,46 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
 //            )
 //        }
 //    }
+
+    fun postWithQuery(item: QueryResultList) {
+        viewModelScope.launch {
+            val result = if (item.isWithQuery) {
+                repository.deleteWithQuery(item.queryId)
+            } else {
+                repository.postWithQuery(item.queryId)
+            }
+
+            when (result) {
+                is BaseState.Success -> {
+                    val updatedItem = item.copy(
+                        isWithQuery = !item.isWithQuery,
+                        totalWithQueryCount = if (item.isWithQuery) {
+                            item.totalWithQueryCount - 1
+                        } else {
+                            item.totalWithQueryCount + 1
+                        }
+                    )
+
+                    _getQueries.update { currentList ->
+                        currentList.map {
+                            if (it.queryId == updatedItem.queryId) {
+                                updatedItem
+                            } else {
+                                it
+                            }
+                        }
+                    }
+
+                    _askDetail.value = updatedItem
+                }
+
+                is BaseState.Error -> {
+                    Log.d("AskDetailFragment", "ERROR(Request Success)")
+                }
+            }
+        }
+    }
+
 
     fun navigateToPost() {
         viewModelScope.launch {
