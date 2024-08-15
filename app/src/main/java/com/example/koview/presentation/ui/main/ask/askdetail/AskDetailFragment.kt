@@ -41,6 +41,21 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         initAnswerListObserver()
         clickAsk()
     }
+//
+//    override fun onResume() {
+//        super.onResume()
+//
+//        binding.vm = viewModel
+//
+//        // 데이터 관찰
+//        parentViewModel.askDetail.observe(viewLifecycleOwner) { askDetail ->
+//            binding.model = askDetail
+//        }
+//
+//        initRecyclerview()
+//        initAnswerListObserver()
+//        clickAsk()
+//    }
 
     private fun initRecyclerview() {
         // 쇼핑몰 태그 리사이클러뷰 연결

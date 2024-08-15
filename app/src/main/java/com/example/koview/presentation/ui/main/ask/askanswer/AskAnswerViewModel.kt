@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +31,10 @@ class AskAnswerViewModel @Inject constructor(private val repository: MainReposit
     private val _reviewList = MutableStateFlow<List<ReviewList>>(emptyList())
     val reviewList: StateFlow<List<ReviewList>> = _reviewList
 
+
+    private val _response = MutableStateFlow<Boolean>(false)
+    val response: StateFlow<Boolean> = _response.asStateFlow()
+
     init {
         getMyReviews()
     }
@@ -44,7 +49,9 @@ class AskAnswerViewModel @Inject constructor(private val repository: MainReposit
                     }
 
                     is BaseState.Success -> {
-                        Log.d("AskAnswerFragment", queryId.toString() + params.toString())
+                        Log.d("AskAnswerFragment", it.body.code)
+                        _response.value = it.body.isSuccess
+                        _event.emit(AskAnswerEvent.NavigateToAskDetail)
                     }
                 }
             }
