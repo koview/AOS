@@ -284,6 +284,7 @@
             android:background="@drawable/rect_blackfill_nostroke_12radius"
             android:text="리뷰 작성"
             android:textColor="@color/white"
+            android:onClick="@{()->vm.navigateToReviewCreate()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

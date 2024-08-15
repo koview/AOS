@@ -30,6 +30,12 @@ class AskFragment : BaseFragment<FragmentAskBinding>(R.layout.fragment_ask), Ask
         initEventObserve()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getQueries()
+    }
+
     private fun initAskRecyclerview() {
         binding.rvAsk.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

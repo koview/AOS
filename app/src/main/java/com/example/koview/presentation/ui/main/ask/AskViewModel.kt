@@ -43,7 +43,7 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
         getQueries()
     }
 
-    private fun getQueries() {
+    fun getQueries() {
         viewModelScope.launch {
             repository.getQueries().let {
                 when (it) {
@@ -134,6 +134,26 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
                     Log.d("AskDetailFragment", "ERROR(Request Success)")
                 }
             }
+        }
+    }
+
+    fun updateAnswer(item: QueryResultList) {
+        viewModelScope.launch {
+            val updatedItem = item.copy(
+                totalAnswerCount = item.totalAnswerCount + 1
+            )
+
+            _getQueries.update { currentList ->
+                currentList.map {
+                    if (it.queryId == updatedItem.queryId) {
+                        updatedItem
+                    } else {
+                        it
+                    }
+                }
+            }
+
+            _askDetail.value = updatedItem
         }
     }
 

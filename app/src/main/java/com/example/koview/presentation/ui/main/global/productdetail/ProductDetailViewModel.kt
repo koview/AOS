@@ -19,6 +19,7 @@ import javax.inject.Inject
 
 sealed class ProductDetailEvent {
     data object NavigateToSearch : ProductDetailEvent()
+    data object NavigateToReviewCreate: ProductDetailEvent()
 }
 
 @HiltViewModel
@@ -34,6 +35,12 @@ class ProductDetailViewModel @Inject constructor(private val repository: MainRep
     fun navigateToSearch() {
         viewModelScope.launch {
             _event.emit(ProductDetailEvent.NavigateToSearch)
+        }
+    }
+
+    fun navigateToReviewCreate() {
+        viewModelScope.launch {
+            _event.emit(ProductDetailEvent.NavigateToReviewCreate)
         }
     }
 
