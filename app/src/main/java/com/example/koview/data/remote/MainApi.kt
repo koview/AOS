@@ -111,6 +111,7 @@ interface MainApi {
         @Query("reviewId") reviewId: Long
     ): Response<ReviewLikeResponse>
 
+    // 리뷰 상세 조회
     @GET("reviews/detail")
     suspend fun getReviewDetails(
         @Query("page") page: Int,

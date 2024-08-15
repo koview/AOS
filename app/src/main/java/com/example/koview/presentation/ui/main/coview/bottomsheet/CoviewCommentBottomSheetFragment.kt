@@ -22,6 +22,8 @@ import com.example.koview.databinding.FragmentCoviewCommentBottomSheetBinding
 import com.example.koview.presentation.customview.LoadingDialog
 import com.example.koview.presentation.ui.main.coview.CoviewViewModel
 import com.example.koview.presentation.ui.main.coview.adapter.CoviewCommentAdapter
+import com.example.koview.presentation.ui.main.global.model.ReviewType
+import com.example.koview.presentation.ui.main.global.reviewdetail.UserReviewDetailViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -42,10 +44,13 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
     private val reviewId by lazy { args.reviewId }
     private val profileImgUrl by lazy { args.profileImg }
     private val isFullView by lazy { args.isFullView }
+    // isFrom을 ReviewType으로 변환
+    private val isFrom by lazy { ReviewType.valueOf(args.isFrom) }
 
     private lateinit var behavior: BottomSheetBehavior<View>
     private val viewModel: CoviewCommentBottomSheetViewModel by viewModels()
-    private val parentViewModel: CoviewViewModel by activityViewModels()
+    private val coviewViewModel: CoviewViewModel by activityViewModels()
+    private val reviewDetailViewModel: UserReviewDetailViewModel by activityViewModels()
 
     private var adapter: CoviewCommentAdapter? = null
 
@@ -202,7 +207,13 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
 
     // 댓글 개수 증가
     private fun addCommentCount(reviewId: Long) {
-        parentViewModel.addCommentCount(reviewId)
+        when(this.isFrom) {
+            ReviewType.COVIEW -> coviewViewModel.addCommentCount(reviewId)
+            ReviewType.REVIEW_DETAIL -> reviewDetailViewModel.addCommentCount(reviewId)
+            ReviewType.MYPAGE -> {
+                // todo: mypage와 연결
+            }
+        }
     }
 
 }

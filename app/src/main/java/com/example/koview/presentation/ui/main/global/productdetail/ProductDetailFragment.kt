@@ -130,6 +130,11 @@ class ProductDetailFragment :
         navigate(action)
     }
 
+    private fun NavController.toReviewDetail(reviewId: Long, nickname: String) {
+        val action = ProductDetailFragmentDirections.actionProductDetailFragmentToUserReviewDetailFragment(reviewId, nickname)
+        navigate(action)
+    }
+
     private fun clickTag(url: String?) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
@@ -145,6 +150,11 @@ class ProductDetailFragment :
 
     override fun onLikeClick(item: ProductReviewDetail) {
         viewModel.onLikeClick(item)
+    }
+
+    // 리뷰 상세 페이지로 이동
+    override fun onContentClick(reviewId: Long, nickname: String) {
+        findNavController().toReviewDetail(reviewId, nickname)
     }
 
 }
