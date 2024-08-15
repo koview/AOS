@@ -136,5 +136,25 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
         }
     }
 
+    fun updateAnswer(item: QueryResultList) {
+        viewModelScope.launch {
+            val updatedItem = item.copy(
+                totalAnswerCount = item.totalAnswerCount + 1
+            )
+
+            _getQueries.update { currentList ->
+                currentList.map {
+                    if (it.queryId == updatedItem.queryId) {
+                        updatedItem
+                    } else {
+                        it
+                    }
+                }
+            }
+
+            _askDetail.value = updatedItem
+        }
+    }
+
 
 }
