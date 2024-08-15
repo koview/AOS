@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -16,17 +15,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.koview.R
 import com.example.koview.databinding.ActivityMainBinding
 import com.example.koview.presentation.base.BaseActivity
 import com.example.koview.presentation.utils.Constants.STORAGE_PERMISSION_IMAGE
-import com.example.koview.presentation.ui.main.mypage.MypageEvent
-import com.example.koview.presentation.utils.Constants.STORAGE_PERMISSION_IMAGE
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {

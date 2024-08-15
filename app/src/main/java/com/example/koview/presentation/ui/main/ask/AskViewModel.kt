@@ -1,12 +1,10 @@
 package com.example.koview.presentation.ui.main.ask
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.koview.presentation.ui.main.ask.model.AskData
-import com.example.koview.presentation.ui.main.global.product.model.Review
-import com.example.koview.presentation.ui.main.global.product.model.TagShop
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.response.QueryResultList
 import com.example.koview.data.repository.MainRepository
@@ -52,6 +50,7 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
                         Log.d("AskFragment", "GetQueries ERROR(Request Success)")
                         Log.d("AskFragment", it.code + ", " + it.msg)
                     }
+
                     is BaseState.Success -> {
                         _getQueries.value = it.body.result.queryList
                     }
@@ -115,13 +114,6 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
 //            )
 //        }
 //    }
-
-    fun navigateToAskDetail(askDetail: AskData) {
-        _askDetail.value = askDetail
-        viewModelScope.launch {
-            _event.emit(AskEvent.NavigateToAskDetail(askDetail))
-        }
-    }
 
     fun navigateToPost() {
         viewModelScope.launch {
