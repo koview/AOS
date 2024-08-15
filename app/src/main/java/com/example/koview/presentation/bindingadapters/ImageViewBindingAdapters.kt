@@ -22,7 +22,7 @@ fun bindProfileImg(imageView: ImageView, url: String?) {
 fun bindAskImg(imageView: ImageView, url: String?) {
     Glide.with(imageView.context)
         .load(url)
-        .error(R.drawable.img_product_ex)
+        .error(R.drawable.img_review_ex)
         .into(imageView)
 }
 

@@ -1,5 +1,6 @@
 package com.example.koview.presentation.ui.main.coview.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,7 @@ class CoviewImageViewHolder(private val binding: ItemCoviewImageBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: String?) {
+        Log.d("코뷰", "vp 이미지 : $item")
         Glide.with(binding.root.context)
             .load(item)
             .error(R.drawable.img_review_ex)

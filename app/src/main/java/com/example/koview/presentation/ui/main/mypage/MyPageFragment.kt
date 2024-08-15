@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.koview.R
 import com.example.koview.databinding.FragmentMypageBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.mypage.adapter.MyItemClickListener
 import com.example.koview.presentation.ui.main.mypage.adapter.ReviewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -20,7 +21,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage), ConfirmDialogInterface  {
+class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage),
+    ConfirmDialogInterface {
 
     private val viewModel: MyPageFragmentViewModel by activityViewModels()
     private lateinit var reviewsAdapter: ReviewsAdapter
@@ -42,13 +44,12 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         observeRvViewModel()
-        viewModel.getMyReviews() // 초기 리뷰 가져오기
 
         // 스크롤 리스너 설정 (페이징)
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) { // 스크롤이 끝에 도달했을 때
+                if (!recyclerView.canScrollVertically(1) && viewModel.hasNext) { // 다음 페이지가 존재할 때만 호출
                     viewModel.getMyReviews() // 다음 페이지 리뷰 가져오기
                 }
             }
@@ -59,22 +60,26 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMyReviews(true) // 초기 리뷰 가져오기
+    }
     private fun setMyReviewOnClick(){
         // 내 리뷰 클릭 리스너
-        reviewsAdapter.setMyItemClickListener(object: ReviewsAdapter.MyItemClickListener{
+        reviewsAdapter.setMyItemClickListener(object : MyItemClickListener {
             override fun onLongClick(reviewId: Long) {
                 // isChecking == false 일 때 리뷰 삭제 버튼 활성화
-                if (!viewModel.isChecking.value){
+                if (!viewModel.isChecking.value) {
                     viewModel.startChecking(reviewId)
                 }
             }
 
             override fun onItemClick(reviewId: Long) {
-                // 삭제 버튼 활성화 시 리뷰 삭제 목록 추가 else 리뷰 상세 화면 이동
-                if(viewModel.isChecking.value){
-                    viewModel.toggleReviewId(reviewId)
-                } else{
-                    // todo: 리뷰 상세화면 이동
+                // 삭제 버튼 활성화
+                if (viewModel.isChecking.value) {
+                    viewModel.toggleReviewId(reviewId)  // 리뷰 삭제 목록 추가
+                } else {
+                    findNavController().toReviewDetail(reviewId)    // 리뷰 상세 화면 이동
                 }
             }
         })
@@ -114,6 +119,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
             viewModel.event.collect {
                 when (it) {
                     is MypageEvent.NavigateToSetting -> findNavController().toSetting()
+                    is MypageEvent.NavigateToCreateReview -> findNavController().toCreateReview()
+                    else -> {}
                 }
             }
         }
@@ -124,7 +131,19 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         navigate(action)
     }
 
-    fun dialogDeleteReviews(){
+    private fun NavController.toCreateReview(){
+        val action = MyPageFragmentDirections.actionMypageFragmentToCreateReviewFragment()
+        navigate(action)
+    }
+
+    // 리뷰 상세 화면으로 이동
+    private fun NavController.toReviewDetail(reviewId: Long) {
+        val action =
+            MyPageFragmentDirections.actionMypageFragmentToMypageReviewDetailFragment(reviewId)
+        navigate(action)
+    }
+
+    fun dialogDeleteReviews() {
         Log.d("MyPageFragment", "dialogDeleteReviews 호출")
         val title = "해당 리뷰를 삭제하시겠어요?"
         val dialog = ConfirmDialog(this@MyPageFragment, title, null, 0)

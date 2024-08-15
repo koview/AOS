@@ -67,7 +67,7 @@
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:background="@color/kv_gray3"
             app:layout_constraintTop_toBottomOf="@id/lo_profile"/>
 

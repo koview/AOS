@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_home_fragment_to_search_fragment"
             app:destination="@id/search_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_ask_fragment"
+            app:destination="@id/ask_fragment" />
     </fragment>
 
     <fragment
@@ -48,6 +51,10 @@
         <argument
             app:argType="boolean"
             android:name="isFullView"/>
+
+        <argument
+            app:argType="string"
+            android:name="isFrom"/>
     </dialog>
 
     <fragment
@@ -60,7 +67,7 @@
             app:destination="@id/ask_detail_fragment">
             <argument
                 android:name="askData"
-                app:argType="com.example.koview.presentation.ui.main.ask.model.AskData"
+                app:argType="com.example.koview.data.model.response.QueryResultList"
                 app:nullable="true" />
         </action>
 
@@ -84,6 +91,12 @@
         <action
             android:id="@+id/action_mypage_fragment_to_myPageSettingFragment"
             app:destination="@id/myPageSettingFragment" />
+        <action
+            android:id="@+id/action_mypage_fragment_to_mypage_review_detail_fragment"
+            app:destination="@id/mypage_review_detail_fragment" />
+        <action
+            android:id="@+id/action_mypage_fragment_to_createReviewFragment"
+            app:destination="@id/createReviewFragment" />
     </fragment>
 
     <fragment
@@ -176,11 +189,22 @@
         android:name="com.example.koview.presentation.ui.main.global.productdetail.ProductDetailFragment"
         android:label="ProductDetailFragment">
 
+        <argument
+            android:name="sourceFragmentId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
         <action
             android:id="@+id/action_product_detail_fragment_to_search_fragment"
             app:destination="@id/search_fragment"
             app:popUpTo="@id/search_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_product_detail_fragment_to_user_review_detail_fragment"
+            app:destination="@id/user_review_detail_fragment" />
+        <action
+            android:id="@+id/action_product_detail_fragment_to_createReviewFragment"
+            app:destination="@id/createReviewFragment" />
 
     </fragment>
 
@@ -243,6 +267,46 @@
         android:name="com.example.koview.presentation.ui.main.ask.askanswer.AskAnswerFragment"
         android:label="AskAnswerFragment">
 
+        <action
+            android:id="@+id/action_ask_answer_fragment_to_ask_detail_fragment"
+            app:destination="@id/ask_detail_fragment"
+            app:popUpTo="@id/ask_detail_fragment"
+            app:popUpToInclusive="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/user_review_detail_fragment"
+        android:name="com.example.koview.presentation.ui.main.global.reviewdetail.UserReviewDetailFragment"
+        android:label="UserReviewDetailFragment">
+
+        <argument
+            app:argType="long"
+            android:name="reviewId"/>
+
+        <argument
+            app:argType="string"
+            android:name="nickname"/>
+
+        <action
+            android:id="@+id/action_user_review_detail_fragment_to_coviewCommentBottomSheetFragment"
+            app:destination="@id/coviewCommentBottomSheetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mypage_review_detail_fragment"
+        android:name="com.example.koview.presentation.ui.main.mypage.reviewdetail.MyPageReviewDetailFragment"
+        android:label="MyPageReviewDetailFragment">
+
+        <argument
+            app:argType="long"
+            android:name="reviewId"/>
+        <action
+            android:id="@+id/action_mypage_review_detail_fragment_to_coviewCommentBottomSheetFragment"
+            app:destination="@id/coviewCommentBottomSheetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createReviewFragment"
+        android:name="com.example.koview.presentation.ui.main.global.createreview.CreateReviewFragment"
+        android:label="CreateReviewFragment" />
 
 </navigation>

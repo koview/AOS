@@ -33,7 +33,7 @@ internal fun Uri.toMultiPartImage(context: Context): MultipartBody.Part? {
     getRealPathFromUri(this, context)?.let {
         val file = File(it)
         val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
-        return MultipartBody.Part.createFormData("image", file.name, requestFile)
+        return MultipartBody.Part.createFormData("images", file.name, requestFile)
     } ?: run {
         Log.e("toMultiPartImage", "Error creating multipart image")
         return null

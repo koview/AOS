@@ -83,7 +83,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <!--    댓글 입력    -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_comment"
                 android:layout_width="match_parent"

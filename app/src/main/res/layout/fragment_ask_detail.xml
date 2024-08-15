@@ -8,7 +8,7 @@
 
         <variable
             name="model"
-            type="com.example.koview.presentation.ui.main.ask.model.AskData" />
+            type="com.example.koview.data.model.response.QueryResultList" />
 
         <variable
             name="vm"
@@ -97,7 +97,7 @@
                             style="TextSmallSemiBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{model.nickname}" />
+                            android:text="@{model.writer}" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="TextTinyMedium"
@@ -110,7 +110,7 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_product"
-                        searchProductImgUrl="@{model.askImage}"
+                        searchProductImgUrl="@{model.imageList[0].url}"
                         android:layout_width="350dp"
                         android:layout_height="220dp"
                         android:layout_marginTop="15dp"
@@ -141,7 +141,7 @@
                                 style="TextSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text='@{"조회수 " + String.valueOf(model.viewCount)}' />
+                                android:text='@{"조회수 " + String.valueOf(model.totalViewCount)}' />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/iv_answer"
@@ -156,7 +156,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
-                                android:text="@{String.valueOf(model.answerCount)}" />
+                                android:text="@{String.valueOf(model.totalAnswerCount)}" />
 
                             <LinearLayout
                                 android:id="@+id/layout_ask_icon"
@@ -169,7 +169,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:src="@drawable/ic_ask_off"
-                                    android:visibility="@{model.isAsk? View.GONE : View.VISIBLE}" />
+                                    android:visibility="@{model.isWithQuery? View.GONE : View.VISIBLE}" />
 
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/iv_ask_on"
@@ -177,7 +177,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:src="@drawable/ic_ask_on"
-                                    android:visibility="@{model.isAsk? View.VISIBLE : View.GONE}" />
+                                    android:visibility="@{model.isWithQuery? View.VISIBLE : View.GONE}" />
 
                             </LinearLayout>
 
@@ -187,7 +187,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
-                                android:text="@{String.valueOf(model.askCount)}" />
+                                android:text="@{String.valueOf(model.totalWithQueryCount)}" />
 
                         </LinearLayout>
 
@@ -196,7 +196,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:text="@{model.contents}" />
+                            android:text="@{model.content}" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_shop"
@@ -242,7 +242,7 @@
                     app:layout_constraintTop_toBottomOf="@id/line_review" />
 
                 <LinearLayout
-                    reviewLayoutVisibility="@{model.answerCount}"
+                    reviewLayoutVisibility="@{model.totalAnswerCount}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"

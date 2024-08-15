@@ -5,10 +5,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="item"
             type="com.example.koview.presentation.ui.main.home.model.AskUiData" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +36,7 @@
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{item.contents}"
+                android:text="@{item.content}"
                 android:textColor="@color/kv_gray9"
                 tools:text="상품 리뷰 내용" />
 
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:textColor="@color/kv_gray6"
-                    app:textFromInt="@{item.viewCount}"
+                    app:textFromLong="@{item.viewCount}"
                     tools:text="90" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -74,14 +75,24 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:textColor="@color/kv_gray6"
-                    app:textFromInt="@{item.replyCount}"
+                    app:textFromLong="@{item.answerCount}"
                     tools:text="10" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_on_withQuery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:src="@drawable/ic_question_mark" />
+                    android:visibility="@{item.withQuery ? View.VISIBLE : View.GONE}"
+                    android:src="@drawable/ic_ask_on" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_off_withQuery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:visibility="@{item.withQuery ? View.GONE : View.VISIBLE}"
+                    android:src="@drawable/ic_ask_off" />
 
                 <TextView
                     android:id="@+id/tv_agree"
@@ -90,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:textColor="@color/kv_gray6"
-                    app:textFromInt="@{item.agreeCount}"
+                    app:textFromLong="@{item.withQueryCount}"
                     tools:text="30" />
 
             </LinearLayout>
@@ -102,6 +113,7 @@
             android:layout_width="80dp"
             android:layout_height="64dp"
             app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">

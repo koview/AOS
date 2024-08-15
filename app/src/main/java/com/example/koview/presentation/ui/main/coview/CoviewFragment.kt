@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.koview.R
@@ -14,13 +14,14 @@ import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.coview.adapter.CoviewClickListener
 import com.example.koview.presentation.ui.main.coview.adapter.CoviewReviewAdapter
 import com.example.koview.presentation.ui.main.coview.model.CoviewUiData
+import com.example.koview.presentation.ui.main.global.model.ReviewType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_coview),
     CoviewClickListener {
 
-    private val viewModel: CoviewViewModel by viewModels()
+    private val viewModel: CoviewViewModel by activityViewModels()
     private var adapter: CoviewReviewAdapter? = null
 
     private var bottomScrollState = true
@@ -46,6 +47,12 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
             viewModel.getUserInfo()
         }
         isReturningFromExternal = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        viewModel.resetKeyword()
     }
 
     private fun initEventObserver() {
@@ -82,12 +89,25 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
                 // 화면 하단에 도달
                 if (bottomScrollState) {
                     bottomScrollState = false
-                    viewModel.getReviews()
+
+                    // 검색 모드에 따라 다른 함수 호출
+                    if (viewModel.isSearchMode.value) {
+                        viewModel.searchReviews()
+                        checkMode()
+                        Log.d("코뷰", "리뷰 검색")
+                    } else {
+                        viewModel.getReviews()
+                        Log.d("코뷰", "리뷰 전체")
+                    }
                 }
             } else {
                 bottomScrollState = true
             }
         }
+    }
+
+    private fun checkMode() {
+        viewModel.checkSearchMode()
     }
 
     // 리뷰 아이템 좋아요 클릭 시 호출
@@ -117,7 +137,8 @@ class CoviewFragment : BaseFragment<FragmentCoviewBinding>(R.layout.fragment_cov
             CoviewFragmentDirections.actionCoviewFragmentToCoviewCommentBottomSheetFragment(
                 reviewId,
                 profileUrl,
-                isFullView
+                isFullView,
+                ReviewType.COVIEW.toString()
             )
         navigate(action)
     }
