@@ -8,6 +8,7 @@ import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.response.CreateReviewResponse
 import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.AddCoviewCommentResponse
+import com.example.koview.data.model.response.AddQueryImageResponse
 import com.example.koview.data.model.response.CreateQueryResponse
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetCoviewCommentsResponse
@@ -125,4 +126,7 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
 
     override suspend fun postQuery(params: CreateQueryRequest): BaseState<CreateQueryResponse> =
         runRemote { api.postQuery(params) }
+
+    override suspend fun postQueryImages(images: List<MultipartBody.Part>): BaseState<AddQueryImageResponse> =
+        runRemote { api.postQueryImages(images) }
 }
