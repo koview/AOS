@@ -49,6 +49,17 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
                 linkAdapter?.submitList(it.shopLinkList)
             }
         }
+
+        repeatOnStarted {
+            viewModel.isButtonEnabled.collect {
+                if(it){
+                    binding.btnCreate.setBackgroundResource(R.drawable.rect_main3fill_nostroke_12radius)
+                } else {
+                    binding.btnCreate.setBackgroundResource(R.drawable.rect_blackfill_nostroke_12radius)
+                }
+                binding.btnCreate.isEnabled = it
+            }
+        }
     }
 
     private fun initEventObserver() {
@@ -58,6 +69,7 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
                     AskPostEvent.GoToGallery -> parentViewModel.goToSetProfileImage()
                     is AskPostEvent.ShowToastMessage -> showToastMessage(it.msg)
                     AskPostEvent.NavigateToBack -> findNavController().navigateUp()
+                    AskPostEvent.CreateQuery -> viewModel.postReviewImage(requireContext())
                 }
             }
         }
