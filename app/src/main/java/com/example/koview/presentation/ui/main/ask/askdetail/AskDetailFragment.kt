@@ -2,10 +2,10 @@ package com.example.koview.presentation.ui.main.ask.askdetail
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +16,6 @@ import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.ask.AskViewModel
 import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskAnswerAdapter
 import com.example.koview.presentation.ui.main.ask.askdetail.adapter.AskShopTagAdapter
-import com.example.koview.presentation.ui.main.global.product.model.Review
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -98,7 +97,8 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
 
     private fun clickAsk() {
         binding.layoutAskIcon.setOnClickListener {
-//            parentViewModel.askDetail.value?.let { parentViewModel.onAskClick(it) }
+            parentViewModel.askDetail.value?.let { it1 -> parentViewModel.postWithQuery(it1) }
+            Log.d("AskDetailFragment", "눌렀슈")
         }
     }
 

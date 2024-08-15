@@ -1,13 +1,13 @@
 package com.example.koview.presentation.ui.main.ask.askdetail
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
-import com.example.koview.data.model.response.ProductReviewDetail
 import com.example.koview.data.model.response.QueryAnswerList
 import com.example.koview.data.repository.MainRepository
-import com.example.koview.presentation.ui.main.global.productdetail.ProductDetailEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,6 +52,7 @@ class AskDetailViewModel @Inject constructor(private val repository: MainReposit
                         Log.d("AskDetailFragment", "GetQueryAnswers ERROR(Request Success)")
                         Log.d("AskDetailFragment", it.code + ", " + it.msg)
                     }
+
                     is BaseState.Success -> {
                         Log.d("AskDetailFragment", it.body.result.answerList.toString())
                         _getAnswers.value = it.body.result.answerList

@@ -20,6 +20,7 @@ import com.example.koview.data.model.response.QueryAnswerResponse
 import com.example.koview.data.model.response.QueryResponse
 import com.example.koview.data.model.response.ReviewDetailResponse
 import com.example.koview.data.model.response.Status
+import com.example.koview.data.model.response.WithQueryResponse
 import com.example.koview.presentation.ui.main.home.model.Category
 
 interface MainRepository {
@@ -108,4 +109,12 @@ interface MainRepository {
         queryId: Long,
         params: QueryAnswerRequest
     ): BaseState<QueryAnswerPostResponse>
+
+    suspend fun postWithQuery(
+        queryId: Long
+    ): BaseState<WithQueryResponse>
+
+    suspend fun deleteWithQuery(
+        queryId: Long
+    ): BaseState<WithQueryResponse>
 }
