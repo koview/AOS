@@ -1,6 +1,8 @@
 package com.example.koview.data.remote
 
+import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.DeleteMyReviewRequest
+import com.example.koview.data.model.response.CreateReviewResponse
 import com.example.koview.data.model.response.DeleteMyReviewsResponse
 import com.example.koview.data.model.response.GetMyDetailResponse
 import com.example.koview.data.model.response.GetMyReviewDetailResponse
@@ -10,11 +12,16 @@ import retrofit2.http.DELETE
 import com.example.koview.data.model.response.HomeResponse
 import com.example.koview.data.model.response.ProductsResponse
 import com.example.koview.data.model.response.ReviewDetailResponse
+import com.example.koview.data.model.response.ReviewImageResponse
 import com.example.koview.data.model.response.Status
 import com.example.koview.presentation.ui.main.home.model.Category
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.HTTP
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface MainApi {
@@ -44,6 +51,17 @@ interface MainApi {
     suspend fun deleteMyReviews(
         @Body params: DeleteMyReviewRequest
     ): Response<DeleteMyReviewsResponse>
+
+    @Multipart
+    @POST("image/reviews")
+    suspend fun postReviewImages(
+        @Part images: List<MultipartBody.Part>
+    ): Response<ReviewImageResponse>
+
+    @POST("review/create")
+    suspend fun createReview(
+        @Body params: CreateReviewRequest
+    ): Response<CreateReviewResponse>
 
     @GET("products")
     suspend fun getProducts(

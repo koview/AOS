@@ -56,6 +56,7 @@ class MyPageFragmentViewModel @Inject constructor(
 
     private var currentPage = 1
     private val pageSize = 10 // 페이지당 리뷰 수
+    var hasNext = true
 
     fun getMyDetail(){
         viewModelScope.launch {
@@ -78,10 +79,14 @@ class MyPageFragmentViewModel @Inject constructor(
 
     fun getMyReviews(isReload: Boolean = false) {
         viewModelScope.launch {
-
             if (isReload) {
                 currentPage = 1 // 페이지 초기화
+            }else if(!hasNext){
+                Log.d("MyPageFragment", "다음 페이지가 없습니다.")
+                return@launch // 다음 페이지가 없으면 조기 반환
+
             }
+
             val response = repository.getMyReviews(page = currentPage, size = pageSize)
 
             when (response) {
@@ -100,7 +105,11 @@ class MyPageFragmentViewModel @Inject constructor(
                             // 기존 리스트에 추가
                             _myReviews.value = _myReviews.value + newReviews
                         }
-                        currentPage++ // 다음 페이지로 이동
+
+                        // 현재 페이지 증가
+                        currentPage++
+                        // 다음 페이지 존재 여부 업데이트
+                        hasNext = response.body.result.hasNext // 이 값을 업데이트
                     } else {
                         Log.d("MyPageFragment", response.body.message)
                     }
