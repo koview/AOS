@@ -57,6 +57,7 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
                     MypageSettingEvent.NavigateToPoint -> findNavController().toPoint()
                     MypageSettingEvent.NavigateToLoginInfo -> findNavController().toLoginInfo()
                     MypageSettingEvent.NavigateToOperating -> findNavController().toOperating()
+                    else -> {}
                 }
             }
         }

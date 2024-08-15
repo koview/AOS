@@ -4,4 +4,5 @@ import com.example.koview.data.model.response.ProductReviewDetail
 
 interface ProductDetailInterface {
     fun onLikeClick(item: ProductReviewDetail)
+    fun onContentClick(reviewId: Long, nickname: String)
 }
