@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.koview.presentation.ui.main.ask.model.AskShopUiData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,7 @@ sealed class AskPostEvent() {
 
 data class AskPostUiState(
     val imageList: List<Uri> = emptyList(),
+    val shopLinkList: List<AskShopUiData> = emptyList()
 )
 
 @HiltViewModel
@@ -63,5 +65,26 @@ class AskPostViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    // 링크 추가
+    fun addLink(link: AskShopUiData) {
+        viewModelScope.launch {
+            _uiState.update { state ->
+                state.copy(
+                    shopLinkList = state.shopLinkList + link // 링크 추가
+                )
+            }
+            Log.d("질문", "링크 추가 완료")
+        }
+    }
 
+    // 링크 삭제
+    fun deleteLink(link: AskShopUiData) {
+        viewModelScope.launch {
+            _uiState.update { state ->
+                state.copy(
+                    shopLinkList = state.shopLinkList.filterNot { it.purchaseLink == link.purchaseLink } // 해당 링크와 일치하는 요소 제거
+                )
+            }
+        }
+    }
 }

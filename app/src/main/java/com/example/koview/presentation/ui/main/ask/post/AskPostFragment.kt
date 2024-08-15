@@ -9,8 +9,10 @@ import com.example.koview.R
 import com.example.koview.databinding.FragmentAskPostBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.MainViewModel
+import com.example.koview.presentation.ui.main.ask.model.AskShopUiData
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskPostClickListener
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskPostImageAdapter
+import com.example.koview.presentation.ui.main.ask.post.adapter.AskShopTagAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +23,7 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
     private val viewModel: AskPostViewModel by viewModels()
 
     private var imageAdapter: AskPostImageAdapter? = null
+    private var shopAdapter: AskShopTagAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,10 +64,18 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
     private fun initAdapter() {
         imageAdapter = AskPostImageAdapter(this)
         binding.rvImage.adapter = imageAdapter
+
+        shopAdapter = AskShopTagAdapter(this)
+        binding.rvShop.adapter = shopAdapter
     }
 
     // 사진 삭제
     override fun onImageClick(uri: Uri) {
         viewModel.deleteImage(uri)
+    }
+
+    // 상품 링크 삭제
+    override fun onShopTagClick(item: AskShopUiData) {
+        viewModel.deleteLink(item)
     }
 }

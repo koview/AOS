@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.databinding.ItemPostImageBinding
+import com.example.koview.presentation.ui.main.ask.model.AskShopUiData
 
 interface AskPostClickListener {
     fun onImageClick(uri: Uri)
+    fun onShopTagClick(item: AskShopUiData)
 }
 
-class AskPostImageAdapter(private val askPostClickListener: AskPostClickListener) :
+class AskPostImageAdapter(private val clickListener: AskPostClickListener) :
     ListAdapter<Uri, AskPostImageViewHolder>(diffCallback) {
 
     companion object {
@@ -39,7 +41,7 @@ class AskPostImageAdapter(private val askPostClickListener: AskPostClickListener
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ), askPostClickListener
+            ), clickListener
         )
 
     override fun onBindViewHolder(holder: AskPostImageViewHolder, position: Int) {
@@ -49,7 +51,7 @@ class AskPostImageAdapter(private val askPostClickListener: AskPostClickListener
 
 class AskPostImageViewHolder(
     private val binding: ItemPostImageBinding,
-    private val askPostClickListener: AskPostClickListener,
+    private val clickListener: AskPostClickListener,
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -57,7 +59,7 @@ class AskPostImageViewHolder(
         binding.item = item.toString()
 
         binding.root.setOnClickListener {
-            askPostClickListener.onImageClick(item)
+            clickListener.onImageClick(item)
         }
     }
 }
