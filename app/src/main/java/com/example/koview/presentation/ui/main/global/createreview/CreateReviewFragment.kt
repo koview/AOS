@@ -56,10 +56,8 @@ class CreateReviewFragment: BaseFragment<FragmentReviewCreateBinding>(R.layout.f
         observeRvViewModel()
         observeParentViewModel()
         observeBtnViewModel()
-        setMyImageOnClick()
-        setMyTagOnClick()
+        initClickLister()
     }
-
 
 
     private fun initEventObserve() {
@@ -120,23 +118,31 @@ class CreateReviewFragment: BaseFragment<FragmentReviewCreateBinding>(R.layout.f
 
     }
 
-
-    private fun setMyTagOnClick(){
+    private fun initClickLister() {
         // 내 태그 클릭 리스너
         tagAdapter.setMyItemClickListener(object: TagAdapter.MyItemClickListener{
             override fun onDeleteClick(link: PurchaseLinkDTO) {
                 viewModel.deleteLink(link)
             }
         })
-    }
 
-    private fun setMyImageOnClick(){
         // 내 이미지 클릭 리스너
         galleryAdapter.setMyItemClickListener(object: GalleryAdapter.MyItemClickListener{
             override fun onDeleteClick(url: String) {
                 viewModel.deleteImage(url)
             }
         })
+
+        // 좋아요 클릭
+        binding.ivLike.setOnClickListener {
+            binding.ivLike.visibility = View.GONE
+            binding.ivUnlike.visibility = View.VISIBLE
+        }
+
+        binding.ivUnlike.setOnClickListener {
+            binding.ivLike.visibility = View.VISIBLE
+            binding.ivUnlike.visibility = View.GONE
+        }
     }
 
     fun getGallery(){
