@@ -47,7 +47,8 @@ class CreateReviewFragmentViewModel @Inject constructor(
     private val _createError = MutableSharedFlow<String>()
     val createError: SharedFlow<String> = _createError.asSharedFlow()
 
-    var isLiked = MutableStateFlow(false)
+    private val _isLiked = MutableStateFlow(false)
+    val isLiked: StateFlow<Boolean> = _isLiked.asStateFlow()
 
     var content = MutableStateFlow("")
 
@@ -189,6 +190,10 @@ class CreateReviewFragmentViewModel @Inject constructor(
             createBtnOn.value = true
             return
         }
+    }
+
+    fun onClickLike(){
+        _isLiked.value = !_isLiked.value
     }
 
     fun navigateToBack() {
