@@ -18,8 +18,10 @@
         android:paddingBottom="90dp">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:overScrollMode="always"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +109,6 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_my_review"
-                    android:overScrollMode="never"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"

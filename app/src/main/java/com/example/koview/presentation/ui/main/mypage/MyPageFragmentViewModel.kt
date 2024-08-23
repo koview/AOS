@@ -9,6 +9,7 @@ import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.response.MyReview
 import com.example.koview.data.model.response.ReviewList
 import com.example.koview.data.repository.MainRepository
+import com.example.koview.presentation.ui.main.coview.CoviewEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +24,7 @@ import javax.inject.Inject
 sealed class MypageEvent {
     data object NavigateToSetting : MypageEvent()
     data object NavigateToCreateReview : MypageEvent()
+    data object ShowLoading : MypageEvent()
 }
 
 @HiltViewModel
@@ -86,6 +88,8 @@ class MyPageFragmentViewModel @Inject constructor(
                 return@launch // 다음 페이지가 없으면 조기 반환
 
             }
+            // 로딩 띄우기
+            _event.emit(MypageEvent.ShowLoading)
 
             val response = repository.getMyReviews(page = currentPage, size = pageSize)
 
