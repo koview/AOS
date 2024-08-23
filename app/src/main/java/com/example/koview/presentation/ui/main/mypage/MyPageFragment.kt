@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.koview.R
 import com.example.koview.databinding.FragmentMypageBinding
 import com.example.koview.presentation.base.BaseFragment
+import com.example.koview.presentation.ui.main.coview.CoviewEvent
 import com.example.koview.presentation.ui.main.mypage.adapter.MyItemClickListener
 import com.example.koview.presentation.ui.main.mypage.adapter.ReviewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,15 +46,18 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
         observeRvViewModel()
 
-        // 스크롤 리스너 설정 (페이징)
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1) && viewModel.hasNext) { // 다음 페이지가 존재할 때만 호출
+        binding.scrollView.setOnScrollChangeListener { v, _, scrollY, _, _  ->
+            val childHeight = binding.scrollView.getChildAt(0).measuredHeight
+            val scrollViewHeight = v.height
+
+            // NestedScrollView의 바닥에 도달했을 때
+            if (scrollY >= (childHeight - scrollViewHeight)) {
+                if (viewModel.hasNext) {
+                    Log.d("onScrolled", "onScrolled")
                     viewModel.getMyReviews() // 다음 페이지 리뷰 가져오기
                 }
             }
-        })
+        }
         setMyReviewOnClick()
 
         binding.btnDeleteReview.setOnClickListener { dialogDeleteReviews() }
@@ -110,6 +114,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         // 새로운 리뷰 관찰
         viewModel.myReviews.onEach { reviews ->
             reviewsAdapter.updateReviews(reviews) // 새로운 리뷰로 어댑터 업데이트
+            dismissLoading()
             viewModel.checkReviewsIsEmpty()
         }.launchIn(viewLifecycleOwner.lifecycleScope) // Flow를 관찰
     }
@@ -120,6 +125,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                 when (it) {
                     is MypageEvent.NavigateToSetting -> findNavController().toSetting()
                     is MypageEvent.NavigateToCreateReview -> findNavController().toCreateReview()
+                    is MypageEvent.ShowLoading -> showLoading(requireContext())
                     else -> {}
                 }
             }
