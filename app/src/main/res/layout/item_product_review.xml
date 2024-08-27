@@ -28,19 +28,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.profileInfo.memberNickname}"
+            android:textColor="@color/kv_gray9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="닉네임" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_content"
-            style="@style/TextRegularMedium"
+            style="@style/TextRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{model.content}"
+            android:textColor="@color/kv_gray9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_nickname"
             tools:text="리뷰 내용" />
@@ -98,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="@{String.valueOf(model.totalLikesCount)}"
-                android:textColor="@color/kv_main3"
+                android:textColor="@color/kv_gray9"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/layout_like_icon"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -119,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="@{String.valueOf(model.totalCommentCount)}"
+                android:textColor="@color/kv_gray9"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_comment"
                 app:layout_constraintTop_toTopOf="parent" />

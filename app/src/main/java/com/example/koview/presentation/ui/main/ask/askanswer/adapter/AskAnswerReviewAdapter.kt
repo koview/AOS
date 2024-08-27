@@ -77,7 +77,7 @@ class AskAnswerReviewAdapter(listener: AskAnswerInterface) :
             }
 
             binding.rvImage.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.rvImage.adapter = AskAnswerReviewImageAdapter(review.imageList)
         }
     }
