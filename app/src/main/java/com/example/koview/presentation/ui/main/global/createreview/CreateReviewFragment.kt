@@ -17,9 +17,6 @@ import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.MainViewModel
 import com.example.koview.presentation.ui.main.global.createreview.adapter.GalleryAdapter
 import com.example.koview.presentation.ui.main.global.createreview.adapter.TagAdapter
-import com.example.koview.presentation.ui.main.mypage.MyPageFragmentViewModel
-import com.example.koview.presentation.ui.main.mypage.adapter.ReviewsAdapter
-import com.example.koview.presentation.ui.main.mypage.setting.MypageSettingEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -92,9 +89,8 @@ class CreateReviewFragment: BaseFragment<FragmentReviewCreateBinding>(R.layout.f
     private fun observeParentViewModel() {
         // 새로운 이미지 관찰
         parentViewModel.imageList.onEach { links ->
-            val newImageList = links
-            Log.d("getGallery", "parentViewModel.imageList.value = ${newImageList}")
-            viewModel.inputImage(newImageList)
+            Log.d("getGallery", "parentViewModel.imageList.value = $links")
+            viewModel.inputImage(links)
         }.launchIn(viewLifecycleOwner.lifecycleScope) // Flow를 관찰
     }
     private fun observeBtnViewModel() {

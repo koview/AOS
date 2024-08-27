@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.PurchaseLinkDTO
-import com.example.koview.data.model.response.ReviewDetailImage
+import com.example.koview.data.model.response.ImageDTO
 import com.example.koview.data.repository.MainRepository
 import com.example.koview.presentation.ui.toMultiPartImage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,7 +56,7 @@ class CreateReviewFragmentViewModel @Inject constructor(
     private val _imageLinkList = MutableStateFlow<List<Uri>>(emptyList())
     val imageLinkList: StateFlow<List<Uri>> = _imageLinkList.asStateFlow()
 
-    var imagePathList: List<ReviewDetailImage> = emptyList()
+    private var imagePathList: List<ImageDTO> = emptyList()
 
 
     fun createBtnClick() {
@@ -72,7 +72,7 @@ class CreateReviewFragmentViewModel @Inject constructor(
 
     }
 
-    fun convertUriToMultipart(uri: Uri): MultipartBody.Part? {
+    private fun convertUriToMultipart(uri: Uri): MultipartBody.Part? {
         return uri.toMultiPartImage(context)
     }
 
@@ -113,7 +113,7 @@ class CreateReviewFragmentViewModel @Inject constructor(
             repository.createReview(request).let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("PostReviewImage", it.code.toString() + ", " + it.msg.toString())
+                        Log.d("PostReviewImage", it.code + ", " + it.msg)
                     }
 
                     is BaseState.Success -> {
@@ -170,7 +170,7 @@ class CreateReviewFragmentViewModel @Inject constructor(
     }
 
     fun validate() {
-        if (content.value.toString().equals("")) {
+        if (content.value == "") {
             createBtnOn.value = false
             return
         } else if (_purchaseLinkList.value.isEmpty()) {
