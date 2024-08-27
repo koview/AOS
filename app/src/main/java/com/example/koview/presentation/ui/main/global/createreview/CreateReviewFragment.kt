@@ -22,7 +22,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class CreateReviewFragment: BaseFragment<FragmentReviewCreateBinding>(R.layout.fragment_review_create) {
+class CreateReviewFragment :
+    BaseFragment<FragmentReviewCreateBinding>(R.layout.fragment_review_create) {
 
     private val viewModel: CreateReviewFragmentViewModel by viewModels()
     private val parentViewModel: MainViewModel by activityViewModels()
@@ -37,23 +38,28 @@ class CreateReviewFragment: BaseFragment<FragmentReviewCreateBinding>(R.layout.f
         binding.vm = viewModel
         binding.etContent.movementMethod = ScrollingMovementMethod.getInstance()
 
-        // 갤러리 리사이클러뷰 설정
-        galleryRecyclerView = binding.rvGallery
-        galleryAdapter = GalleryAdapter(emptyList())
-        galleryRecyclerView.adapter = galleryAdapter
-        galleryRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-        // 태그 리사이클러뷰 설정
-        tagRecyclerView = binding.rvTag
-        tagAdapter = TagAdapter(emptyList())
-        tagRecyclerView.adapter = tagAdapter
-        tagRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
+        initRecyclerView()
         initEventObserve()
         observeRvViewModel()
         observeParentViewModel()
         observeBtnViewModel()
         initClickLister()
+    }
+
+    private fun initRecyclerView() {
+        // 갤러리 리사이클러뷰 설정
+        galleryRecyclerView = binding.rvGallery
+        galleryAdapter = GalleryAdapter(emptyList())
+        galleryRecyclerView.adapter = galleryAdapter
+        galleryRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        // 태그 리사이클러뷰 설정
+        tagRecyclerView = binding.rvTag
+        tagAdapter = TagAdapter(emptyList())
+        tagRecyclerView.adapter = tagAdapter
+        tagRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
 
@@ -62,7 +68,7 @@ class CreateReviewFragment: BaseFragment<FragmentReviewCreateBinding>(R.layout.f
             viewModel.event.collect {
                 when (it) {
                     CreateReviewEvent.NavigateToBack -> findNavController().navigateUp()
-                    else -> {}
+                    is CreateReviewEvent.ShowToastMessage -> showToastMessage(it.msg)
                 }
             }
         }
@@ -93,13 +99,16 @@ class CreateReviewFragment: BaseFragment<FragmentReviewCreateBinding>(R.layout.f
             viewModel.inputImage(links)
         }.launchIn(viewLifecycleOwner.lifecycleScope) // Flow를 관찰
     }
+
     private fun observeBtnViewModel() {
-        viewModel.content.onEach{
+        viewModel.content.onEach {
             viewModel.validate()
         }.launchIn(viewLifecycleOwner.lifecycleScope)
-        viewModel.purchaseLinkList.onEach{
+
+        viewModel.purchaseLinkList.onEach {
             viewModel.validate()
         }.launchIn(viewLifecycleOwner.lifecycleScope)
+
         viewModel.createBtnOn.onEach { btnOn ->
             if (btnOn) {
                 // 버튼이 클릭 가능한 상태로 변경
@@ -116,14 +125,14 @@ class CreateReviewFragment: BaseFragment<FragmentReviewCreateBinding>(R.layout.f
 
     private fun initClickLister() {
         // 내 태그 클릭 리스너
-        tagAdapter.setMyItemClickListener(object: TagAdapter.MyItemClickListener{
+        tagAdapter.setMyItemClickListener(object : TagAdapter.MyItemClickListener {
             override fun onDeleteClick(link: PurchaseLinkDTO) {
                 viewModel.deleteLink(link)
             }
         })
 
         // 내 이미지 클릭 리스너
-        galleryAdapter.setMyItemClickListener(object: GalleryAdapter.MyItemClickListener{
+        galleryAdapter.setMyItemClickListener(object : GalleryAdapter.MyItemClickListener {
             override fun onDeleteClick(url: String) {
                 viewModel.deleteImage(url)
             }
@@ -141,7 +150,7 @@ class CreateReviewFragment: BaseFragment<FragmentReviewCreateBinding>(R.layout.f
         }
     }
 
-    fun getGallery(){
+    fun getGallery() {
         parentViewModel.goToSetProfileImage()
     }
 

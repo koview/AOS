@@ -24,6 +24,7 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 sealed class CreateReviewEvent {
+    data class ShowToastMessage(val msg: String) : CreateReviewEvent()
     data object NavigateToBack : CreateReviewEvent()
 }
 
@@ -141,12 +142,18 @@ class CreateReviewFragmentViewModel @Inject constructor(
     }
 
     fun inputLink() {
-        val tag = extractTag(link.value)
-        val newLink = PurchaseLinkDTO(link.value, tag)
+        viewModelScope.launch {
+            val tag = extractTag(link.value)
+            val newLink = PurchaseLinkDTO(link.value, tag)
 
-        // 기존 목록에 새 링크 추가
-        _purchaseLinkList.value = _purchaseLinkList.value + newLink
-        link.value = ""
+            if (tag == "") {
+                _event.emit(CreateReviewEvent.ShowToastMessage("유효하지 않은 링크입니다."))
+            } else {
+                // 기존 목록에 새 링크 추가
+                _purchaseLinkList.value = _purchaseLinkList.value + newLink
+            }
+            link.value = ""
+        }
     }
 
     fun deleteLink(link: PurchaseLinkDTO) {
