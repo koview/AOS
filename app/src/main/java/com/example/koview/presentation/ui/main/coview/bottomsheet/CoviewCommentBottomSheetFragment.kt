@@ -179,12 +179,12 @@ class CoviewCommentBottomSheetFragment : BottomSheetDialogFragment() {
     private fun setProfileImage() {
         if (profileImgUrl.isNullOrEmpty()) {
             Glide.with(binding.root.context)
-                .load(R.drawable.img_review_ex)
+                .load(R.drawable.ic_profile)
                 .into(binding.ivMyProfile)
         } else {
             Glide.with(binding.root.context)
                 .load(profileImgUrl)
-                .error(R.drawable.img_review_ex)
+                .error(R.drawable.ic_profile)
                 .into(binding.ivMyProfile)
         }
     }

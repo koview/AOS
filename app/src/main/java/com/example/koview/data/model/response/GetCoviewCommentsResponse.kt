@@ -22,6 +22,6 @@ data class CoviewCommentItem(
     val commentId: Long,
     val content: String,
     val writer: String,
-    val profileImage: CoviewImage,
+    val profileImage: ImageDTO,
     val createdDate: String,
 )

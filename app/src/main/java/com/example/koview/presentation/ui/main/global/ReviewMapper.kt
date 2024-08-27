@@ -8,8 +8,8 @@ fun CoviewReviewList.toCoviewUiData(
     myProfileImgUrl: String?,
 ) = CoviewUiData(
     reviewId = reviewId,
-    writer = writer,
-    profileImage = profileImage?.url,
+    writer = profileInfo.memberNickname,
+    profileImage = profileInfo.imageUrl,
     purchaseLinkList = purchaseLinkList,
     totalCommentCount = totalCommentCount,
     totalLikeCount = totalLikeCount,
@@ -24,8 +24,8 @@ fun ReviewDetailList.toCoviewUiData(
     myProfileImgUrl: String?,
 ) = CoviewUiData(
     reviewId = reviewId,
-    writer = writer,
-    profileImage = profileImage?.url,
+    writer = profileInfo.memberNickname,
+    profileImage = profileInfo.imageUrl,
     purchaseLinkList = purchaseLinkList,
     totalCommentCount = totalCommentCount,
     totalLikeCount = totalLikeCount,

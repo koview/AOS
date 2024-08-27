@@ -17,18 +17,12 @@ data class ReviewsResult(
 data class CoviewReviewList(
     val reviewId: Long,
     val content: String,
-    val writer: String,
-    val profileImage: CoviewImage?,
-    val imageList: List<CoviewImage?>,
+    val profileInfo: ProfileResponseDTO,
+    val imageList: List<ImageDTO?>,
     val purchaseLinkList: List<PurchaseLinkList>,
     val totalCommentCount: Long,
     val totalLikeCount: Long,
     val isLiked: Boolean,
     val createdAt: String,
     val updatedAt: String
-)
-
-data class CoviewImage(
-    val imageId: Long,
-    val url: String
 )
