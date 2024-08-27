@@ -93,7 +93,8 @@ interface MainRepository {
     suspend fun getReviewDetails(
         page: Int,
         size: Int,
-        clickedReviewId: Long
+        clickedReviewId: Long,
+        memberId: Long
     ): BaseState<ReviewDetailResponse>
 
     suspend fun getProductReview(

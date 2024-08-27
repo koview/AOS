@@ -94,9 +94,10 @@ class MainRepositoryImpl @Inject constructor(private val api: MainApi) : MainRep
     override suspend fun getReviewDetails(
         page: Int,
         size: Int,
-        clickedReviewId: Long
+        clickedReviewId: Long,
+        memberId: Long
     ): BaseState<ReviewDetailResponse> = runRemote {
-        api.getReviewDetails(page, size, clickedReviewId)
+        api.getReviewDetails(page, size, clickedReviewId, memberId)
     }
 
     override suspend fun getProductReview(
