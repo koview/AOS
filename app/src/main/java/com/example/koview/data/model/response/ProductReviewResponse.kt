@@ -23,8 +23,7 @@ data class ProductReviewResult (
 data class ProductReviewDetail (
     val reviewId: Long,
     val content: String,
-    val writer: String,
-    val profileImage: String?,
+    val profileInfo: ProfileResponseDTO,
     val imageList: List<ProductReviewDetailImageList>,
     val totalCommentCount: Long,
     val totalLikesCount: Long,
