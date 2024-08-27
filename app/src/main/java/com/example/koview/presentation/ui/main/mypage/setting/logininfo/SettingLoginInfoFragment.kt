@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.koview.R
@@ -32,7 +31,7 @@ class SettingLoginInfoFragment :
 
         binding.vm = viewModel
         initEventObserver()
-        initImageObserver()
+        initProfileInfo()
         settingListClickEvent()
     }
 
@@ -78,14 +77,17 @@ class SettingLoginInfoFragment :
             viewModel.event.collect {
                 when (it) {
                     LoginInfoEvent.NavigateToBack -> findNavController().navigateUp()
-                    LoginInfoEvent.NavigateToLogin -> findNavController().toComplete()
+                    LoginInfoEvent.NavigateToLogin -> {
+                        startActivity(Intent(requireContext(), IntroActivity::class.java))
+                        activity?.finish()
+                    }
                 }
             }
         }
     }
 
 
-    private fun initImageObserver() {
+    private fun initProfileInfo() {
         repeatOnStarted {
             parentViewModel.profileImg.collect { imageUrl ->
                 // Glide를 사용하여 이미지 로드
@@ -95,6 +97,8 @@ class SettingLoginInfoFragment :
                     .into(binding.ivProfile)
             }
         }
+
+        viewModel.setNickname(parentViewModel.nickname.value)
     }
 
     override fun onClickYesButton(id: Int) {
@@ -105,17 +109,9 @@ class SettingLoginInfoFragment :
                 .remove(REFRESH_TOKEN)
                 .apply()
 
-            val intent = Intent(requireContext(), IntroActivity::class.java)
-            startActivity(intent)
-
             viewModel.navigateToLogin()
         } else if (id == 2) {
             // todo: 회원 탈퇴
         }
-    }
-
-    private fun NavController.toComplete() {
-        val action = SettingLoginInfoFragmentDirections.actionSettingLoginInfoFragmentToHomeFragment()
-        navigate(action)
     }
 }

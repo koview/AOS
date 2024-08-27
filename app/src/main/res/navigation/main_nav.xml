@@ -227,12 +227,6 @@
         android:id="@+id/settingLoginInfoFragment"
         android:name="com.example.koview.presentation.ui.main.mypage.setting.logininfo.SettingLoginInfoFragment"
         android:label="SettingLoginInfoFragment" >
-
-        <action
-            android:id="@+id/action_settingLoginInfoFragment_to_home_fragment"
-            app:destination="@id/home_fragment"
-            app:popUpTo="@id/login_fragment"
-            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
