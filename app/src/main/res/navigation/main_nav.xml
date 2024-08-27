@@ -298,6 +298,11 @@
         <argument
             app:argType="long"
             android:name="reviewId"/>
+
+        <argument
+            app:argType="long"
+            android:name="memberId"/>
+
         <action
             android:id="@+id/action_mypage_review_detail_fragment_to_coviewCommentBottomSheetFragment"
             app:destination="@id/coviewCommentBottomSheetFragment" />

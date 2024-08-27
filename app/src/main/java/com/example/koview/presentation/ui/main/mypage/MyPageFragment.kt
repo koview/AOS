@@ -77,12 +77,12 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
                 }
             }
 
-            override fun onItemClick(reviewId: Long) {
+            override fun onItemClick(reviewId: Long, memberId: Long) {
                 // 삭제 버튼 활성화
                 if (viewModel.isChecking.value) {
                     viewModel.toggleReviewId(reviewId)  // 리뷰 삭제 목록 추가
                 } else {
-                    findNavController().toReviewDetail(reviewId)    // 리뷰 상세 화면 이동
+                    findNavController().toReviewDetail(reviewId, memberId)    // 리뷰 상세 화면 이동
                 }
             }
         })
@@ -142,9 +142,9 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     }
 
     // 리뷰 상세 화면으로 이동
-    private fun NavController.toReviewDetail(reviewId: Long) {
+    private fun NavController.toReviewDetail(reviewId: Long, memberId: Long) {
         val action =
-            MyPageFragmentDirections.actionMypageFragmentToMypageReviewDetailFragment(reviewId)
+            MyPageFragmentDirections.actionMypageFragmentToMypageReviewDetailFragment(reviewId, memberId)
         navigate(action)
     }
 

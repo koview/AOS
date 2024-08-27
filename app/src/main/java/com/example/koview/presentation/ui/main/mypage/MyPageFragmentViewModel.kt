@@ -48,6 +48,9 @@ class MyPageFragmentViewModel @Inject constructor(
     private val _profileImg = MutableStateFlow("")
     val profileImg: StateFlow<String> = _profileImg.asStateFlow()
 
+    private val _memberId = MutableStateFlow(1L)
+    val memberId: StateFlow<Long> = _memberId.asStateFlow()
+
     private val _isEmpty = MutableStateFlow(true)
     val isEmpty: StateFlow<Boolean> = _isEmpty.asStateFlow()
 
@@ -70,6 +73,7 @@ class MyPageFragmentViewModel @Inject constructor(
                     is BaseState.Success -> {
                         _nickname.value = it.body.result.memberNickname
                         _profileImg.value = it.body.result.imageUrl
+                        _memberId.value = it.body.result.memberId
                     }
                 }
             }
@@ -139,6 +143,7 @@ class MyPageFragmentViewModel @Inject constructor(
     // ReviewList를 MyReview로 변환하는 함수
     private fun convertToMyReview(reviewList: ReviewList): MyReview {
         return MyReview(
+            memberId = memberId.value,
             reviewId = reviewList.reviewId,
             content = reviewList.content,
             writer = reviewList.profileInfo.memberNickname,
