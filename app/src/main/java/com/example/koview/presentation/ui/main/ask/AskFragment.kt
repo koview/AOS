@@ -11,7 +11,6 @@ import com.example.koview.data.model.response.QueryResultList
 import com.example.koview.databinding.FragmentAskBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.main.ask.adapter.AskAdapter
-import com.example.koview.presentation.ui.main.ask.model.AskData
 
 class AskFragment : BaseFragment<FragmentAskBinding>(R.layout.fragment_ask), AskInterface {
 
@@ -53,8 +52,8 @@ class AskFragment : BaseFragment<FragmentAskBinding>(R.layout.fragment_ask), Ask
 
     private fun initEventObserve() {
         repeatOnStarted {
-            viewModel.event.collect { event ->
-                when (event) {
+            viewModel.event.collect {
+                when (it) {
                     is AskEvent.NavigateToAskDetail -> {
                         viewModel.askDetail.value?.let { askDetail ->
                             findNavController().toAskDetail(askDetail)
@@ -62,6 +61,7 @@ class AskFragment : BaseFragment<FragmentAskBinding>(R.layout.fragment_ask), Ask
                     }
 
                     AskEvent.NavigateToPost -> findNavController().toPostAsk()
+                    is AskEvent.ShowToastMessage -> showToastMessage(it.msg)
                 }
             }
         }

@@ -1,8 +1,5 @@
 package com.example.koview.presentation.ui.main.ask.askdetail
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
@@ -21,6 +18,7 @@ import javax.inject.Inject
 sealed class AskDetailEvent {
     data object NavigateToAsk : AskDetailEvent()
     data object NavigateToAskAnswer : AskDetailEvent()
+    data class ShowToastMessage(val msg: String) : AskDetailEvent()
 }
 
 @HiltViewModel
@@ -49,12 +47,10 @@ class AskDetailViewModel @Inject constructor(private val repository: MainReposit
             repository.getQueryAnswers(queryId).let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("AskDetailFragment", "GetQueryAnswers ERROR(Request Success)")
-                        Log.d("AskDetailFragment", it.code + ", " + it.msg)
+                        _event.emit(AskDetailEvent.ShowToastMessage(it.msg))
                     }
 
                     is BaseState.Success -> {
-                        Log.d("AskDetailFragment", it.body.result.answerList.toString())
                         _getAnswers.value = it.body.result.answerList
                     }
                 }

@@ -2,7 +2,6 @@ package com.example.koview.presentation.ui.main.ask.askdetail
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
@@ -81,6 +80,7 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
                 when (it) {
                     AskDetailEvent.NavigateToAsk -> findNavController().toAsk()
                     AskDetailEvent.NavigateToAskAnswer -> findNavController().toAskAnswer()
+                    is AskDetailEvent.ShowToastMessage -> showToastMessage(it.msg)
                 }
             }
         }
@@ -110,10 +110,10 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
     }
 
+    // 나도 궁금 클릭
     private fun clickAsk() {
         binding.layoutAskIcon.setOnClickListener {
             parentViewModel.askDetail.value?.let { it1 -> parentViewModel.postWithQuery(it1) }
-            Log.d("AskDetailFragment", "눌렀슈")
         }
     }
 

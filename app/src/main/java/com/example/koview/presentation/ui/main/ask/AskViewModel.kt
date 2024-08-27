@@ -1,6 +1,5 @@
 package com.example.koview.presentation.ui.main.ask
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,6 +21,7 @@ import javax.inject.Inject
 sealed class AskEvent {
     data class NavigateToAskDetail(val askDetail: QueryResultList) : AskEvent()
     data object NavigateToPost : AskEvent()
+    data class ShowToastMessage(val msg: String) : AskEvent()
 }
 
 @HiltViewModel
@@ -48,8 +48,7 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
             repository.getQueries().let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("AskFragment", "GetQueries ERROR(Request Success)")
-                        Log.d("AskFragment", it.code + ", " + it.msg)
+                        _event.emit(AskEvent.ShowToastMessage(it.msg))
                     }
 
                     is BaseState.Success -> {
@@ -98,6 +97,7 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
 //        }
 //    }
 
+    // 나도 궁금 변경 반영
     fun postWithQuery(item: QueryResultList) {
         viewModelScope.launch {
             val result = if (item.isWithQuery) {
@@ -106,32 +106,34 @@ class AskViewModel @Inject constructor(private val repository: MainRepository) :
                 repository.postWithQuery(item.queryId)
             }
 
-            when (result) {
-                is BaseState.Success -> {
-                    val updatedItem = item.copy(
-                        isWithQuery = !item.isWithQuery,
-                        totalWithQueryCount = if (item.isWithQuery) {
-                            item.totalWithQueryCount - 1
-                        } else {
-                            item.totalWithQueryCount + 1
-                        }
-                    )
-
-                    _getQueries.update { currentList ->
-                        currentList.map {
-                            if (it.queryId == updatedItem.queryId) {
-                                updatedItem
+            result.let {
+                when (it) {
+                    is BaseState.Success -> {
+                        val updatedItem = item.copy(
+                            isWithQuery = !item.isWithQuery,
+                            totalWithQueryCount = if (item.isWithQuery) {
+                                item.totalWithQueryCount - 1
                             } else {
-                                it
+                                item.totalWithQueryCount + 1
+                            }
+                        )
+
+                        _getQueries.update { currentList ->
+                            currentList.map {
+                                if (it.queryId == updatedItem.queryId) {
+                                    updatedItem
+                                } else {
+                                    it
+                                }
                             }
                         }
+
+                        _askDetail.value = updatedItem
                     }
 
-                    _askDetail.value = updatedItem
-                }
-
-                is BaseState.Error -> {
-                    Log.d("AskDetailFragment", "ERROR(Request Success)")
+                    is BaseState.Error -> {
+                        _event.emit(AskEvent.ShowToastMessage(it.msg))
+                    }
                 }
             }
         }

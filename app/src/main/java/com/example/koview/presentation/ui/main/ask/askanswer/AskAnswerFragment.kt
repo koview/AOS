@@ -51,6 +51,7 @@ class AskAnswerFragment : BaseFragment<FragmentAskAnswerBinding>(R.layout.fragme
             viewModel.event.collect {
                 when (it) {
                     AskAnswerEvent.NavigateToAskDetail -> findNavController().toAskDetail()
+                    is AskAnswerEvent.ShowToastMessage -> showToastMessage(it.msg)
                 }
             }
         }

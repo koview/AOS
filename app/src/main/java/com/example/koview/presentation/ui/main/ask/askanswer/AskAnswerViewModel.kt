@@ -7,8 +7,6 @@ import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.QueryAnswerRequest
 import com.example.koview.data.model.response.ReviewList
 import com.example.koview.data.repository.MainRepository
-import com.example.koview.presentation.ui.main.ask.askdetail.AskDetailEvent
-import com.example.koview.presentation.ui.main.global.product.model.Review
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +19,9 @@ import javax.inject.Inject
 
 sealed class AskAnswerEvent {
     data object NavigateToAskDetail : AskAnswerEvent()
+    data class ShowToastMessage(val msg: String) : AskAnswerEvent()
 }
+
 @HiltViewModel
 class AskAnswerViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
 
@@ -44,8 +44,7 @@ class AskAnswerViewModel @Inject constructor(private val repository: MainReposit
             repository.postQueryAnswer(queryId, params).let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("AskAnswerFragment", "PostQueryAnswer ERROR(Request Success)")
-                        Log.d("AskAnswerFragment", it.code + ", " + it.msg)
+                        _event.emit(AskAnswerEvent.ShowToastMessage(it.msg))
                     }
 
                     is BaseState.Success -> {
@@ -58,7 +57,7 @@ class AskAnswerViewModel @Inject constructor(private val repository: MainReposit
         }
     }
 
-    fun getMyReviews() {
+    private fun getMyReviews() {
         viewModelScope.launch {
             repository.getMyReviews(
                 page = 1,
@@ -66,9 +65,9 @@ class AskAnswerViewModel @Inject constructor(private val repository: MainReposit
             ).let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("AskAnswerFragment", "GetMyReviews ERROR(Request Success)")
-                        Log.d("AskAnswerFragment", it.code + ", " + it.msg)
+                        _event.emit(AskAnswerEvent.ShowToastMessage(it.msg))
                     }
+
                     is BaseState.Success -> {
                         _reviewList.value = it.body.result.reviewList
                     }
