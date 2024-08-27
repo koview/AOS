@@ -20,7 +20,7 @@ data class QueryResultList(
     val queryId: Long,
     val content: String,
     val writer: String,
-    val profileImage: QueryImage,
+    val profileImage: QueryImage?,
     val imageList: List<QueryImage>,
     val totalWithQueryCount: Long,
     val isWithQuery: Boolean,
