@@ -1,24 +1,22 @@
 package com.example.koview.presentation.ui.main.mypage.adapter
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koview.R
 import com.example.koview.data.model.response.MyReview
-import com.example.koview.data.model.response.ReviewList
 import com.example.koview.databinding.ItemReviewBinding
 
 //item clicklistner를 저장하기 위한 인터페이스
 interface MyItemClickListener {
     // 삭제할 리뷰 선택 시작
     fun onLongClick(reviewId: Long)
+
     // 삭제할 리뷰 선택하기, 리뷰 상세 보기
-    fun onItemClick(reviewId: Long)
+    fun onItemClick(reviewId: Long, memberId: Long)
 }
 
 class ReviewsAdapter(private var reviews: List<MyReview>) :
@@ -41,6 +39,7 @@ class ReviewsAdapter(private var reviews: List<MyReview>) :
         holder.bind(reviews[position])
 
         val reviewId = reviews[position].reviewId
+        val memberId = reviews[position].memberId
 
         // 아이템 클릭 리스너
         holder.itemView.setOnLongClickListener {
@@ -50,7 +49,7 @@ class ReviewsAdapter(private var reviews: List<MyReview>) :
             true
         }
         holder.itemView.setOnClickListener {
-            mItemClickListener.onItemClick(reviewId)
+            mItemClickListener.onItemClick(reviewId, memberId)
 
             // 해당 아이템만 갱신
             notifyItemChanged(position)

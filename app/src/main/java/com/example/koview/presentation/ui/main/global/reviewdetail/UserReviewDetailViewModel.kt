@@ -54,12 +54,12 @@ class UserReviewDetailViewModel @Inject constructor(
     }
 
     // 댓글 입력 창에 보여줄 프로필 사진
-    fun getUserInfo(reviewId: Long) {
+    fun getUserInfo(reviewId: Long, memberId: Long) {
         viewModelScope.launch {
             repository.getMyDetail().let {
                 when (it) {
                     is BaseState.Success -> {
-                        profileImgUrl = it.body.result.url
+                        profileImgUrl = it.body.result.imageUrl
                     }
 
                     is BaseState.Error -> {
@@ -76,16 +76,17 @@ class UserReviewDetailViewModel @Inject constructor(
             )
         }
 
-        getReviews(reviewId)
+        getReviews(reviewId, memberId)
     }
 
-    fun getReviews(reviewId: Long) {
+    fun getReviews(reviewId: Long, memberId: Long) {
         viewModelScope.launch {
             if (uiState.value.hasNext) {
                 // 로딩 띄우기
                 _event.emit(UserReviewDetailEvent.ShowLoading)
 
-                repository.getReviewDetails(uiState.value.page, 15, reviewId).let {
+                // todo: memberId 전달받아 넣어주기
+                repository.getReviewDetails(uiState.value.page, 15, reviewId, memberId).let {
                     when (it) {
                         is BaseState.Success -> {
                             val reviews = it.body.result.reviewList.map { data ->
