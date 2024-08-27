@@ -3,14 +3,11 @@ package com.example.koview.presentation.ui.main
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.koview.presentation.ui.main.mypage.MypageEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import javax.inject.Inject
 
 sealed class MainEvent {
@@ -37,13 +34,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
     fun setImageUri(uris: List<Uri>) {
         viewModelScope.launch {
             _imageList.emit(uris)
-        }
-    }
-
-    // 이미지 업로드
-    fun fileToUrl(file: MultipartBody.Part) {
-        viewModelScope.launch {
-            // todo: 이미지 업로드 api 연결
         }
     }
 

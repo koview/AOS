@@ -30,12 +30,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is SplashEvent.NavigateToIntroActivity -> {
+                    SplashEvent.NavigateToIntroActivity -> {
                         startActivity(Intent(this@SplashActivity, IntroActivity::class.java))
                         finish()
                     }
-
-                    is SplashEvent.NavigateToMainActivity -> {
+                    SplashEvent.NavigateToMainActivity -> {
                         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                         finish()
                     }

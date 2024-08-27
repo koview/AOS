@@ -2,18 +2,14 @@ package com.example.koview.presentation.ui.main.global.createreview
 
 import android.content.Context
 import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.PurchaseLinkDTO
-import com.example.koview.data.model.requeset.SignUpRequest
 import com.example.koview.data.model.response.ReviewDetailImage
 import com.example.koview.data.repository.MainRepository
-import com.example.koview.presentation.ui.main.mypage.setting.MypageSettingEvent
 import com.example.koview.presentation.ui.toMultiPartImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,20 +20,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
 import javax.inject.Inject
 
 sealed class CreateReviewEvent {
     data object NavigateToBack : CreateReviewEvent()
 }
+
 @HiltViewModel
 class CreateReviewFragmentViewModel @Inject constructor(
     private val repository: MainRepository,
-    @ApplicationContext private val context: Context
-) : ViewModel(){
+    @ApplicationContext private val context: Context,
+) : ViewModel() {
 
 
     private val _event = MutableSharedFlow<CreateReviewEvent>()
@@ -65,9 +59,9 @@ class CreateReviewFragmentViewModel @Inject constructor(
     var imagePathList: List<ReviewDetailImage> = emptyList()
 
 
-    fun createBtnClick(){
-        if (content.value != "" && _purchaseLinkList.value.isNotEmpty()){
-            if(_imageLinkList.value.isEmpty()){
+    fun createBtnClick() {
+        if (content.value != "" && _purchaseLinkList.value.isNotEmpty()) {
+            if (_imageLinkList.value.isEmpty()) {
                 createReview()
             } else postReviewImage()
         } else {
@@ -82,19 +76,19 @@ class CreateReviewFragmentViewModel @Inject constructor(
         return uri.toMultiPartImage(context)
     }
 
-    private fun postReviewImage(){
+    private fun postReviewImage() {
         viewModelScope.launch {
 
             // _imageLinkList.value를 List<MultipartBody.Part>로 변환
             val images: List<MultipartBody.Part> = _imageLinkList.value.mapNotNull { uri ->
                 convertUriToMultipart(uri)
-            }?: emptyList()
+            } ?: emptyList()
             Log.d("postReviewImage", "images.isEmpty(): ${images.isEmpty()}")
 
             repository.postReviewImage(images).let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("PostReviewImage", it.code.toString() +", "+it.msg.toString())
+                        Log.d("PostReviewImage", it.code.toString() + ", " + it.msg.toString())
                     }
 
                     is BaseState.Success -> {
@@ -103,14 +97,12 @@ class CreateReviewFragmentViewModel @Inject constructor(
 
                         createReview()
                     }
-
-                    else -> {}
                 }
             }
         }
     }
 
-    private fun createReview(){
+    private fun createReview() {
         val contentValue = content.value
         val imageListValue: List<Long> = imagePathList.map { it -> it.imageId } ?: emptyList()
         Log.d("PostImage", imageListValue.toString())
@@ -121,20 +113,18 @@ class CreateReviewFragmentViewModel @Inject constructor(
             repository.createReview(request).let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("PostReviewImage", it.code.toString() +", "+it.msg.toString())
+                        Log.d("PostReviewImage", it.code.toString() + ", " + it.msg.toString())
                     }
 
                     is BaseState.Success -> {
                         navigateToBack()
                     }
-
-                    else -> {}
                 }
             }
         }
     }
 
-    fun inputImage(newImages: List<Uri>){
+    fun inputImage(newImages: List<Uri>) {
         // 기존 목록에서 새 이미지 중복 체크 후 추가
         val existingImages = _imageLinkList.value
         val filteredImages = newImages.filterNot { existingImages.contains(it) }
@@ -143,14 +133,14 @@ class CreateReviewFragmentViewModel @Inject constructor(
         _imageLinkList.value = existingImages + filteredImages
     }
 
-    fun deleteImage(url: String){
+    fun deleteImage(url: String) {
         // 현재 리스트에서 url를 제외한 새로운 리스트 생성
         val updatedList = _imageLinkList.value.filter { it.toString() != url }
 
         _imageLinkList.value = updatedList
     }
 
-    fun inputLink(){
+    fun inputLink() {
         val tag = extractTag(link.value)
         val newLink = PurchaseLinkDTO(link.value, tag)
 
@@ -179,11 +169,11 @@ class CreateReviewFragmentViewModel @Inject constructor(
         }
     }
 
-    fun validate(){
-        if(content.value.toString().equals("")){
+    fun validate() {
+        if (content.value.toString().equals("")) {
             createBtnOn.value = false
             return
-        } else if (_purchaseLinkList.value.isEmpty()){
+        } else if (_purchaseLinkList.value.isEmpty()) {
             createBtnOn.value = false
             return
         } else {
@@ -192,7 +182,7 @@ class CreateReviewFragmentViewModel @Inject constructor(
         }
     }
 
-    fun onClickLike(){
+    fun onClickLike() {
         _isLiked.value = !_isLiked.value
     }
 
