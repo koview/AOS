@@ -36,7 +36,6 @@ class CreateReviewFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.frag = this
         binding.vm = viewModel
-        binding.etContent.movementMethod = ScrollingMovementMethod.getInstance()
 
         initRecyclerView()
         initEventObserve()
@@ -69,6 +68,8 @@ class CreateReviewFragment :
                 when (it) {
                     CreateReviewEvent.NavigateToBack -> findNavController().navigateUp()
                     is CreateReviewEvent.ShowToastMessage -> showToastMessage(it.msg)
+                    CreateReviewEvent.DismissLoading -> dismissLoading()
+                    CreateReviewEvent.ShowLoading -> showLoading(requireContext())
                 }
             }
         }
@@ -85,11 +86,6 @@ class CreateReviewFragment :
             val stringLinks = links.map { it.toString() }
             galleryAdapter.updateImages(stringLinks) // 새로운 태그로 어댑터 업데이트
         }.launchIn(viewLifecycleOwner.lifecycleScope) // Flow를 관찰
-
-        // 리뷰 작성 클릭 시 에러 메시지
-        viewModel.createError.onEach { message ->
-            showToastMessage(message)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun observeParentViewModel() {
