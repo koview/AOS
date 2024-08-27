@@ -13,13 +13,11 @@ import com.bumptech.glide.Glide
 import com.example.koview.R
 import com.example.koview.databinding.FragmentMypageBinding
 import com.example.koview.presentation.base.BaseFragment
-import com.example.koview.presentation.ui.main.coview.CoviewEvent
 import com.example.koview.presentation.ui.main.mypage.adapter.MyItemClickListener
 import com.example.koview.presentation.ui.main.mypage.adapter.ReviewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage),
@@ -46,7 +44,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
         observeRvViewModel()
 
-        binding.scrollView.setOnScrollChangeListener { v, _, scrollY, _, _  ->
+        binding.scrollView.setOnScrollChangeListener { v, _, scrollY, _, _ ->
             val childHeight = binding.scrollView.getChildAt(0).measuredHeight
             val scrollViewHeight = v.height
 
@@ -68,7 +66,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         super.onResume()
         viewModel.getMyReviews(true) // 초기 리뷰 가져오기
     }
-    private fun setMyReviewOnClick(){
+
+    private fun setMyReviewOnClick() {
         // 내 리뷰 클릭 리스너
         reviewsAdapter.setMyItemClickListener(object : MyItemClickListener {
             override fun onLongClick(reviewId: Long) {
@@ -90,16 +89,16 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     }
 
 
-    private fun observeViewModel(){
+    private fun observeViewModel() {
         // 닉네임 관찰
-        lifecycleScope.launch {
+        repeatOnStarted {
             viewModel.nickname.collect { nickname ->
                 binding.tvNickname.text = nickname
             }
         }
 
         // 프로필 이미지 관찰
-        lifecycleScope.launch {
+        repeatOnStarted {
             viewModel.profileImg.collect { imageUrl ->
                 // Glide를 사용하여 이미지 로드
                 Glide.with(this@MyPageFragment)
@@ -123,10 +122,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is MypageEvent.NavigateToSetting -> findNavController().toSetting()
-                    is MypageEvent.NavigateToCreateReview -> findNavController().toCreateReview()
-                    is MypageEvent.ShowLoading -> showLoading(requireContext())
-                    else -> {}
+                    MypageEvent.NavigateToSetting -> findNavController().toSetting()
+                    MypageEvent.NavigateToCreateReview -> findNavController().toCreateReview()
+                    MypageEvent.ShowLoading -> showLoading(requireContext())
+                    MypageEvent.DismissLoading -> dismissLoading()
                 }
             }
         }
@@ -137,7 +136,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         navigate(action)
     }
 
-    private fun NavController.toCreateReview(){
+    private fun NavController.toCreateReview() {
         val action = MyPageFragmentDirections.actionMypageFragmentToCreateReviewFragment()
         navigate(action)
     }
@@ -149,10 +148,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         navigate(action)
     }
 
-    fun dialogDeleteReviews() {
-        Log.d("MyPageFragment", "dialogDeleteReviews 호출")
+    private fun dialogDeleteReviews() {
         val title = "해당 리뷰를 삭제하시겠어요?"
         val dialog = ConfirmDialog(this@MyPageFragment, title, null, 0)
+
         // 알림창이 띄워져있는 동안 배경 클릭 막기
         dialog.isCancelable = false
         activity?.let { dialog.show(it.supportFragmentManager, "ConfirmDialog") }

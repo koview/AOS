@@ -3,13 +3,11 @@ package com.example.koview.presentation.ui.main.mypage
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bumptech.glide.integration.compose.GlideImage
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.DeleteMyReviewRequest
 import com.example.koview.data.model.response.MyReview
 import com.example.koview.data.model.response.ReviewList
 import com.example.koview.data.repository.MainRepository
-import com.example.koview.presentation.ui.main.coview.CoviewEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +23,7 @@ sealed class MypageEvent {
     data object NavigateToSetting : MypageEvent()
     data object NavigateToCreateReview : MypageEvent()
     data object ShowLoading : MypageEvent()
+    data object DismissLoading : MypageEvent()
 }
 
 @HiltViewModel
@@ -60,20 +59,18 @@ class MyPageFragmentViewModel @Inject constructor(
     private val pageSize = 10 // 페이지당 리뷰 수
     var hasNext = true
 
-    fun getMyDetail(){
+    fun getMyDetail() {
         viewModelScope.launch {
             repository.getMyDetail().let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("MyPageFragment", it.code.toString() +", "+it.msg.toString())
+                        Log.d("MyPageFragment", it.code.toString() + ", " + it.msg.toString())
                     }
 
                     is BaseState.Success -> {
-                        _nickname.value = it.body.result.nickname
-                        _profileImg.value = it.body.result.url
+                        _nickname.value = it.body.result.memberNickname
+                        _profileImg.value = it.body.result.imageUrl
                     }
-
-                    else -> {}
                 }
             }
         }
@@ -83,11 +80,12 @@ class MyPageFragmentViewModel @Inject constructor(
         viewModelScope.launch {
             if (isReload) {
                 currentPage = 1 // 페이지 초기화
-            }else if(!hasNext){
+            } else if (!hasNext) {
                 Log.d("MyPageFragment", "다음 페이지가 없습니다.")
                 return@launch // 다음 페이지가 없으면 조기 반환
 
             }
+
             // 로딩 띄우기
             _event.emit(MypageEvent.ShowLoading)
 
@@ -95,52 +93,45 @@ class MyPageFragmentViewModel @Inject constructor(
 
             when (response) {
                 is BaseState.Error -> {
-                    Log.d("MyPageFragment", response.code.toString() + ", " + response.msg.toString())
+                    Log.d("MyPageFragment", response.code + ", " + response.msg)
                 }
-                is BaseState.Success -> {
-                    // 새로운 리뷰를 현재 리스트에 추가
-                    if (response.body.isSuccess) {
-                        // ReviewList를 MyReview로 변환
-                        val newReviews = response.body.result.reviewList.map { convertToMyReview(it) }
-                        if (isReload) {
-                            // 삭제 후 새로 로딩하는 경우
-                            _myReviews.value = newReviews // 전체 리스트로 교체
-                        } else {
-                            // 기존 리스트에 추가
-                            _myReviews.value = _myReviews.value + newReviews
-                        }
 
-                        // 현재 페이지 증가
-                        currentPage++
-                        // 다음 페이지 존재 여부 업데이트
-                        hasNext = response.body.result.hasNext // 이 값을 업데이트
+                is BaseState.Success -> {
+                    // ReviewList를 MyReview로 변환
+                    val newReviews = response.body.result.reviewList.map { convertToMyReview(it) }
+                    if (isReload) {
+                        // 삭제 후 새로 로딩하는 경우
+                        _myReviews.value = newReviews // 전체 리스트로 교체
                     } else {
-                        Log.d("MyPageFragment", response.body.message)
+                        // 기존 리스트에 추가
+                        _myReviews.value = _myReviews.value + newReviews
                     }
+
+                    // 현재 페이지 증가
+                    currentPage++
+                    // 다음 페이지 존재 여부 업데이트
+                    hasNext = response.body.result.hasNext // 이 값을 업데이트
                 }
-                else -> {}
             }
+
+            _event.emit(MypageEvent.DismissLoading)
         }
     }
 
-    fun deleteMyReviews(){
+    fun deleteMyReviews() {
         viewModelScope.launch {
             val request = DeleteMyReviewRequest(_deleteReviewList.value)
             val response = repository.deleteMyReviews(request)
 
             when (response) {
                 is BaseState.Error -> {
-                    Log.d("MyPageFragment", response.code.toString() + ", " + response.msg.toString())
+                    Log.d("MyPageFragment", response.code + ", " + response.msg)
                 }
+
                 is BaseState.Success -> {
-                    if (response.body.isSuccess) {
-                        _isChecking.value = false
-                        getMyReviews(isReload = true) // 삭제 후 리뷰를 처음부터 새로 가져오기
-                    } else {
-                        Log.d("MyPageFragment", response.body.message)
-                    }
+                    _isChecking.value = false
+                    getMyReviews(isReload = true) // 삭제 후 리뷰를 처음부터 새로 가져오기
                 }
-                else -> {}
             }
         }
     }
@@ -150,7 +141,7 @@ class MyPageFragmentViewModel @Inject constructor(
         return MyReview(
             reviewId = reviewList.reviewId,
             content = reviewList.content,
-            writer = reviewList.writer,
+            writer = reviewList.profileInfo.memberNickname,
             imageList = reviewList.imageList,
             totalCommentCount = reviewList.totalCommentCount,
             totalLikesCount = reviewList.totalLikesCount,
@@ -160,7 +151,7 @@ class MyPageFragmentViewModel @Inject constructor(
     }
 
 
-    fun startChecking(reviewId: Long){
+    fun startChecking(reviewId: Long) {
         _isChecking.value = true
         toggleReviewId(reviewId)
     }
@@ -169,13 +160,13 @@ class MyPageFragmentViewModel @Inject constructor(
         changeSelectedById(reviewId)
         if (_deleteReviewList.value.contains(reviewId)) {
             // 아이디가 이미 존재하면 제거
-             _deleteReviewList.value = _deleteReviewList.value.filter { it != reviewId }
+            _deleteReviewList.value = _deleteReviewList.value.filter { it != reviewId }
         } else {
             // 아이디가 존재하지 않으면 추가
-             _deleteReviewList.value = _deleteReviewList.value + reviewId
+            _deleteReviewList.value = _deleteReviewList.value + reviewId
         }
 
-        if(_deleteReviewList.value.isEmpty()){
+        if (_deleteReviewList.value.isEmpty()) {
             _isChecking.value = false // 리스트가 비어있으면 체크 상태를 false로 설정
         }
 
@@ -183,12 +174,12 @@ class MyPageFragmentViewModel @Inject constructor(
     }
 
     // isSelected 변환
-    fun changeSelectedById(reviewId: Long){
+    private fun changeSelectedById(reviewId: Long) {
         val review = _myReviews.value.find { it.reviewId == reviewId }
         review!!.isSelected = !review.isSelected
     }
 
-    fun checkReviewsIsEmpty(){
+    fun checkReviewsIsEmpty() {
         _isEmpty.value = _myReviews.value.isEmpty()
     }
 

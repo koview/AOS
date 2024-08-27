@@ -3,32 +3,36 @@ package com.example.koview.presentation.ui.main.mypage.setting.logininfo
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.koview.R
 import com.example.koview.app.App.Companion.sharedPreferences
 import com.example.koview.databinding.FragmentSettingLoginInfoBinding
 import com.example.koview.presentation.base.BaseFragment
 import com.example.koview.presentation.ui.intro.IntroActivity
-import com.example.koview.presentation.ui.intro.signup.complete.SignUpCompleteFragmentDirections
 import com.example.koview.presentation.ui.main.mypage.ConfirmDialog
 import com.example.koview.presentation.ui.main.mypage.ConfirmDialogInterface
+import com.example.koview.presentation.ui.main.mypage.MyPageFragmentViewModel
 import com.example.koview.presentation.utils.Constants.ACCESS_TOKEN
 import com.example.koview.presentation.utils.Constants.REFRESH_TOKEN
 
 
-class SettingLoginInfoFragment : BaseFragment<FragmentSettingLoginInfoBinding>(R.layout.fragment_setting_login_info),
+class SettingLoginInfoFragment :
+    BaseFragment<FragmentSettingLoginInfoBinding>(R.layout.fragment_setting_login_info),
     ConfirmDialogInterface {
 
+    private val parentViewModel: MyPageFragmentViewModel by activityViewModels()
     private val viewModel: SettingLoginInfoFragmentViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        initEventObserve()
-
+        initEventObserver()
+        initImageObserver()
         settingListClickEvent()
     }
 
@@ -69,13 +73,26 @@ class SettingLoginInfoFragment : BaseFragment<FragmentSettingLoginInfoBinding>(R
         activity?.let { dialog.show(it.supportFragmentManager, "ConfirmDialog") }
     }
 
-    private fun initEventObserve() {
+    private fun initEventObserver() {
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
                     LoginInfoEvent.NavigateToBack -> findNavController().navigateUp()
                     LoginInfoEvent.NavigateToLogin -> findNavController().toComplete()
                 }
+            }
+        }
+    }
+
+
+    private fun initImageObserver() {
+        repeatOnStarted {
+            parentViewModel.profileImg.collect { imageUrl ->
+                // Glide를 사용하여 이미지 로드
+                Glide.with(this@SettingLoginInfoFragment)
+                    .load(imageUrl)
+                    .error(R.drawable.ic_profile) // 오류 발생 시 표시할 이미지
+                    .into(binding.ivProfile)
             }
         }
     }
@@ -92,8 +109,8 @@ class SettingLoginInfoFragment : BaseFragment<FragmentSettingLoginInfoBinding>(R
             startActivity(intent)
 
             viewModel.navigateToLogin()
-        }
-        else if (id == 2) { // 회원탈퇴
+        } else if (id == 2) {
+            // todo: 회원 탈퇴
         }
     }
 
