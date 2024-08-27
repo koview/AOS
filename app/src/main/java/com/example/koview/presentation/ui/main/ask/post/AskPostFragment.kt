@@ -14,7 +14,6 @@ import com.example.koview.presentation.ui.main.MainViewModel
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskPostClickListener
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskPostImageAdapter
 import com.example.koview.presentation.ui.main.ask.post.adapter.AskShopTagAdapter
-import com.example.koview.presentation.ui.main.global.createreview.adapter.GalleryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,7 +52,7 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
 
         repeatOnStarted {
             viewModel.isButtonEnabled.collect {
-                if(it){
+                if (it) {
                     binding.btnCreate.setBackgroundResource(R.drawable.rect_main3fill_nostroke_12radius)
                 } else {
                     binding.btnCreate.setBackgroundResource(R.drawable.rect_blackfill_nostroke_12radius)
@@ -66,11 +65,13 @@ class AskPostFragment : BaseFragment<FragmentAskPostBinding>(R.layout.fragment_a
     private fun initEventObserver() {
         repeatOnStarted {
             viewModel.event.collect {
-                when(it){
+                when (it) {
                     AskPostEvent.GoToGallery -> parentViewModel.goToSetProfileImage()
                     is AskPostEvent.ShowToastMessage -> showToastMessage(it.msg)
                     AskPostEvent.NavigateToBack -> findNavController().navigateUp()
                     AskPostEvent.CreateQuery -> viewModel.postReviewImage(requireContext())
+                    AskPostEvent.DismissLoading -> dismissLoading()
+                    AskPostEvent.ShowLoading -> showLoading(requireContext())
                 }
             }
         }

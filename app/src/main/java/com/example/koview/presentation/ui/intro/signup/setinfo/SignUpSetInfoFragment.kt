@@ -1,7 +1,6 @@
 package com.example.koview.presentation.ui.intro.signup.setinfo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -27,8 +26,6 @@ class SignUpSetInfoFragment : BaseFragment<FragmentSignupSetInfoBinding>(R.layou
         val selectedShops: List<Int> = args.checkedShops.toList()
         viewModel.selectedShops.value = selectedShops
 
-// To-do : 잘 들어오는 지에 대한 것이기 때문에 나중에 삭제
-        showToastMessage(selectedShops.toString())
         initEventObserve()
         setObserve()
     }

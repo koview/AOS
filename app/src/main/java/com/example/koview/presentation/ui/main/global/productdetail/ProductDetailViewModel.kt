@@ -52,7 +52,6 @@ class ProductDetailViewModel @Inject constructor(private val repository: MainRep
             ).let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("ProductDetailFragment", "GetReviewDetails ERROR(Request Success)")
                         Log.d("ProductDetailFragment", it.code + ", " + it.msg)
                     }
 

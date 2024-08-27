@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -77,11 +78,11 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/iv_profile"
+                        profileImgUrl="@{model.profileImage.url}"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginTop="35dp"
                         android:src="@drawable/ic_profile"
-                        profileImgUrl="@{model.profileImage.url}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,7 +99,8 @@
                             style="TextSmallSemiBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{model.writer}" />
+                            android:text="@{model.writer}"
+                            tools:text="닉네임"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="TextTinyMedium"
@@ -134,15 +136,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:gravity="center"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="TextSmallMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="조회수" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_viewCount"
                                 style="TextSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text='@{"조회수 " + String.valueOf(model.totalViewCount)}' />
+                                android:layout_marginStart="5dp"
+                                android:text='@{String.valueOf(model.totalViewCount)}'
+                                android:textColor="@color/kv_gray9"
+                                tools:text="100" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/iv_answer"
@@ -157,7 +169,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
-                                android:text="@{String.valueOf(model.totalAnswerCount)}" />
+                                android:text="@{String.valueOf(model.totalAnswerCount)}"
+                                android:textColor="@color/kv_gray9"
+                                tools:text="30" />
 
                             <LinearLayout
                                 android:id="@+id/layout_ask_icon"
@@ -178,7 +192,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:src="@drawable/ic_ask_on"
-                                    android:visibility="@{model.isWithQuery? View.VISIBLE : View.GONE}" />
+                                    android:visibility="@{model.isWithQuery? View.VISIBLE : View.GONE}"
+                                    tools:visibility="gone" />
 
                             </LinearLayout>
 
@@ -188,7 +203,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
-                                android:text="@{String.valueOf(model.totalWithQueryCount)}" />
+                                android:text="@{String.valueOf(model.totalWithQueryCount)}"
+                                android:textColor="@color/kv_gray9"
+                                tools:text="2" />
 
                         </LinearLayout>
 
@@ -197,7 +214,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:text="@{model.content}" />
+                            android:text="@{model.content}"
+                            tools:text="리뷰 내용" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_shop"
@@ -216,7 +234,7 @@
                     style="@style/Title4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="30dp"
                     android:text="답변"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -249,6 +267,7 @@
                     android:layout_marginTop="30dp"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:paddingBottom="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/line_review">

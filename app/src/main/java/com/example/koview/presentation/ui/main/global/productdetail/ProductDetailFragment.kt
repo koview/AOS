@@ -32,30 +32,33 @@ class ProductDetailFragment :
     private val productViewModel: ProductViewModel by activityViewModels()
     private val productReviewAdapter = ProductReviewAdapter(this)
 
-    private var sourceFragmentId: Int? = null
+    private val args: ProductDetailFragmentArgs by navArgs()
+    private val sourceFragmentId by lazy { args.sourceFragmentId }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
         binding.model = productViewModel.searchProduct.value
+
+        handleBackNavigation()
+
+        initProfileImage()
+        initRecyclerview()
+        initEventObserve()
+        initProductListObserver()
+    }
+
+    private fun initProfileImage() {
         // productImageUrl이 없으면 빈 url
         if (productViewModel.searchProduct.value?.productImageUrls.isNullOrEmpty()) {
             binding.imageUrl = ""
-        } else { // 있으면 첫 번째에 해당하는 url
+        } else {
+            // 있으면 첫 번째에 해당하는 url
             val imageUrl =
                 productViewModel.searchProduct.value?.productImageUrls?.firstOrNull()?.url ?: ""
             binding.imageUrl = imageUrl
         }
-
-        val args: ProductDetailFragmentArgs by navArgs()
-        sourceFragmentId = args.sourceFragmentId
-
-        handleBackNavigation()
-
-        initRecyclerview()
-        initEventObserve()
-        initProductListObserver()
     }
 
     // ProductDetailViewModel Review data
@@ -131,13 +134,19 @@ class ProductDetailFragment :
         navigate(action)
     }
 
-    private fun NavController.toReviewDetail(reviewId: Long, nickname: String) {
-        val action = ProductDetailFragmentDirections.actionProductDetailFragmentToUserReviewDetailFragment(reviewId, nickname)
+    private fun NavController.toReviewDetail(reviewId: Long, nickname: String, memberId: Long) {
+        val action =
+            ProductDetailFragmentDirections.actionProductDetailFragmentToUserReviewDetailFragment(
+                reviewId,
+                nickname,
+                memberId
+            )
         navigate(action)
     }
 
     private fun NavController.toReviewCreate() {
-        val action = ProductDetailFragmentDirections.actionProductDetailFragmentToCreateReviewFragment()
+        val action =
+            ProductDetailFragmentDirections.actionProductDetailFragmentToCreateReviewFragment()
         navigate(action)
     }
 
@@ -159,8 +168,8 @@ class ProductDetailFragment :
     }
 
     // 리뷰 상세 페이지로 이동
-    override fun onContentClick(reviewId: Long, nickname: String) {
-        findNavController().toReviewDetail(reviewId, nickname)
+    override fun onContentClick(reviewId: Long, nickname: String, memberId: Long) {
+        findNavController().toReviewDetail(reviewId, nickname, memberId)
     }
 
 }

@@ -22,9 +22,12 @@ class SettingLoginInfoFragmentViewModel @Inject constructor() : ViewModel() {
     private val _event = MutableSharedFlow<LoginInfoEvent>()
     val event: SharedFlow<LoginInfoEvent> = _event.asSharedFlow()
 
-    private val _nickname = MutableStateFlow("네로")
+    private val _nickname = MutableStateFlow("")
     val nickname: StateFlow<String> = _nickname.asStateFlow()
 
+    fun setNickname(nickname: String){
+        _nickname.value = nickname
+    }
 
     fun navigateToBack() {
         viewModelScope.launch {

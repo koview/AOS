@@ -2,7 +2,6 @@ package com.example.koview.presentation.ui.main.global.reviewdetail
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.activityViewModels
@@ -28,6 +27,7 @@ class UserReviewDetailFragment :
     private val args: UserReviewDetailFragmentArgs by navArgs()
     private val reviewId by lazy { args.reviewId }
     private val nickname by lazy { args.nickname }
+    private val memberId by lazy { args.memberId }
 
 
     private var adapter: CoviewReviewAdapter? = null
@@ -52,7 +52,7 @@ class UserReviewDetailFragment :
         super.onResume()
 
         if (!isReturningFromExternal) {
-            viewModel.getUserInfo(reviewId)
+            viewModel.getUserInfo(reviewId, memberId)
         }
         isReturningFromExternal = false
     }
@@ -93,7 +93,7 @@ class UserReviewDetailFragment :
                 if (bottomScrollState) {
                     bottomScrollState = false
 
-                    viewModel.getReviews(reviewId)
+                    viewModel.getReviews(reviewId, memberId)
                 }
             } else {
                 bottomScrollState = true

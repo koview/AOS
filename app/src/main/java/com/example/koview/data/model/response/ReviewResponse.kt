@@ -17,9 +17,8 @@ data class ReviewDetailResult(
 data class ReviewDetailList(
     val reviewId: Long,
     val content: String,
-    val writer: String,
-    val profileImage: ReviewDetailImage,
-    val imageList: List<ReviewDetailImage>,
+    val profileInfo: ProfileResponseDTO,
+    val imageList: List<ImageDTO?>,
     val purchaseLinkList: List<PurchaseLinkList>,
     val totalCommentCount: Long,
     val totalLikeCount: Long,
@@ -28,16 +27,11 @@ data class ReviewDetailList(
     val updatedAt: String
 )
 
-data class ReviewDetailImage(
-    val imageId: Long,
-    val url: String
-)
-
 data class ReviewImageResponse(
     val isSuccess: Boolean,
     val code: String,
     val message: String,
-    val result: List<ReviewDetailImage>
+    val result: List<ImageDTO>
 )
 
 data class CreateReviewResponse(
@@ -49,9 +43,8 @@ data class CreateReviewResponse(
 data class ReviewResult(
     val reviewId: Long,
     val content: String,
-    val writer: String,
-    val profileImage: ReviewDetailImage,
-    val imageList: List<ReviewDetailImage>,
+    val profileInfo: ProfileResponseDTO,
+    val imageList: List<ImageDTO>,
     val totalCommentCount: Long,
     val totalLikesCount: Long,
     val isLiked: Boolean,

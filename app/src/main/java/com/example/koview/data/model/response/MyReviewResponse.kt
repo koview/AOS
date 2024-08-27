@@ -1,19 +1,11 @@
 package com.example.koview.data.model.response
 
-import java.time.LocalDate
-
 // 내 정보 조회
 data class GetMyDetailResponse(
     val isSuccess: Boolean,
     val code: String,
     val message: String,
-    val result: MyDetailResult
-)
-
-data class MyDetailResult(
-    val imageId: Long,
-    val url: String,
-    val nickname: String
+    val result: ProfileResponseDTO
 )
 
 // 내 리뷰 전체 조회
@@ -34,7 +26,7 @@ data class GetMyReviewsResult(
 data class ReviewList(
     val reviewId: Long,
     val content: String,
-    val writer: String,
+    val profileInfo: ProfileResponseDTO,
     val imageList: List<ImageDTO>,
     val totalCommentCount: Long,
     val totalLikesCount: Long,
@@ -44,6 +36,7 @@ data class ReviewList(
 
 // 마이페이지 리뷰 화면을 위한 데이터 클래스
 data class MyReview(
+    val memberId: Long,
     val reviewId: Long,
     val content: String,
     val writer: String,
@@ -53,6 +46,14 @@ data class MyReview(
     val createdAt: String,
     val updatedAt: String,
     var isSelected: Boolean = false
+)
+
+// 리뷰 프로필 정보
+data class ProfileResponseDTO(
+    val imageId: Long,
+    val imageUrl: String,
+    val memberId: Long,
+    val memberNickname: String
 )
 
 // 이미지 DTO

@@ -63,7 +63,7 @@ class ProductReviewAdapter(listener: ProductDetailInterface) :
             binding.rvImage.adapter = ProductReviewImageAdapter(review.imageList)
 
             binding.tvContent.setOnClickListener {
-                mCallBack.onContentClick(review.reviewId, review.writer)
+                mCallBack.onContentClick(review.reviewId, review.profileInfo.memberNickname, review.profileInfo.memberId)
             }
         }
 

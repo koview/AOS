@@ -128,7 +128,8 @@ interface MainApi {
     suspend fun getReviewDetails(
         @Query("page") page: Int,
         @Query("size") size: Int,
-        @Query("clickedReviewId") clickedReviewId: Long
+        @Query("clickedReviewId") clickedReviewId: Long,
+        @Query("memberId") memberId: Long
     ): Response<ReviewDetailResponse>
 
     @GET("products/{productId}/reviews")

@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.CreateReviewRequest
 import com.example.koview.data.model.requeset.PurchaseLinkDTO
-import com.example.koview.data.model.response.ReviewDetailImage
+import com.example.koview.data.model.response.ImageDTO
 import com.example.koview.data.repository.MainRepository
 import com.example.koview.presentation.ui.toMultiPartImage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +24,10 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 sealed class CreateReviewEvent {
+    data class ShowToastMessage(val msg: String) : CreateReviewEvent()
     data object NavigateToBack : CreateReviewEvent()
+    data object ShowLoading : CreateReviewEvent()
+    data object DismissLoading : CreateReviewEvent()
 }
 
 @HiltViewModel
@@ -36,10 +39,6 @@ class CreateReviewFragmentViewModel @Inject constructor(
 
     private val _event = MutableSharedFlow<CreateReviewEvent>()
     val event: SharedFlow<CreateReviewEvent> = _event.asSharedFlow()
-
-
-    private val _createError = MutableSharedFlow<String>()
-    val createError: SharedFlow<String> = _createError.asSharedFlow()
 
     private val _isLiked = MutableStateFlow(false)
     val isLiked: StateFlow<Boolean> = _isLiked.asStateFlow()
@@ -56,23 +55,28 @@ class CreateReviewFragmentViewModel @Inject constructor(
     private val _imageLinkList = MutableStateFlow<List<Uri>>(emptyList())
     val imageLinkList: StateFlow<List<Uri>> = _imageLinkList.asStateFlow()
 
-    var imagePathList: List<ReviewDetailImage> = emptyList()
+    private var imagePathList: List<ImageDTO> = emptyList()
 
 
     fun createBtnClick() {
-        if (content.value != "" && _purchaseLinkList.value.isNotEmpty()) {
-            if (_imageLinkList.value.isEmpty()) {
-                createReview()
-            } else postReviewImage()
-        } else {
-            viewModelScope.launch {
-                _createError.emit("내용 혹은 링크를 확인하십시오.")
+        viewModelScope.launch {
+            if (content.value != "" && _purchaseLinkList.value.isNotEmpty()) {
+                // 로딩 띄우기
+                _event.emit(CreateReviewEvent.ShowLoading)
+
+                if (_imageLinkList.value.isEmpty()) {
+                    createReview()
+                } else {
+                    postReviewImage()
+                }
+            } else {
+                _event.emit(CreateReviewEvent.ShowToastMessage("\"내용 혹은 링크를 다시 확인해주세요.\""))
             }
         }
 
     }
 
-    fun convertUriToMultipart(uri: Uri): MultipartBody.Part? {
+    private fun convertUriToMultipart(uri: Uri): MultipartBody.Part? {
         return uri.toMultiPartImage(context)
     }
 
@@ -88,7 +92,8 @@ class CreateReviewFragmentViewModel @Inject constructor(
             repository.postReviewImage(images).let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("PostReviewImage", it.code.toString() + ", " + it.msg.toString())
+                        _event.emit(CreateReviewEvent.DismissLoading)
+                        _event.emit(CreateReviewEvent.ShowToastMessage(it.msg))
                     }
 
                     is BaseState.Success -> {
@@ -105,7 +110,6 @@ class CreateReviewFragmentViewModel @Inject constructor(
     private fun createReview() {
         val contentValue = content.value
         val imageListValue: List<Long> = imagePathList.map { it -> it.imageId } ?: emptyList()
-        Log.d("PostImage", imageListValue.toString())
         val purchaseLinkList = _purchaseLinkList.value
 
         viewModelScope.launch {
@@ -113,10 +117,12 @@ class CreateReviewFragmentViewModel @Inject constructor(
             repository.createReview(request).let {
                 when (it) {
                     is BaseState.Error -> {
-                        Log.d("PostReviewImage", it.code.toString() + ", " + it.msg.toString())
+                        _event.emit(CreateReviewEvent.DismissLoading)
+                        _event.emit(CreateReviewEvent.ShowToastMessage(it.msg))
                     }
 
                     is BaseState.Success -> {
+                        _event.emit(CreateReviewEvent.DismissLoading)
                         navigateToBack()
                     }
                 }
@@ -140,20 +146,38 @@ class CreateReviewFragmentViewModel @Inject constructor(
         _imageLinkList.value = updatedList
     }
 
+    // 링크 추가
     fun inputLink() {
-        val tag = extractTag(link.value)
-        val newLink = PurchaseLinkDTO(link.value, tag)
+        viewModelScope.launch {
+            val trimmedLink = trimUrl(link.value)  // 링크를 자르는 함수 호출
+            val tag = extractTag(trimmedLink)
+            val newLink = PurchaseLinkDTO(trimmedLink, tag)
 
-        // 기존 목록에 새 링크 추가
-        _purchaseLinkList.value = _purchaseLinkList.value + newLink
-        link.value = ""
+            if (tag == "") {
+                _event.emit(CreateReviewEvent.ShowToastMessage("유효하지 않은 링크입니다."))
+            } else {
+                // 기존 목록에 새 링크 추가
+                _purchaseLinkList.value = _purchaseLinkList.value + newLink
+            }
+            link.value = ""
+        }
     }
 
+    // 링크 삭제
     fun deleteLink(link: PurchaseLinkDTO) {
         // 현재 리스트에서 link를 제외한 새로운 리스트 생성
         val updatedList = _purchaseLinkList.value.filter { it != link }
 
         _purchaseLinkList.value = updatedList
+    }
+
+    // URL 쿼리 파라미터 잘라내는 함수
+    private fun trimUrl(url: String): String {
+        val uri = Uri.parse(url)
+
+        val trimmedUrl = "${uri.scheme}://${uri.host}${uri.path}"
+
+        return trimmedUrl
     }
 
     // URL로부터 도메인 이름 추출하는 함수
@@ -163,14 +187,16 @@ class CreateReviewFragmentViewModel @Inject constructor(
         val matchResult = regex.find(link)
 
         return if (matchResult != null) {
-            matchResult.groups[2]?.value ?: ""  // 그룹 2에서 도메인 이름 반환
+            // 그룹 2에서 도메인 이름 반환
+            matchResult.groups[2]?.value ?: ""
         } else {
-            ""  // 매치되지 않는 경우 빈 문자열 반환
+            // 매치되지 않는 경우 빈 문자열 반환
+            ""
         }
     }
 
     fun validate() {
-        if (content.value.toString().equals("")) {
+        if (content.value == "") {
             createBtnOn.value = false
             return
         } else if (_purchaseLinkList.value.isEmpty()) {

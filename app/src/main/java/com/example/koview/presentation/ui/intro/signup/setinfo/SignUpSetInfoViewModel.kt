@@ -82,12 +82,10 @@ class SignUpSetInfoViewModel @Inject constructor(
                 repository.memberSignUp(request).let {
                     when (it) {
                         is BaseState.Error -> {
-                            Log.d("SignUpSetInfoFragment", "SignUp ERROR(Request Success)")
-                            Log.d("SignUpSetInfoFragment", it.code.toString() +", "+ it.msg.toString())
+                            Log.d("SignUpSetInfoFragment", it.code +", "+ it.msg)
                         }
 
                         is BaseState.Success -> {
-                            Log.d("SignUpSetInfoFragment", "SignUp SUCCESS")
                             navigateToNext()
                         }
                     }
@@ -100,7 +98,7 @@ class SignUpSetInfoViewModel @Inject constructor(
 
 
     // 빈 항목이 있는지, 이메일 형식에 맞는지, 비밀번호 확인이 맞는지 체크
-    fun validate(){
+    private fun validate(){
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
         if (email.value.toString().equals("")){
@@ -133,7 +131,7 @@ class SignUpSetInfoViewModel @Inject constructor(
         }
     }
 
-    fun navigateToNext() {
+    private fun navigateToNext() {
         viewModelScope.launch {
             _event.emit(SetInfoEvent.NavigateToComplete)
         }

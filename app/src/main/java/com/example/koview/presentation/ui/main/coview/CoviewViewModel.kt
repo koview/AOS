@@ -1,6 +1,5 @@
 package com.example.koview.presentation.ui.main.coview
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
@@ -52,7 +51,7 @@ class CoviewViewModel @Inject constructor(private val repository: MainRepository
             repository.getMyDetail().let {
                 when (it) {
                     is BaseState.Success -> {
-                        profileImgUrl = it.body.result.url
+                        profileImgUrl = it.body.result.imageUrl
                     }
 
                     is BaseState.Error -> {

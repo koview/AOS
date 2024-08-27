@@ -27,6 +27,7 @@ class MyPageReviewDetailFragment :
 
     private val args: MyPageReviewDetailFragmentArgs by navArgs()
     private val reviewId by lazy { args.reviewId }
+    private val memberId by lazy { args.memberId }
 
 
     private var adapter: CoviewReviewAdapter? = null
@@ -50,7 +51,7 @@ class MyPageReviewDetailFragment :
         super.onResume()
 
         if (!isReturningFromExternal) {
-            parentViewModel.getUserInfo(reviewId)
+            parentViewModel.getUserInfo(reviewId, memberId)
         }
         isReturningFromExternal = false
     }
@@ -99,7 +100,7 @@ class MyPageReviewDetailFragment :
                 if (bottomScrollState) {
                     bottomScrollState = false
 
-                    parentViewModel.getReviews(reviewId)
+                    parentViewModel.getReviews(reviewId, memberId)
                 }
             } else {
                 bottomScrollState = true

@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.koview.data.model.BaseState
 import com.example.koview.data.model.requeset.CreateQueryRequest
 import com.example.koview.data.model.requeset.PurchaseLinkDTO
-import com.example.koview.data.model.response.ImageDTO
 import com.example.koview.data.repository.MainRepository
 import com.example.koview.presentation.ui.toMultiPartImage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +27,8 @@ sealed class AskPostEvent() {
     data class ShowToastMessage(val msg: String) : AskPostEvent()
     data object NavigateToBack : AskPostEvent()
     data object CreateQuery : AskPostEvent()
+    data object ShowLoading : AskPostEvent()
+    data object DismissLoading : AskPostEvent()
 }
 
 data class AskPostImageUiState(
@@ -88,6 +89,9 @@ class AskPostViewModel @Inject constructor(
     fun postReviewImage(context: Context) {
         viewModelScope.launch {
             try {
+                // 로딩 띄우기
+                _event.emit(AskPostEvent.ShowLoading)
+
                 // Uri를 파일로 변환하여 MultipartBody.Part로 만들기
                 val imageParts = _imageUiState.value.imageList.mapNotNull { uri ->
                     uri.toMultiPartImage(context)
@@ -113,6 +117,7 @@ class AskPostViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
+                _event.emit(AskPostEvent.DismissLoading)
                 _event.emit(AskPostEvent.ShowToastMessage("이미지 업로드 중 오류가 발생했습니다."))
             }
         }
@@ -121,14 +126,19 @@ class AskPostViewModel @Inject constructor(
     // 질문 글 작성
     private fun createQuery() {
         viewModelScope.launch {
-            val request = CreateQueryRequest(content.value, imagePathList, linkUiState.value.shopLinkList)
+            val request =
+                CreateQueryRequest(content.value, imagePathList, linkUiState.value.shopLinkList)
+
             repository.postQuery(request).let {
-                when(it){
+                when (it) {
                     is BaseState.Success -> {
+                        _event.emit(AskPostEvent.DismissLoading)
                         _event.emit(AskPostEvent.NavigateToBack)
                     }
+
                     is BaseState.Error -> {
                         // todo: 이미지 리스트 삭제 api 호풀
+                        _event.emit(AskPostEvent.DismissLoading)
                         _event.emit(AskPostEvent.ShowToastMessage(it.msg))
                     }
                 }
@@ -162,8 +172,9 @@ class AskPostViewModel @Inject constructor(
     // 링크 추가
     fun addLink() {
         viewModelScope.launch {
-            val tag = extractTag(link.value)
-            val newLink = PurchaseLinkDTO(link.value, tag)
+            val trimmedLink = trimUrl(link.value)  // 링크를 자르는 함수 호출
+            val tag = extractTag(trimmedLink)
+            val newLink = PurchaseLinkDTO(trimmedLink, tag)
 
             if (tag == "") {
                 _event.emit(AskPostEvent.ShowToastMessage("유효하지 않은 링크입니다."))
@@ -187,6 +198,15 @@ class AskPostViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    // URL 쿼리 파라미터 잘라내는 함수
+    private fun trimUrl(url: String): String {
+        val uri = Uri.parse(url)
+
+        val trimmedUrl = "${uri.scheme}://${uri.host}${uri.path}"
+
+        return trimmedUrl
     }
 
     // URL로부터 도메인 이름 추출
