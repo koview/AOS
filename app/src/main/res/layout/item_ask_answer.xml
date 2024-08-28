@@ -97,6 +97,7 @@
                 android:layout_marginStart="5dp"
                 android:text="@{String.valueOf(model.totalLikeCount)}"
                 android:textColor="@color/kv_gray9"
+                SetLikeTextViewColor="@{model.isLiked}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/layout_like_icon"
                 app:layout_constraintTop_toTopOf="parent" />
