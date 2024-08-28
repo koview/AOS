@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingVertical="40dp">
+        android:paddingTop="40dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_top"
