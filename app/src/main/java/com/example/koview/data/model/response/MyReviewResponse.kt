@@ -30,6 +30,7 @@ data class ReviewList(
     val imageList: List<ImageDTO>,
     val totalCommentCount: Long,
     val totalLikesCount: Long,
+    val isLiked: Boolean,
     val createdAt: String,
     val updatedAt: String
 )
@@ -43,6 +44,7 @@ data class MyReview(
     val imageList: List<ImageDTO>,
     val totalCommentCount: Long,
     val totalLikesCount: Long,
+    val isLiked: Boolean,
     val createdAt: String,
     val updatedAt: String,
     var isSelected: Boolean = false

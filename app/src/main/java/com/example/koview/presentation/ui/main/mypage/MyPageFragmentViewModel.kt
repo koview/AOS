@@ -150,6 +150,7 @@ class MyPageFragmentViewModel @Inject constructor(
             imageList = reviewList.imageList,
             totalCommentCount = reviewList.totalCommentCount,
             totalLikesCount = reviewList.totalLikesCount,
+            isLiked = reviewList.isLiked,
             createdAt = reviewList.createdAt,
             updatedAt = reviewList.updatedAt
         )
