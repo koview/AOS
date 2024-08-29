@@ -105,6 +105,11 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
         navigate(action)
     }
 
+    private fun NavController.toReviewDetail(reviewId: Long, nickname: String, memberId: Long) {
+        val action = AskDetailFragmentDirections.actionAskDetailFragmentToUserReviewDetailFragment(reviewId, nickname, memberId)
+        navigate(action)
+    }
+
     private fun clickTag(url: String?) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
@@ -123,5 +128,9 @@ class AskDetailFragment : BaseFragment<FragmentAskDetailBinding>(R.layout.fragme
 
     override fun onClickLike(item: QueryAnswerList) {
 //        parentViewModel.onLikeClick(item)
+    }
+
+    override fun onClickItem(item: QueryAnswerList) {
+        findNavController().toReviewDetail(item.reviewId, item.profileInform.memberNickname, item.profileInform.memberId)
     }
 }

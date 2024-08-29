@@ -54,6 +54,10 @@ class AskAnswerAdapter(listener: AskDetailInterface) :
                 mCallBack.onClickLike(review)
             }
 
+            binding.layoutItem.setOnClickListener {
+                mCallBack.onClickItem(review)
+            }
+
             binding.rvImage.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.rvImage.adapter = AskAnswerImageAdapter(review.imageList)
