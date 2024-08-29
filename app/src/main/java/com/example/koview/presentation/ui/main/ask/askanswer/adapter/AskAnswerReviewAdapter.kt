@@ -63,7 +63,7 @@ class AskAnswerReviewAdapter(listener: AskAnswerInterface) :
                 binding.rvItem.setBackgroundColor(Color.WHITE)  // 기본 배경색
             }
 
-            binding.rvItem.setOnLongClickListener {
+            binding.rvItem.setOnClickListener {
                 // 현재 선택된 아이템의 포지션을 업데이트
                 val previousPosition = adapter.selectedPosition
                 adapter.selectedPosition = position
@@ -73,7 +73,6 @@ class AskAnswerReviewAdapter(listener: AskAnswerInterface) :
                 adapter.notifyItemChanged(position)
 
                 mCallBack.onReviewLongClick(review.reviewId)
-                true
             }
 
             binding.rvImage.layoutManager =
