@@ -38,3 +38,16 @@ fun setCategoryColor(view: TextView, targetCategory: Category, curCategory: Cate
 fun bindNormalIconLayoutVisibility(view: TextView, status: Status) {
     view.visibility = if (status == Status.NORMAL) View.VISIBLE else View.GONE
 }
+
+@BindingAdapter("SetLikeTextViewColor")
+fun bindSetLikeTextViewColor(view: TextView, isLiked: Boolean) {
+    val context = view.context
+    val main3Color = ContextCompat.getColor(context, R.color.kv_main3)
+    val defaultColor = ContextCompat.getColor(context, R.color.kv_gray9)
+
+    if (isLiked) {
+        view.setTextColor(main3Color)
+    } else {
+        view.setTextColor(defaultColor)
+    }
+}
