@@ -42,7 +42,7 @@
                     android:id="@+id/layout_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="40dp"
+                    android:paddingTop="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -83,9 +83,9 @@
                         android:id="@+id/cv_product"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="0dp"
-                        android:layout_marginTop="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -119,9 +119,9 @@
                             <!-- Layout with hot Icon -->
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/layout_with_hot_icon"
+                                FamousIconLayoutVisibility="@{model.status}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                FamousIconLayoutVisibility="@{model.status}"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
@@ -150,9 +150,9 @@
                             <!-- Layout with warning Icon -->
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/layout_with_warning_icon"
+                                RestrictedIconLayoutVisibility="@{model.status}"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                RestrictedIconLayoutVisibility="@{model.status}"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
@@ -182,11 +182,11 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_product_without_icon"
                                 style="@style/TextRegularSemiBold"
+                                NormalTextviewVisibility="@{model.status}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{model.productName}"
                                 android:textColor="@color/kv_gray9"
-                                NormalTextviewVisibility="@{model.status}"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -282,9 +282,9 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/rect_blackfill_nostroke_12radius"
+            android:onClick="@{()->vm.navigateToReviewCreate()}"
             android:text="리뷰 작성"
             android:textColor="@color/white"
-            android:onClick="@{()->vm.navigateToReviewCreate()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

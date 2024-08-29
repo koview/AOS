@@ -19,7 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="40dp">
+        android:paddingTop="50dp">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_back"
@@ -143,10 +143,10 @@
                 android:layout_marginEnd="5dp"
                 android:background="@android:color/transparent"
                 android:hint="구매 링크 입력"
-                android:scrollbars="none"
-                android:scrollHorizontally="true"
                 android:inputType="text"
                 android:maxLines="1"
+                android:scrollbars="none"
+                android:scrollHorizontally="true"
                 android:text="@={vm.link}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_link"

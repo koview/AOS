@@ -35,17 +35,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:paddingTop="40dp"
+                    android:paddingTop="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/btn_back"
-                        android:onClick="@{()->vm.navigateToHome()}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
+                        android:onClick="@{()->vm.navigateToHome()}"
                         android:padding="0dp"
                         android:src="@drawable/ic_back"
                         app:layout_constraintBottom_toBottomOf="parent"

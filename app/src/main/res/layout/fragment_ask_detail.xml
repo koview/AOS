@@ -38,7 +38,7 @@
                     android:id="@+id/layout_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="40dp"
+                    android:paddingTop="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -100,7 +100,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{model.writer}"
-                            tools:text="닉네임"/>
+                            tools:text="닉네임" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="TextTinyMedium"
