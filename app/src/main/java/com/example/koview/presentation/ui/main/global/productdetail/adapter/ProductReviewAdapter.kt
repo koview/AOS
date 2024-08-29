@@ -54,10 +54,6 @@ class ProductReviewAdapter(listener: ProductDetailInterface) :
 
             binding.model = review
 
-            binding.layoutLikeIcon.setOnClickListener {
-                mCallBack.onLikeClick(review)
-            }
-
             binding.rvImage.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.rvImage.adapter = ProductReviewImageAdapter(review.imageList)
