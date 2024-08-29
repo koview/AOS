@@ -66,13 +66,21 @@ data class QueryAnswerResult(
 data class QueryAnswerList(
     val answerId: Long,
     val content: String,
-    val writer: String,
+    val profileInform: QueryProfileInform,
     val imageList: List<QueryImage>,
     val totalLikeCount: Long,
     val isLiked: Boolean,
     val commentCount: Long,
+    val reviewId: Long,
     val createdAt: String,
     val updatedAt: String
+): Serializable
+
+data class QueryProfileInform(
+    val imageId: Long,
+    val imageUrl: String,
+    val memberId: Long,
+    val memberNickname: String
 ): Serializable
 
 data class QueryAnswerPostResponse (

@@ -254,6 +254,10 @@
             android:id="@+id/action_ask_detail_fragment_to_ask_answer_fragment"
             app:destination="@id/ask_answer_fragment"/>
 
+        <action
+            android:id="@+id/action_ask_detail_fragment_to_user_review_detail_fragment"
+            app:destination="@id/user_review_detail_fragment" />
+
     </fragment>
 
     <fragment

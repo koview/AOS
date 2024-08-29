@@ -18,6 +18,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp">
@@ -27,7 +28,7 @@
             style="@style/TextRegularSemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.writer}"
+            android:text="@{model.profileInform.memberNickname}"
             android:textColor="@color/kv_gray9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
