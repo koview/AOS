@@ -23,17 +23,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/main_nav" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_bnv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.9" />
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/main_bnv"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="70dp"
             android:background="@color/white"
             app:itemActiveIndicatorStyle="@android:color/transparent"
             app:itemBackground="@color/white"
@@ -43,7 +36,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guide_bnv"
             app:menu="@menu/main_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
